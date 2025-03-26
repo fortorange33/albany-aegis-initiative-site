@@ -1,0 +1,208 @@
+/* === COLOR VARIABLES (for clarity & scalability) === */
+:root {
+  --blue: #003087;
+  --orange: #ff8c00;
+  --text: #333;
+  --light-bg: #f9f9f9;
+  --hero-bg: #f0f4f9;
+  --dark-bg: #121212;
+  --dark-surface: #1e1e1e;
+  --dark-header: #1f1f1f;
+  --dark-text: #e0e0e0;
+  --dark-accent: #66ccff;
+  --dark-muted: #ccc;
+}
+
+/* === RESET === */
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+/* === BASE STYLES === */
+body {
+  font-family: 'Inter', Arial, sans-serif;
+  line-height: 1.6;
+  color: var(--text);
+  background-color: var(--light-bg);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+a {
+  color: var(--blue);
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+/* === HEADER === */
+header {
+  background-color: var(--blue);
+  color: white;
+  padding: 1rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.logo {
+  font-size: 1.8rem;
+  font-weight: 700;
+}
+
+nav ul {
+  list-style: none;
+  display: flex;
+  gap: 2rem;
+}
+
+nav ul li a {
+  color: white;
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+/* === DARK MODE TOGGLE === */
+.dark-toggle {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  color: white;
+  cursor: pointer;
+  margin-left: 1rem;
+}
+
+/* === MAIN CONTAINER === */
+main {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+/* === HERO SECTION === */
+.hero {
+  text-align: center;
+  background-color: var(--hero-bg);
+  padding: 3rem 2rem;
+  border-radius: 8px;
+  margin-bottom: 2rem;
+}
+
+.hero-logo {
+  max-width: 160px;
+  height: auto;
+  display: block;
+  margin: 0 auto 0.75rem auto;
+  object-fit: contain;
+  filter: drop-shadow(0 2px 5px rgba(0, 0, 0, 0.25));
+}
+
+.hero-caption {
+  font-size: 0.875rem;
+  text-align: center;
+  color: #555;
+  font-style: italic;
+  margin-bottom: 1.25rem;
+}
+
+.hero h1, .hero h2 {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+  color: var(--blue);
+}
+
+.hero p {
+  font-size: 1.2rem;
+}
+
+/* === SECTION STYLES === */
+.overview, .key-findings {
+  margin-top: 2.5rem;
+}
+
+.overview h2, .key-findings h2 {
+  font-size: 1.8rem;
+  margin-bottom: 1rem;
+  color: var(--blue);
+}
+
+.key-findings img {
+  display: block;
+  margin: 1rem auto;
+  width: 100%;
+  max-width: 650px;
+}
+
+/* === FOOTER === */
+footer {
+  background-color: var(--blue);
+  color: white;
+  text-align: center;
+  padding: 1.25rem;
+  margin-top: 3rem;
+}
+
+footer a {
+  color: var(--orange);
+}
+
+footer a:hover {
+  text-decoration: underline;
+}
+
+/* === DARK MODE === */
+body.dark-mode {
+  background-color: var(--dark-bg);
+  color: var(--dark-text);
+}
+
+body.dark-mode a {
+  color: var(--dark-accent);
+}
+
+body.dark-mode header {
+  background-color: var(--dark-header);
+}
+
+body.dark-mode nav ul li a {
+  color: var(--dark-text);
+}
+
+body.dark-mode .hero,
+body.dark-mode .overview,
+body.dark-mode .key-findings {
+  background-color: var(--dark-surface);
+  border-left: 4px solid #888;
+  border-radius: 6px;
+}
+
+body.dark-mode footer {
+  background-color: var(--dark-header);
+  color: var(--dark-muted);
+}
+
+/* === RESPONSIVE DESIGN === */
+@media (max-width: 768px) {
+  header {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  nav ul {
+    flex-direction: column;
+    gap: 1rem;
+    margin-top: 1rem;
+  }
+
+  .hero h1, .hero h2 {
+    font-size: 2rem;
+  }
+
+  main {
+    padding: 1.5rem;
+  }
+}
