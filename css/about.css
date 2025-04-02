@@ -1,0 +1,41 @@
+/* === ABOUT PAGE CUSTOM STYLES === */
+
+.about-page h2,
+.about-page h3 {
+  color: #003087;
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
+
+.about-page section {
+  padding-bottom: 2rem;
+  border-bottom: 1px solid #ddd;
+  margin-bottom: 2.5rem;
+}
+
+.about-page ul {
+  list-style-type: disc;
+  margin-left: 2rem;
+  margin-bottom: 1rem;
+}
+
+.about-page ul li {
+  margin-bottom: 0.5rem;
+}
+
+/* Optional: icon-style list bullets */
+.about-page ul.list-icon li::before {
+  content: "✔";
+  color: #003087;
+  margin-right: 0.5rem;
+}
+
+/* Dark mode for about page */
+body.dark-mode .about-page section {
+  border-color: #444;
+}
+
+body.dark-mode .about-page h2,
+body.dark-mode .about-page h3 {
+  color: #66ccff;
+}
