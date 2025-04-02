@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Crime Data | Albany Aegis Initiative</title>
-  <meta name="description" content="Explore interactive charts, official reports, and analysis from Albany’s crime data (2021–2024).">
+  <meta name="description" content="Explore Albany crime trends, data visualizations, and official reports (2021–2024).">
 
   <!-- Fonts & Styles -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
@@ -35,6 +35,7 @@
 
   <!-- Main Content -->
   <main class="container my-5">
+
     <section class="mb-5">
       <h2 class="h3 text-primary mb-3">2021–2024 Crime Overview</h2>
       <p>This page summarizes Albany's crime statistics and policy outcomes. Visualized reports and strategic data are presented below to support transparency and accountability efforts.</p>
@@ -53,7 +54,7 @@
       <div class="row">
         <div class="col-md-6 mb-4">
           <img src="images/top-10-crime-neighborhoods.png" class="img-fluid rounded shadow" alt="Top Crime Neighborhoods" />
-          <p class="small text-muted mt-2">Top neighborhoods by total reported crimes.</p>
+          <p class="small text-muted mt-2">Top Albany neighborhoods by reported crimes.</p>
         </div>
         <div class="col-md-6 mb-4">
           <img src="images/top-10-crime-types.png" class="img-fluid rounded shadow" alt="Top Crime Types" />
@@ -67,11 +68,11 @@
       <div class="row">
         <div class="col-md-6 mb-4">
           <canvas id="crimesVsArrestsChart"></canvas>
-          <p class="small text-muted mt-2">Total crimes and arrests by year.</p>
+          <p class="text-muted small mt-2">Total crimes and arrests by year.</p>
         </div>
         <div class="col-md-6 mb-4">
           <canvas id="closureRateChart"></canvas>
-          <p class="small text-muted mt-2">Annual case closure rates (2021–2024).</p>
+          <p class="text-muted small mt-2">Case closure rates from 2021 to 2024.</p>
         </div>
       </div>
     </section>
@@ -91,7 +92,7 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script src="js/main.js"></script>
 
-  <!-- Charts -->
+  <!-- Chart Configuration -->
   <script>
     new Chart(document.getElementById('crimesVsArrestsChart').getContext('2d'), {
       type: 'bar',
@@ -128,7 +129,9 @@
         plugins: {
           title: { display: true, text: 'Case Closure Rate by Year' }
         },
-        scales: { y: { beginAtZero: true, max: 100 } },
+        scales: {
+          y: { beginAtZero: true, max: 100 }
+        },
         responsive: true
       }
     });
