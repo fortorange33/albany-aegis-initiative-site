@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Crime Data | Albany Aegis Initiative</title>
-  <meta name="description" content="Explore Albany crime trends, data visualizations, and official reports (2021–2024).">
+  <meta name="description" content="Explore Albany crime trends, strategic visualizations, and report analysis (2021–2024).">
 
   <!-- Fonts & Styles -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
@@ -33,46 +33,60 @@
     </div>
   </header>
 
-  <!-- Main Content -->
+  <!-- Main -->
   <main class="container my-5">
 
     <section class="mb-5">
       <h2 class="h3 text-primary mb-3">2021–2024 Crime Overview</h2>
-      <p>This page summarizes Albany's crime statistics and policy outcomes. Visualized reports and strategic data are presented below to support transparency and accountability efforts.</p>
+      <p>This report summarizes Albany's recent crime trends and performance metrics based on official data. Strategic analysis and visualizations support transparency and policy improvement.</p>
     </section>
 
     <section class="mb-5">
       <h3 class="h4 text-primary mb-3">Downloadable Reports</h3>
       <ul>
-        <li><a href="reports/Crime-Analysis-Report.pdf" target="_blank">2021–2024 Crime Analysis Report (PDF)</a></li>
+        <li><a href="reports/Crime-Analysis-Report.pdf" target="_blank">Crime Analysis Report (PDF)</a></li>
         <li><a href="reports/FOIL-Crime-Data-Summary.pdf" target="_blank">FOIL Crime Data Summary (PDF)</a></li>
       </ul>
     </section>
 
-    <section class="mb-5">
+    <section class="mb-5" id="visual-highlights">
       <h3 class="h4 text-primary mb-3">Visual Highlights</h3>
-      <div class="row">
-        <div class="col-md-6 mb-4">
-          <img src="images/top-10-crime-neighborhoods.png" class="img-fluid rounded shadow" alt="Top Crime Neighborhoods" />
-          <p class="small text-muted mt-2">Top Albany neighborhoods by reported crimes.</p>
+
+      <ul class="nav nav-tabs mb-3" id="vizTabs" role="tablist">
+        <li class="nav-item" role="presentation">
+          <button class="nav-link active" id="tab1-tab" data-bs-toggle="tab" data-bs-target="#tab1" type="button" role="tab">Crimes by Neighborhood</button>
+        </li>
+        <li class="nav-item" role="presentation">
+          <button class="nav-link" id="tab2-tab" data-bs-toggle="tab" data-bs-target="#tab2" type="button" role="tab">Crimes by Type</button>
+        </li>
+      </ul>
+
+      <div class="tab-content" id="vizTabsContent">
+        <div class="tab-pane fade show active" id="tab1" role="tabpanel">
+          <canvas id="neighborhoodChart" height="300"></canvas>
+          <p class="small text-muted mt-2">Top neighborhoods by reported crimes (2021–2024).</p>
         </div>
-        <div class="col-md-6 mb-4">
-          <img src="images/top-10-crime-types.png" class="img-fluid rounded shadow" alt="Top Crime Types" />
-          <p class="small text-muted mt-2">Most common crime types categorized by UCR code.</p>
+        <div class="tab-pane fade" id="tab2" role="tabpanel">
+          <canvas id="typeChart" height="300"></canvas>
+          <p class="small text-muted mt-2">Most frequent crime types by classification.</p>
         </div>
+      </div>
+
+      <div class="mt-4">
+        <a href="visualizations.html" class="btn btn-outline-primary">View All Visualizations</a>
       </div>
     </section>
 
     <section class="mb-5">
-      <h3 class="h4 text-primary mb-3">Interactive Charts</h3>
+      <h3 class="h4 text-primary mb-3">Interactive Trends</h3>
       <div class="row">
         <div class="col-md-6 mb-4">
           <canvas id="crimesVsArrestsChart"></canvas>
-          <p class="text-muted small mt-2">Total crimes and arrests by year.</p>
+          <p class="text-muted small mt-2">Total crimes and arrests per year.</p>
         </div>
         <div class="col-md-6 mb-4">
           <canvas id="closureRateChart"></canvas>
-          <p class="text-muted small mt-2">Case closure rates from 2021 to 2024.</p>
+          <p class="text-muted small mt-2">Annual case closure rates.</p>
         </div>
       </div>
     </section>
@@ -94,6 +108,44 @@
 
   <!-- Chart Configuration -->
   <script>
+    new Chart(document.getElementById('neighborhoodChart').getContext('2d'), {
+      type: 'bar',
+      data: {
+        labels: ['West Hill', 'Pine Hills', 'South End', 'Arbor Hill', 'Delaware', 'Washington Park', 'North Albany', 'Beverwyck', 'Mansion', 'Buckingham Lake'],
+        datasets: [{
+          label: 'Incidents',
+          data: [1245, 980, 850, 795, 610, 575, 440, 395, 330, 310],
+          backgroundColor: '#003087'
+        }]
+      },
+      options: {
+        responsive: true,
+        plugins: {
+          title: { display: true, text: 'Top 10 Crime Neighborhoods' },
+          legend: { display: false }
+        }
+      }
+    });
+
+    new Chart(document.getElementById('typeChart').getContext('2d'), {
+      type: 'bar',
+      data: {
+        labels: ['Assault', 'Larceny', 'Burglary', 'Robbery', 'Rape', 'Motor Theft', 'Drugs', 'Fraud', 'Weapons', 'Homicide'],
+        datasets: [{
+          label: 'Incidents',
+          data: [2890, 2475, 1840, 1590, 1485, 1202, 880, 765, 590, 17],
+          backgroundColor: '#ff8c00'
+        }]
+      },
+      options: {
+        responsive: true,
+        plugins: {
+          title: { display: true, text: 'Top 10 Crime Types by UCR Code' },
+          legend: { display: false }
+        }
+      }
+    });
+
     new Chart(document.getElementById('crimesVsArrestsChart').getContext('2d'), {
       type: 'bar',
       data: {
@@ -117,7 +169,7 @@
       data: {
         labels: ['2021', '2022', '2023', '2024'],
         datasets: [{
-          label: 'Case Closure Rate (%)',
+          label: 'Closure Rate (%)',
           data: [67, 62, 56, 55],
           borderColor: '#003087',
           backgroundColor: 'rgba(0, 48, 135, 0.1)',
@@ -127,7 +179,7 @@
       },
       options: {
         plugins: {
-          title: { display: true, text: 'Case Closure Rate by Year' }
+          title: { display: true, text: 'Case Closure Rates by Year' }
         },
         scales: {
           y: { beginAtZero: true, max: 100 }
