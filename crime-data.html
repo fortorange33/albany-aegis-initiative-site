@@ -4,14 +4,14 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Crime Data | Albany Aegis Initiative</title>
-  <meta name="description" content="Explore crime data and analysis for Albany, NY (2021–2024).">
-  
-  <!-- Fonts & CSS -->
+  <meta name="description" content="Explore data and analysis from Albany crime trends (2021–2024).">
+
+  <!-- Fonts & Bootstrap -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
-  <link
-    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
-    rel="stylesheet"
-  />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+
+  <!-- Font Awesome & Custom CSS -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet" />
   <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
@@ -40,31 +40,54 @@
 
     <section class="mb-5">
       <h2 class="h3 text-primary mb-3">2021–2024 Crime Overview</h2>
-      <p>This section summarizes Albany crime trends and law enforcement response over a 4-year period. The data supports the Albany Aegis Initiative’s strategic goals around behavioral analysis, technology, transparency, and economic reform.</p>
+      <p>This section presents Albany's crime trends and public safety challenges over the past four years. The data supports strategic goals in law enforcement transparency, accountability, and reform.</p>
     </section>
 
     <section class="mb-5">
-      <h3 class="h4 text-primary mb-3">Download the Reports</h3>
+      <h3 class="h4 text-primary mb-3">Download Reports</h3>
       <ul>
-        <li><a href="images/Crime Analysis Report.pdf" target="_blank" rel="noopener">📄 Crime Analysis Report (2021–2024)</a></li>
-        <li><a href="reports/doc08089320250210115937_2 copy 2.pdf" target="_blank" rel="noopener">📊 FOIL-Provided Albany Police Data</a></li>
+        <li><a href="images/Crime Analysis Report.pdf" target="_blank">Crime Analysis Report (PDF)</a></li>
+        <li><a href="reports/doc08089320250210115937_2 copy 2.pdf" target="_blank">FOIL Data Summary (PDF)</a></li>
       </ul>
     </section>
 
     <section class="mb-5">
-      <h3 class="h4 text-primary mb-3">Key Findings (2021–2024)</h3>
-      <ul>
-        <li><strong>Total crimes peaked</strong> in 2023 at 9,582, then fell to 8,420 in 2024.</li>
-        <li><strong>Violent crimes</strong> remain high, especially aggravated assaults and rising rape reports in 2024.</li>
-        <li><strong>High crime areas:</strong> West Hill and Pine Hills recorded the highest neighborhood-level counts.</li>
-        <li><strong>Case resolution rate:</strong> 45% of 2024 cases remained open.</li>
-        <li><strong>Slow police response times</strong> to property crimes (e.g., burglary average: 31 minutes).</li>
-      </ul>
+      <h3 class="h4 text-primary mb-3">Static Crime Visualizations</h3>
+      <div class="row">
+        <div class="col-md-6 mb-4">
+          <img src="images/Top 10 Albany Neighborhoods by Number of Reported Crimes.png" class="img-fluid rounded shadow" alt="Crime by Neighborhood" />
+          <p class="small text-muted mt-2">Top 10 neighborhoods by reported crimes.</p>
+        </div>
+        <div class="col-md-6 mb-4">
+          <img src="images/Top 10 Crime Types by UCR Code.png" class="img-fluid rounded shadow" alt="Crime by Type" />
+          <p class="small text-muted mt-2">Most common offenses by category (UCR-coded).</p>
+        </div>
+      </div>
     </section>
 
-    <section>
-      <h3 class="h4 text-primary mb-3">Next Steps</h3>
-      <p>The Albany Aegis Initiative uses this data to inform strategic priorities and ensure transparency. These findings will continue to shape interventions, policy proposals, and community engagement going forward.</p>
+    <section class="mb-5">
+      <h3 class="h4 text-primary mb-3">Interactive Charts</h3>
+      <div class="row">
+        <div class="col-md-6 mb-4">
+          <canvas id="totalCrimesChart"></canvas>
+          <p class="small text-muted mt-2">Total crimes and arrests (2021–2024).</p>
+        </div>
+        <div class="col-md-6 mb-4">
+          <canvas id="closureRateChart"></canvas>
+          <p class="small text-muted mt-2">Case closure rates across years.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="mb-5">
+      <h3 class="h4 text-primary mb-3">Key Findings</h3>
+      <ul>
+        <li>Crime peaked in 2023 at 9,582 incidents; dropped to 8,420 in 2024.</li>
+        <li>Aggravated assault and rape rates remain elevated and require targeted intervention.</li>
+        <li>West Hill and Pine Hills experienced the highest neighborhood-level crime rates.</li>
+        <li>Only 55% of 2024 cases were closed; transparency and efficiency remain priorities.</li>
+        <li>Average police response time for burglaries exceeded 30 minutes.</li>
+      </ul>
     </section>
 
   </main>
@@ -75,10 +98,75 @@
     <p class="mb-0">Contact: <a href="mailto:info@albanyaegis.org" class="text-warning">info@albanyaegis.org</a></p>
   </footer>
 
-  <!-- Scripts -->
-  <script
-    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-  ></script>
+  <!-- JS Libraries -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script src="js/main.js"></script>
+
+  <!-- Chart.js Config -->
+  <script>
+    // Total Crimes vs Arrests Chart
+    new Chart(document.getElementById('totalCrimesChart').getContext('2d'), {
+      type: 'bar',
+      data: {
+        labels: ['2021', '2022', '2023', '2024'],
+        datasets: [
+          {
+            label: 'Total Crimes',
+            data: [8264, 9548, 9583, 8420],
+            backgroundColor: '#003087'
+          },
+          {
+            label: 'Arrests',
+            data: [1859, 1869, 1997, 2150],
+            backgroundColor: '#ff8c00'
+          }
+        ]
+      },
+      options: {
+        responsive: true,
+        plugins: {
+          title: {
+            display: true,
+            text: 'Total Crimes vs Arrests'
+          },
+          legend: {
+            position: 'bottom'
+          }
+        }
+      }
+    });
+
+    // Closure Rate Line Chart
+    new Chart(document.getElementById('closureRateChart').getContext('2d'), {
+      type: 'line',
+      data: {
+        labels: ['2021', '2022', '2023', '2024'],
+        datasets: [{
+          label: 'Case Closure Rate (%)',
+          data: [67, 62, 56, 55],
+          borderColor: '#003087',
+          backgroundColor: 'rgba(0, 48, 135, 0.1)',
+          tension: 0.4,
+          fill: true
+        }]
+      },
+      options: {
+        responsive: true,
+        plugins: {
+          title: {
+            display: true,
+            text: 'Case Closure Rates (2021–2024)'
+          }
+        },
+        scales: {
+          y: {
+            beginAtZero: true,
+            max: 100
+          }
+        }
+      }
+    });
+  </script>
 </body>
 </html>
