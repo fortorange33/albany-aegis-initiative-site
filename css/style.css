@@ -197,3 +197,7 @@ body.dark-mode footer {
     padding: 1.5rem;
   }
 }
+nav ul li a.active {
+  border-bottom: 2px solid #ff8c00;
+  font-weight: 700;
+}
