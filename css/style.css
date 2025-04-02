@@ -1,46 +1,27 @@
-/* === COLOR VARIABLES (for clarity & scalability) === */
-:root {
-  --blue: #003087;
-  --orange: #ff8c00;
-  --text: #333;
-  --light-bg: #f9f9f9;
-  --hero-bg: #f0f4f9;
-  --dark-bg: #121212;
-  --dark-surface: #1e1e1e;
-  --dark-header: #1f1f1f;
-  --dark-text: #e0e0e0;
-  --dark-accent: #66ccff;
-  --dark-muted: #ccc;
-}
-
 /* === RESET === */
 * {
-	margin: 0;
-	padding: 0;
-	box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-/* === BASE STYLES === */
+/* === BASE === */
+html, body {
+  height: 100%;
+}
+
 body {
-  font-family: 'Inter', Arial, sans-serif;
+  font-family: 'Inter', sans-serif;
+  background-color: #f9f9f9;
+  color: #333;
   line-height: 1.6;
-  color: var(--text);
-  background-color: var(--light-bg);
-  transition: background-color 0.3s ease, color 0.3s ease;
-}
-
-a {
-  color: var(--blue);
-  text-decoration: none;
-}
-
-a:hover {
-  text-decoration: underline;
+  display: flex;
+  flex-direction: column;
 }
 
 /* === HEADER === */
 header {
-  background-color: var(--blue);
+  background-color: #003087;
   color: white;
   padding: 1rem 2rem;
   display: flex;
@@ -50,7 +31,7 @@ header {
 }
 
 .logo {
-  font-size: 1.8rem;
+  font-size: 1.5rem;
   font-weight: 700;
 }
 
@@ -64,20 +45,28 @@ nav ul li a {
   color: white;
   font-size: 1.1rem;
   font-weight: 600;
+  text-decoration: none;
+}
+
+nav ul li a:hover {
+  text-decoration: underline;
 }
 
 /* === DARK MODE TOGGLE === */
 .dark-toggle {
   background: none;
-  border: none;
-  font-size: 1.5rem;
+  border: 1px solid white;
   color: white;
+  font-size: 1.2rem;
+  padding: 0.3rem 0.6rem;
+  border-radius: 4px;
   cursor: pointer;
   margin-left: 1rem;
 }
 
-/* === MAIN CONTAINER === */
+/* === MAIN CONTENT === */
 main {
+  flex: 1;
   max-width: 1200px;
   margin: 0 auto;
   padding: 2rem;
@@ -86,48 +75,38 @@ main {
 /* === HERO SECTION === */
 .hero {
   text-align: center;
-  background-color: var(--hero-bg);
-  padding: 3rem 2rem;
-  border-radius: 8px;
-  margin-bottom: 2rem;
+  background-color: #e9f1fb;
+  padding: 4rem 2rem;
 }
 
 .hero-logo {
-  max-width: 160px;
-  height: auto;
-  display: block;
-  margin: 0 auto 0.75rem auto;
-  object-fit: contain;
-  filter: drop-shadow(0 2px 5px rgba(0, 0, 0, 0.25));
+  max-width: 150px;
+  margin-bottom: 1.5rem;
 }
 
-.hero-caption {
-  font-size: 0.875rem;
-  text-align: center;
-  color: #555;
-  font-style: italic;
-  margin-bottom: 1.25rem;
-}
-
-.hero h1, .hero h2 {
-  font-size: 2.5rem;
-  margin-bottom: 1rem;
-  color: var(--blue);
+.hero h2 {
+  font-size: 2rem;
+  color: #003087;
+  margin-bottom: 0.75rem;
 }
 
 .hero p {
-  font-size: 1.2rem;
+  font-size: 1.1rem;
+  color: #444;
 }
 
-/* === SECTION STYLES === */
+/* === SECTIONS === */
 .overview, .key-findings {
-  margin-top: 2.5rem;
+  margin-top: 2rem;
+  max-width: 960px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .overview h2, .key-findings h2 {
-  font-size: 1.8rem;
-  margin-bottom: 1rem;
-  color: var(--blue);
+  font-size: 1.5rem;
+  color: #003087;
+  margin-bottom: 0.75rem;
 }
 
 .key-findings img {
@@ -139,15 +118,16 @@ main {
 
 /* === FOOTER === */
 footer {
-  background-color: var(--blue);
+  background-color: #003087;
   color: white;
   text-align: center;
   padding: 1.25rem;
-  margin-top: 3rem;
+  font-size: 0.9rem;
+  margin-top: auto;
 }
 
 footer a {
-  color: var(--orange);
+  color: #ff8c00;
 }
 
 footer a:hover {
@@ -156,33 +136,33 @@ footer a:hover {
 
 /* === DARK MODE === */
 body.dark-mode {
-  background-color: var(--dark-bg);
-  color: var(--dark-text);
+  background-color: #121212;
+  color: #e0e0e0;
 }
 
 body.dark-mode a {
-  color: var(--dark-accent);
+  color: #66ccff;
 }
 
 body.dark-mode header {
-  background-color: var(--dark-header);
+  background-color: #1f1f1f;
 }
 
 body.dark-mode nav ul li a {
-  color: var(--dark-text);
+  color: #e0e0e0;
 }
 
 body.dark-mode .hero,
 body.dark-mode .overview,
 body.dark-mode .key-findings {
-  background-color: var(--dark-surface);
+  background-color: #1e1e1e;
   border-left: 4px solid #888;
   border-radius: 6px;
 }
 
 body.dark-mode footer {
-  background-color: var(--dark-header);
-  color: var(--dark-muted);
+  background-color: #1f1f1f;
+  color: #ccc;
 }
 
 /* === RESPONSIVE DESIGN === */
@@ -198,11 +178,11 @@ body.dark-mode footer {
     margin-top: 1rem;
   }
 
-  .hero h1, .hero h2 {
-    font-size: 2rem;
+  .hero h2 {
+    font-size: 1.75rem;
   }
 
-  main {
-    padding: 1.5rem;
+  .hero-logo {
+    max-width: 120px;
   }
 }
