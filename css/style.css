@@ -5,7 +5,7 @@
   box-sizing: border-box;
 }
 
-/* === BASE === */
+/* === BASE STYLES === */
 html, body {
   height: 100%;
 }
@@ -17,6 +17,14 @@ body {
   line-height: 1.6;
   display: flex;
   flex-direction: column;
+  min-height: 100vh;
+}
+
+main {
+  flex: 1;
+  padding: 2rem 1rem;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
 /* === HEADER === */
@@ -39,6 +47,8 @@ nav ul {
   list-style: none;
   display: flex;
   gap: 2rem;
+  padding-left: 0;
+  margin: 0;
 }
 
 nav ul li a {
@@ -48,7 +58,8 @@ nav ul li a {
   text-decoration: none;
 }
 
-nav ul li a:hover {
+nav ul li a:hover,
+nav ul li a.active {
   text-decoration: underline;
 }
 
@@ -62,14 +73,6 @@ nav ul li a:hover {
   border-radius: 4px;
   cursor: pointer;
   margin-left: 1rem;
-}
-
-/* === MAIN CONTENT === */
-main {
-  flex: 1;
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 2rem;
 }
 
 /* === HERO SECTION === */
@@ -95,25 +98,28 @@ main {
   color: #444;
 }
 
-/* === SECTIONS === */
-.overview, .key-findings {
-  margin-top: 2rem;
-  max-width: 960px;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-.overview h2, .key-findings h2 {
-  font-size: 1.5rem;
+/* === PAGE SECTIONS === */
+.about-page h2,
+.about-page h3 {
   color: #003087;
-  margin-bottom: 0.75rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
 }
 
-.key-findings img {
-  display: block;
-  margin: 1rem auto;
-  width: 100%;
-  max-width: 650px;
+.about-page section {
+  padding-bottom: 2rem;
+  border-bottom: 1px solid #ddd;
+  margin-bottom: 2.5rem;
+}
+
+.about-page ul {
+  list-style-type: disc;
+  margin-left: 2rem;
+  margin-bottom: 1rem;
+}
+
+.about-page ul li {
+  margin-bottom: 0.5rem;
 }
 
 /* === FOOTER === */
@@ -121,7 +127,7 @@ footer {
   background-color: #003087;
   color: white;
   text-align: center;
-  padding: 1.25rem;
+  padding: 1.25rem 1rem;
   font-size: 0.9rem;
   margin-top: auto;
 }
@@ -154,9 +160,10 @@ body.dark-mode nav ul li a {
 
 body.dark-mode .hero,
 body.dark-mode .overview,
-body.dark-mode .key-findings {
+body.dark-mode .key-findings,
+body.dark-mode .about-page section {
   background-color: #1e1e1e;
-  border-left: 4px solid #888;
+  border-color: #444;
   border-radius: 6px;
 }
 
@@ -184,5 +191,9 @@ body.dark-mode footer {
 
   .hero-logo {
     max-width: 120px;
+  }
+
+  main {
+    padding: 1.5rem;
   }
 }
