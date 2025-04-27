@@ -63,6 +63,11 @@ nav ul li a.active {
   text-decoration: underline;
 }
 
+nav ul li a.active {
+  border-bottom: 2px solid #ff8c00;
+  font-weight: 700;
+}
+
 /* === DARK MODE TOGGLE === */
 .dark-toggle {
   background: none;
@@ -79,12 +84,18 @@ nav ul li a.active {
 .hero {
   text-align: center;
   background-color: #e9f1fb;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   padding: 4rem 2rem;
 }
 
 .hero-logo {
-  max-width: 150px;
-  margin-bottom: 1.5rem;
+  max-width: 160px;
+  height: auto;
+  display: block;
+  margin: 0 auto;
 }
 
 .hero h2 {
@@ -158,6 +169,16 @@ body.dark-mode nav ul li a {
   color: #e0e0e0;
 }
 
+body.dark-mode .hero {
+  background: var(--dark-surface);
+  color: var(--dark-text);
+}
+
+body.dark-mode .card {
+  background: var(--dark-surface);
+  color: var(--dark-text);
+}
+
 body.dark-mode .hero,
 body.dark-mode .overview,
 body.dark-mode .key-findings,
@@ -170,6 +191,17 @@ body.dark-mode .about-page section {
 body.dark-mode footer {
   background-color: #1f1f1f;
   color: #ccc;
+}
+
+/* === CARD STYLES === */
+.card-title {
+  color: var(--blue);
+  font-weight: 600;
+}
+
+.card:hover {
+  transform: translateY(-2px);
+  transition: 0.2s;
 }
 
 /* === RESPONSIVE DESIGN === */
@@ -196,8 +228,4 @@ body.dark-mode footer {
   main {
     padding: 1.5rem;
   }
-}
-nav ul li a.active {
-  border-bottom: 2px solid #ff8c00;
-  font-weight: 700;
 }
