@@ -1,0 +1,10 @@
+fastapi
+uvicorn[standard]
+pydantic
+lightgbm
+pandas
+geopandas
+psycopg2-binary
+shap
+joblib
+python-jose[cryptography]   # JWT
