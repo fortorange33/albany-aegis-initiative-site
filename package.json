@@ -1,5 +1,16 @@
 {
   "devDependencies": {
-    "playwright": "^1.51.1"
+    "@vitejs/plugin-react": "^4.4.1",
+    "playwright": "^1.51.1",
+    "typescript": "^5.8.3",
+    "vite": "^6.3.3"
+  },
+  "dependencies": {
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0"
+  },
+  "scripts": {
+    "build": "vite build",
+    "dev": "vite"
   }
 }
