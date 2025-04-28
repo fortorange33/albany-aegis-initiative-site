@@ -65,6 +65,7 @@ const Widget: React.FC = () => {
   );
 };
 
+// Mount the widget after page load
 const container = document.getElementById("aai-risk-widget");
 if (container) {
   ReactDOM.createRoot(container).render(<Widget />);
