@@ -4,10 +4,31 @@ import { MapContainer, TileLayer, GeoJSON } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 
 const Widget = () => {
-  const [geo, setGeo] = useState<any>(null);
+  const [geo, setGeo] = useState<GeoJSON.GeoJsonObject | null>(null);
 
   useEffect(() => {
-    fetch("/assets/tracts.geojson").then(r => r.json()).then(setGeo);
+    fetch("/assets/tracts.geojson")
+      .then(r => {
+      if (!r.ok) {
+        throw new Error(`HTTP error! status: ${r.status}`);
+      }
+      return r.json();
+      })
+      .then(setGeo)
+      .catch(e => {
+      console.error("Failed to load GeoJSON data:", e);
+      setGeo(null); // Ensure geo is null in case of an error
+      });
+      if (!r.ok) {
+        throw new Error(`HTTP error! status: ${r.status}`);
+      }
+      return r.json();
+      })
+      .then(setGeo)
+      .catch(e => {
+      console.error("Failed to load GeoJSON data:", e);
+      // Optionally, set an error state to display a message to the user
+      });
   }, []);
 
   return (
