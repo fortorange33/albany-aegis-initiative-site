@@ -8,3 +8,7 @@ psycopg2-binary
 shap
 joblib
 python-jose[cryptography]   # JWT
+
+# testing
+pytest>=8.2
+pytest-cov>=5.0
