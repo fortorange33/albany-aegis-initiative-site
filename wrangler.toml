@@ -1,3 +1,2 @@
-name = "albany-aegis-initiative-site"
-pages_build_output_dir = "./dist"  # Use "./build" if your app uses Create React App
+name = "aai-api"
 compatibility_date = "2025-04-28"
