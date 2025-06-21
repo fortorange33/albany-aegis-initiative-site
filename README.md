@@ -1,46 +1,101 @@
 # Albany Aegis Initiative Site
 
 ## Overview
-This is the official website for the Albany Aegis Initiative, a program dedicated to crime reduction, civic engagement, and governance improvements in Albany, New York. The site serves as a hub for community resources, transparency dashboards, and updates on initiative progress.
+
+This is the official site of the **Albany Aegis Initiative**, a civic data and public safety program dedicated to reducing crime, enhancing community trust, and improving local governance in Albany, New York. The site provides transparency tools, interactive visualizations, and civic resources for the public and policymakers.
 
 ## Project Structure
+
 ```
 albany-aegis-initiative-site/
-├── index.html         # Main landing page
-├── css/
-│   └── styles.css     # Stylesheet for the site
-├── js/
-│   └── scripts.js     # JavaScript for interactivity
-└── README.md          # Project documentation
+├── index.html             # Root landing page (GitHub Pages entrypoint)
+├── assets/
+│   ├── css/style.css      # Tailwind-based site stylesheet
+│   ├── js/main.js         # JavaScript interactivity and dashboard logic
+│   └── images/            # Logos, icons, and SVG visual assets
+├── public/                # Static exports (charts, PDFs, favicons)
+├── CNAME                  # Custom domain for GitHub Pages
+├── README.md              # Project documentation
+└── …
 ```
 
 ## Local Development Setup
-1. **Clone the Repository:**
-   ```
-   git clone https://github.com/fortorange33/albany-aegis-initiative-site.git
-   cd albany-aegis-initiative-site
-   ```
-2. **Open in Visual Studio Code:**
-   - Launch VS Code.
-   - Open the `albany-aegis-initiative-site` folder.
-3. **Run Locally:**
-   - Use the VS Code "Live Server" extension to preview the site locally, or open `index.html` in a browser.
 
-## Deployment with Cloudflare Pages
-1. **Connect to Cloudflare Pages:**
-   - Log into Cloudflare and navigate to "Pages."
-   - Create a new project and connect it to this GitHub repository (`fortorange33/albany-aegis-initiative-site`).
-2. **Configure Build Settings:**
-   - Build command: Leave blank (static site).
-   - Output directory: `/` (root directory).
-3. **Deploy:**
-   - Deploy the site. Access it via the provided Cloudflare Pages URL (e.g., `albany-aegis-initiative-site.pages.dev`).
+### 1. Clone the Repository
+
+```bash
+git clone https://github.com/fortorange33/albany-aegis-initiative-site.git
+cd albany-aegis-initiative-site
+```
+
+### 2. Open in Visual Studio Code
+
+- Launch Visual Studio Code.
+- Open the `albany-aegis-initiative-site/` project folder.
+
+### 3. Run Locally
+
+- Use the Live Server extension in VS Code for live HTML previews.
+- Or manually open the homepage in your browser:
+
+```bash
+open index.html
+```
+
+## Deployment via GitHub Pages
+
+This site is published from the `main` branch root using GitHub Pages.
+
+### Custom Domain
+
+- Primary domain: https://www.albany.watch
+- The custom domain is declared in the root-level `CNAME` file.
+- DNS is managed via Cloudflare:
+    - `www.albany.watch` → `fortorange33.github.io`
+    - `albany.watch` → `www.albany.watch`
+
+## Updating the Live Site
+
+To publish changes:
+
+```bash
+git add .
+git commit -m "Update homepage layout and dashboard links"
+git push origin main
+```
+
+GitHub Pages will automatically deploy any commits to the main branch that modify root-level HTML, CSS, or asset files.
 
 ## Contributing
-- Commit changes with clear messages (e.g., `git commit -m "Add transparency dashboard feature"`).
-- Push updates to GitHub: `git push origin main`.
-- Document new features or ideas in this README to streamline collaboration.
+
+- Ensure consistent commit messages and organized file structure.
+- Create new HTML components or visualizations in modular sections.
+- Document major additions or design changes in this `README.md`.
+
+### Example Commit
+
+```bash
+git commit -m "Add arrest heatmap and update style.css for dark mode"
+```
+
+### Example Feature Branch Workflow
+
+```bash
+git checkout -b feature/community-reporting
+git push origin feature/community-reporting
+```
 
 ## Future Enhancements
-- Add a transparency dashboard to display crime stats and civic engagement metrics.
-- Implement interactive features for community forums and feedback.
+
+- Embed live crime feeds from municipal APIs.
+- Add searchable crime stats by neighborhood, race, age, and gender.
+- Launch community reporting and feedback tools.
+- Integrate transparency and policy audit documents in PDF format.
+- Improve accessibility, SEO, and offline access using PWA patterns.
+
+---
+
+Maintained by  
+J. Gregory Walsh  
+[www.albany.watch](https://www.albany.watch)  
+[https://github.com/fortorange33](https://github.com/fortorange33)
