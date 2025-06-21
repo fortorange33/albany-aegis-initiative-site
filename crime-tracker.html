@@ -1,125 +1,143 @@
-```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="Content-Security-Policy" content="
-        default-src 'self';
-        script-src 'self' https://unpkg.com https://cdn.jsdelivr.net;
-        style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net;
-        img-src 'self' data:;
-        font-src 'self' https://fonts.gstatic.com;
-        connect-src 'self' https://api.x.com https://nominatim.openstreetmap.org https://data.albanyny.gov https://www.gunviolencearchive.org http://localhost:8000;
-    ">
-    <title>Albany, NY Live Crime Tracker</title>
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css" />
-    <style>
-        #map { height: 500px; }
-        .legend { background: white; padding: 10px; }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="Content-Security-Policy" content="
+    default-src 'self';
+    script-src 'self';
+    style-src 'self' 'unsafe-inline';
+    img-src 'self' data:;
+    font-src 'self' https://fonts.gstatic.com;
+    connect-src 'self';
+  ">
+  <title>Albany Live Crime Tracker Dashboard</title>
+  <meta name="description" content="Live, real-time crime tracker dashboard for Albany, NY. Map, stats, trends, and risk prediction.">
+  <!-- Tailwind CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@3.4.1/dist/tailwind.min.css" rel="stylesheet">
+  <!-- Leaflet.js -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
-<body class="bg-gray-100">
-    <div class="container mx-auto p-4">
-        <h1 class="text-3xl font-bold text-center mb-6">Albany, NY Live Crime Tracker</h1>
+<body class="bg-gray-50 min-h-screen flex flex-col">
+  <header class="bg-blue-900 text-white py-4 shadow">
+    <div class="container mx-auto px-4 flex flex-col md:flex-row items-center justify-between">
+      <h1 class="text-2xl font-bold tracking-tight">Albany, NY Live Crime Tracker</h1>
+      <nav class="mt-2 md:mt-0">
+        <a href="index.html" class="text-blue-200 hover:text-white mr-4">Home</a>
+        <a href="crime-data.html" class="text-blue-200 hover:text-white mr-4">Crime Data</a>
+        <a href="visualizations.html" class="text-blue-200 hover:text-white">Visualizations</a>
+      </nav>
+    </div>
+  </header>
 
-        <!-- Real-time Statistics -->
-        <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
-            <div class="bg-white p-4 rounded shadow">
-                <h2 class="text-lg font-semibold">Total Incidents</h2>
-                <p id="total-incidents" class="text-2xl">0</p>
-            </div>
-            <div class="bg-white p-4 rounded shadow">
-                <h2 class="text-lg font-semibold">Violent Crimes</h2>
-                <p id="violent-crimes" class="text-2xl">0</p>
-            </div>
-            <div class="bg-white p-4 rounded shadow">
-                <h2 class="text-lg font-semibold">Property Crimes</h2>
-                <p id="property-crimes" class="text-2xl">0</p>
-            </div>
-            <div class="bg-white p-4 rounded shadow">
-                <h2 class="text-lg font-semibold">Last Updated</h2>
-                <p id="last-updated" class="text-2xl">N/A</p>
-            </div>
+  <main class="container mx-auto px-4 py-6 flex-1">
+    <!-- Real-time Stats -->
+    <section class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
+      <div class="bg-white rounded shadow p-4 flex flex-col items-center">
+        <span class="text-gray-500">Total Incidents (7d)</span>
+        <span id="total-incidents" class="text-3xl font-bold text-blue-900">0</span>
+      </div>
+      <div class="bg-white rounded shadow p-4 flex flex-col items-center">
+        <span class="text-gray-500">Violent Crimes</span>
+        <span id="violent-crimes" class="text-3xl font-bold text-red-600">0</span>
+      </div>
+      <div class="bg-white rounded shadow p-4 flex flex-col items-center">
+        <span class="text-gray-500">Property Crimes</span>
+        <span id="property-crimes" class="text-3xl font-bold text-green-600">0</span>
+      </div>
+      <div class="bg-white rounded shadow p-4 flex flex-col items-center">
+        <span class="text-gray-500">Last Updated</span>
+        <span id="last-updated" class="text-lg text-gray-700">--</span>
+      </div>
+    </section>
+
+    <!-- Filter Buttons -->
+    <section class="mb-4 flex flex-wrap gap-2 items-center">
+      <button onclick="filterMap('all')" class="px-4 py-2 bg-blue-700 text-white rounded hover:bg-blue-800">All</button>
+      <button onclick="filterMap('violent')" class="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700">Violent</button>
+      <button onclick="filterMap('property')" class="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700">Property</button>
+      <input id="incidentFilter" type="text" placeholder="Filter by type or location..." class="ml-4 px-3 py-2 border rounded w-64" />
+    </section>
+
+    <!-- Map and Prediction Form -->
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
+      <!-- Map -->
+      <div class="col-span-2 bg-white rounded shadow p-2">
+        <div id="map" class="w-full h-96 rounded"></div>
+      </div>
+      <!-- Crime Risk Prediction Form -->
+      <div class="bg-white rounded shadow p-6 flex flex-col">
+        <h2 class="text-lg font-semibold mb-2 text-blue-900">Crime Risk Prediction</h2>
+        <form id="prediction-form" class="space-y-3">
+          <label class="block text-sm font-medium">Census Tract FIPS
+            <input id="tract_fips" type="text" required class="mt-1 w-full border rounded px-2 py-1" placeholder="e.g. 36001000100" />
+          </label>
+          <label class="block text-sm font-medium">Forecast Horizon (days)
+            <input id="forecast_horizon" type="number" min="1" max="90" value="30" class="mt-1 w-full border rounded px-2 py-1" />
+          </label>
+          <button type="submit" class="w-full bg-blue-700 text-white py-2 rounded hover:bg-blue-800">Predict</button>
+        </form>
+        <div id="prediction-result" class="mt-4 hidden bg-blue-50 border border-blue-200 rounded p-3">
+          <div><span class="font-semibold">Violent Crime Risk:</span> <span id="violent-risk">-</span></div>
+          <div><span class="font-semibold">Property Crime Risk:</span> <span id="property-risk">-</span></div>
+          <div><span class="font-semibold">Top Drivers:</span> <span id="top-drivers">-</span></div>
         </div>
-
-        <!-- Filter Buttons -->
-        <div class="mb-4">
-            <button onclick="filterMap('all')" class="bg-blue-500 text-white px-4 py-2 rounded mr-2">All Crimes</button>
-            <button onclick="filterMap('violent')" class="bg-red-500 text-white px-4 py-2 rounded mr-2">Violent</button>
-            <button onclick="filterMap('property')" class="bg-green-500 text-white px-4 py-2 rounded">Property</button>
-        </div>
-
-        <!-- Interactive Map -->
-        <div id="map" class="mb-6"></div>
-
-        <!-- Crime Risk Prediction -->
-        <div class="bg-white p-4 rounded shadow mb-6">
-            <h2 class="text-lg font-semibold mb-4">Crime Risk Prediction</h2>
-            <form id="prediction-form" class="mb-4">
-                <label for="tract_fips" class="block mb-2">Census Tract FIPS:</label>
-                <input type="text" id="tract_fips" class="w-full p-2 border rounded mb-2" placeholder="e.g., 36001000100">
-                <label for="forecast_horizon" class="block mb-2">Forecast Horizon (days):</label>
-                <input type="number" id="forecast_horizon" class="w-full p-2 border rounded mb-2" value="30">
-                <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded">Predict Risk</button>
-            </form>
-            <div id="prediction-result" class="hidden">
-                <h3 class="text-lg font-semibold">Predicted Risk</h3>
-                <p><strong>Violent Risk:</strong> <span id="violent-risk"></span></p>
-                <p><strong>Property Risk:</strong> <span id="property-risk"></span></p>
-                <p><strong>Top Drivers:</strong> <span id="top-drivers"></span></p>
-            </div>
-        </div>
-
-        <!-- Charts -->
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
-            <div class="bg-white p-4 rounded shadow">
-                <h2 class="text-lg font-semibold mb-4">Crime by Type</h2>
-                <canvas id="crimeTypeChart"></canvas>
-            </div>
-            <div class="bg-white p-4 rounded shadow">
-                <h2 class="text-lg font-semibold mb-4">Crime Trends Over Time</h2>
-                <canvas id="crimeTrendChart"></canvas>
-            </div>
-        </div>
-
-        <!-- Recent Incidents List -->
-        <div class="bg-white p-4 rounded shadow mb-6">
-            <h2 class="text-lg font-semibold mb-4">Recent Incidents</h2>
-            <input id="incidentFilter" type="text" placeholder="Filter by type or location..." class="w-full p-2 mb-4 border rounded">
-            <table class="w-full">
-                <thead>
-                    <tr class="bg-gray-200">
-                        <th class="p-2">Date</th>
-                        <th class="p-2">Type</th>
-                        <th class="p-2">Location</th>
-                        <th class="p-2">Details</th>
-                    </tr>
-                </thead>
-                <tbody id="incidentTable"></tbody>
-            </table>
-        </div>
-
-        <!-- Neighborhood Safety Ratings -->
-        <div class="bg-white p-4 rounded shadow">
-            <h2 class="text-lg font-semibold mb-4">Neighborhood Safety Ratings</h2>
-            <table class="w-full">
-                <thead>
-                    <tr class="bg-gray-200">
-                        <th class="p-2">Neighborhood</th>
-                        <th class="p-2">Safety Rating</th>
-                        <th class="p-2">Crime Rate (per 1,000)</th>
-                    </tr>
-                </thead>
-                <tbody id="safetyTable"></tbody>
-            </table>
-        </div>
+      </div>
     </div>
 
-    <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
-    <script src="js/live-crime-dashboard.js"></script>
+    <!-- Charts -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+      <div class="bg-white rounded shadow p-4">
+        <h3 class="text-md font-semibold mb-2 text-blue-900">Crime Types (7d)</h3>
+        <canvas id="crimeTypeChart" height="180"></canvas>
+      </div>
+      <div class="bg-white rounded shadow p-4">
+        <h3 class="text-md font-semibold mb-2 text-blue-900">Crime Trend (7d)</h3>
+        <canvas id="crimeTrendChart" height="180"></canvas>
+      </div>
+    </div>
+
+    <!-- Recent Incidents Table -->
+    <section class="mb-8 bg-white rounded shadow p-4 overflow-x-auto">
+      <h3 class="text-md font-semibold mb-2 text-blue-900">Recent Incidents</h3>
+      <table class="min-w-full text-sm">
+        <thead>
+          <tr class="bg-blue-50">
+            <th class="p-2 text-left">Date</th>
+            <th class="p-2 text-left">Type</th>
+            <th class="p-2 text-left">Location</th>
+            <th class="p-2 text-left">Details</th>
+          </tr>
+        </thead>
+        <tbody id="incidentTable"></tbody>
+      </table>
+    </section>
+
+    <!-- Neighborhood Safety Ratings Table -->
+    <section class="mb-8 bg-white rounded shadow p-4 overflow-x-auto">
+      <h3 class="text-md font-semibold mb-2 text-blue-900">Neighborhood Safety Ratings</h3>
+      <table class="min-w-full text-sm">
+        <thead>
+          <tr class="bg-blue-50">
+            <th class="p-2 text-left">Neighborhood</th>
+            <th class="p-2 text-left">Rating</th>
+            <th class="p-2 text-left">Incidents per 1,000</th>
+          </tr>
+        </thead>
+        <tbody id="safetyTable"></tbody>
+      </table>
+    </section>
+  </main>
+
+  <footer class="bg-blue-900 text-white text-center py-4 mt-auto text-xs">
+    <p class="mb-1">Data is aggregated from public sources and may not reflect all incidents. For emergencies, call 911. This dashboard is for informational purposes only.</p>
+    <p class="mb-0">&copy; 2025 Albany Aegis Initiative. All rights reserved.</p>
+  </footer>
+
+  <!-- Dashboard Functionality -->
+  <script src="live-crime-dashboard.js"></script>
 </body>
 </html>
-```
