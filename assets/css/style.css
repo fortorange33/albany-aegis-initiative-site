@@ -98,6 +98,12 @@ nav ul li a.active {
   margin: 0 auto;
 }
 
+/* Aegis Seal sizing */
+.hero-seal {
+  max-width: 300px;
+  height: auto;
+}
+
 .hero h2 {
   font-size: 2rem;
   color: #003087;
