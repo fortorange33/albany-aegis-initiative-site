@@ -3,100 +3,247 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta http-equiv="Content-Security-Policy" content="
-    default-src 'self';
-    script-src 'self';
-    style-src 'self' 'unsafe-inline';
-    img-src 'self' data:;
-    font-src 'self' https://fonts.gstatic.com;
-    connect-src 'self';
-  ">
   <title>Albany Aegis Initiative | Home</title>
   <meta name="description" content="Data-driven strategies to reduce crime and promote civic transparency in Albany, NY.">
-  <link rel="icon" href="/favicon.ico" />
-  <!-- Fonts, Bootstrap, Icons -->
+  
+  <!-- Favicon -->
+  <link rel="icon" href="https://iconsusa.org/assets/icons_copy/aai-seal-1.svg" />
+
+  <!-- Google Fonts: Inter -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
+  
+  <!-- Bootstrap CSS -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  
+  <!-- Font Awesome Icons -->
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet" />
-  <link rel="stylesheet" href="/assets/css/style.css" />
+
+  <!-- Custom Styles -->
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+    .logo {
+      font-weight: 700;
+      font-size: 1.5rem;
+    }
+    .hero {
+      background-color: #f8f9fa;
+    }
+    .hero-seal {
+        width: 140px; /* Slightly increased size */
+        height: 140px;
+    }
+    .card {
+        transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+    }
+    .card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important;
+    }
+    .blotter .list-group-item {
+        border-right: 0;
+        border-left: 0;
+    }
+    .blotter .blotter-icon {
+        width: 40px;
+        text-align: center;
+    }
+    footer a {
+        text-decoration: none;
+    }
+    footer a:hover {
+        text-decoration: underline;
+    }
+    .map-container {
+        border-radius: .5rem;
+        overflow: hidden;
+        border: 1px solid #dee2e6;
+    }
+  </style>
+
 </head>
 <body>
 
   <!-- Header -->
-  <header class="bg-dark text-white py-3">
+  <header class="bg-dark text-white py-3 shadow-sm">
     <div class="container">
       <nav class="navbar navbar-expand-lg navbar-dark">
-        <a class="navbar-brand logo" href="index.html">Albany Aegis Initiative</a>
+        <a class="navbar-brand logo" href="#">Albany Aegis Initiative</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
-          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-            <li class="nav-item"><a class="nav-link active" href="index.html" aria-current="page">Home</a></li>
-            <li class="nav-item"><a class="nav-link" href="about.html">About</a></li>
-            <li class="nav-item"><a class="nav-link" href="crime-data.html">Crime Data</a></li>
-            <li class="nav-item"><a class="nav-link" href="resources.html">Resources</a></li>
-            <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
+          <ul class="navbar-nav ms-auto mb-2 mb-lg-0 align-items-center">
+            <li class="nav-item"><a class="nav-link active" href="#" aria-current="page">Home</a></li>
+            <li class="nav-item"><a class="nav-link" href="#">About</a></li>
+            <li class="nav-item"><a class="nav-link" href="#">Crime Data</a></li>
+            <li class="nav-item"><a class="nav-link" href="#">Resources</a></li>
+            <li class="nav-item"><a class="nav-link" href="#">Contact</a></li>
+            <li class="nav-item ms-lg-2">
+                <button id="darkToggle" class="btn btn-outline-light" aria-label="Toggle dark mode">
+                  <i class="fas fa-moon"></i>
+                </button>
+            </li>
           </ul>
-          <button id="darkToggle" class="btn btn-outline-light ms-lg-3" aria-label="Toggle dark mode">
-            <i class="fas fa-moon"></i>
-          </button>
         </div>
       </nav>
     </div>
   </header>
 
-  <!-- Hero -->
-  <section class="hero text-center py-5 bg-light">
-    <div class="container">
-      <img src="/assets/images/seal.svg" alt="Aegis Seal" class="hero-seal img-fluid mb-4" />
-      <h2 class="display-5 fw-bold">A Smarter, Safer Albany</h2>
-      <p class="lead">We reduce crime and promote civic progress through data, technology, and behavioral insight.</p>
-      <a href="crime-data.html" class="btn btn-primary mt-3">View Crime Data</a>
+  <!-- Hero Section -->
+  <section class="hero py-5">
+    <div class="container px-4">
+      <div class="row gx-5 align-items-center justify-content-center">
+        <div class="col-lg-8 col-xl-7 col-xxl-6">
+          <div class="my-5 text-center text-xl-start">
+            <h1 class="display-5 fw-bolder text-dark mb-2">Confronting Crime in Albany</h1>
+            <p class="lead fw-normal text-dark-50 mb-4">Headlines don't tell the whole story. We focus on the persistent threats that undermine safety in our community.</p>
+            <div class="d-grid gap-3 d-sm-flex justify-content-sm-center justify-content-xl-start">
+              <a class="btn btn-primary btn-lg px-4 me-sm-3" href="#">Explore the Data</a>
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-5 col-xxl-6 d-none d-xl-block text-center">
+          <img class="img-fluid rounded-3 my-5 hero-seal" src="https://iconsusa.org/assets/icons_copy/aai-seal-1.svg" alt="Aegis Seal" loading="lazy">
+        </div>
+      </div>
     </div>
   </section>
 
-  <!-- Content -->
-  <main class="container my-5">
-    <section class="overview mb-5">
-      <h2 class="h4 text-primary mb-3">Our Mission</h2>
-      <p>The Albany Aegis Initiative (AAI) applies behavioral analysis, modern policing tools, economic strategy, and community engagement to address complex crime and governance challenges across Albany, NY.</p>
-    </section>
 
-    <section class="key-findings">
-      <h2 class="h4 text-primary mb-3">2021–2024 Highlights</h2>
-      <ul>
-        <li>Crime dropped 12% in 2024 following strategic interventions.</li>
-        <li>Launch of transparency dashboards and community forums.</li>
-        <li>AI-enhanced mapping and forensic tools reduced response gaps.</li>
-      </ul>
+  <!-- Content -->
+  <main class="container my-5 flex-grow-1">
+    <div class="row g-5">
+        <div class="col-lg-7">
+            <section class="overview mb-5">
+              <h2 class="h4 text-primary mb-3">Beyond the Headlines</h2>
+              <p>While some metrics show progress, they can mask the reality of persistent and evolving criminal threats. The Albany Aegis Initiative (AAI) confronts the complex challenges that statistics alone don't capture, focusing on the violent and personal crimes that erode our community's sense of security.</p>
+            </section>
+        </div>
+        <div class="col-lg-5">
+            <section class="blotter">
+                <h2 class="h4 text-danger mb-3">Live Incident Blotter</h2>
+                <div class="card shadow-sm">
+                    <ul class="list-group list-group-flush">
+                        <!-- Incident 1 -->
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            <div class="d-flex align-items-center">
+                                <div class="blotter-icon me-3"><i class="fas fa-bullhorn fa-lg text-danger"></i></div>
+                                <div>
+                                    <div class="fw-bold">Shots Fired</div>
+                                    <small class="text-muted">Arbor Hill</small>
+                                </div>
+                            </div>
+                            <small class="text-muted">2 hours ago</small>
+                        </li>
+                        <!-- Incident 2 -->
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                             <div class="d-flex align-items-center">
+                                <div class="blotter-icon me-3"><i class="fas fa-mask fa-lg text-warning"></i></div>
+                                <div>
+                                    <div class="fw-bold">Armed Robbery</div>
+                                    <small class="text-muted">Central Avenue</small>
+                                </div>
+                            </div>
+                            <small class="text-muted">8 hours ago</small>
+                        </li>
+                        <!-- Incident 3 -->
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                             <div class="d-flex align-items-center">
+                                <div class="blotter-icon me-3"><i class="fas fa-car-burst fa-lg text-primary"></i></div>
+                                <div>
+                                    <div class="fw-bold">Vehicle Theft</div>
+                                    <small class="text-muted">Pine Hills</small>
+                                </div>
+                            </div>
+                            <small class="text-muted">15 hours ago</small>
+                        </li>
+                        <!-- Incident 4 -->
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                             <div class="d-flex align-items-center">
+                                <div class="blotter-icon me-3"><i class="fas fa-house-chimney-window fa-lg text-info"></i></div>
+                                <div>
+                                    <div class="fw-bold">Burglary Reported</div>
+                                    <small class="text-muted">Washington Park Area</small>
+                                </div>
+                            </div>
+                            <small class="text-muted">22 hours ago</small>
+                        </li>
+                        <!-- Incident 5 -->
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                             <div class="d-flex align-items-center">
+                                <div class="blotter-icon me-3"><i class="fas fa-hand-fist fa-lg text-danger"></i></div>
+                                <div>
+                                    <div class="fw-bold">Assault with Weapon</div>
+                                    <small class="text-muted">South End</small>
+                                </div>
+                            </div>
+                            <small class="text-muted">1 day ago</small>
+                        </li>
+                    </ul>
+                </div>
+                 <small class="d-block text-muted text-center mt-2">Note: Incident data is for demonstration.</small>
+            </section>
+        </div>
+    </div>
+    
+    <!-- Interactive Map Section -->
+    <section class="interactive-map py-5 mt-5 border-top">
+        <h2 class="h4 text-primary text-center mb-4">Interactive Map of Albany</h2>
+        <div class="map-container shadow-sm">
+            <div class="ratio ratio-16x9">
+                <iframe 
+                    src="https://www.openstreetmap.org/export/embed.html?bbox=-73.99995803833009%2C42.58696090638247%2C-73.62058639526369%2C42.74852488539495&amp;layer=mapnik" 
+                    style="border:0;" 
+                    allowfullscreen="" 
+                    loading="lazy" 
+                    referrerpolicy="no-referrer-when-downgrade">
+                </iframe>
+            </div>
+        </div>
+        <div class="text-center mt-2">
+            <small><a href="https://www.openstreetmap.org/?#map=13/42.66780/-73.81027" target="_blank" rel="noopener noreferrer">View Larger Map on OpenStreetMap</a></small>
+        </div>
     </section>
 
     <!-- Initiative Pillars -->
-    <section class="initiative-pillars mt-5">
-      <h2 class="h4 text-primary">Initiative Pillars</h2>
-      <div class="row gap-4">
-        <div class="col-12 col-md-6 col-lg-4">
+    <section class="initiative-pillars py-5 mt-5 border-top">
+      <h2 class="h4 text-primary text-center mb-4">Initiative Pillars</h2>
+      <div class="row g-4">
+        <div class="col-md-4">
           <div class="card h-100 shadow-sm border-0">
-            <div class="card-body">
-              <h5 class="card-title">Predictive Risk Modelling</h5>
-              <p class="card-text small">Using data to anticipate and mitigate risks effectively.</p>
+            <div class="card-body text-center p-4">
+              <div class="feature-icon-small d-inline-flex align-items-center justify-content-center text-bg-primary bg-gradient fs-4 rounded-3 mb-3">
+                <i class="fas fa-brain p-3"></i>
+              </div>
+              <h5 class="card-title fw-bold">Predictive Risk Modelling</h5>
+              <p class="card-text">Using data to anticipate and mitigate risks effectively.</p>
             </div>
           </div>
         </div>
-        <div class="col-12 col-md-6 col-lg-4">
+        <div class="col-md-4">
           <div class="card h-100 shadow-sm border-0">
-            <div class="card-body">
-              <h5 class="card-title">Community Forums</h5>
-              <p class="card-text small">Engaging citizens to shape public safety policies.</p>
+            <div class="card-body text-center p-4">
+                <div class="feature-icon-small d-inline-flex align-items-center justify-content-center text-bg-primary bg-gradient fs-4 rounded-3 mb-3">
+                    <i class="fas fa-users p-3"></i>
+                </div>
+              <h5 class="card-title fw-bold">Community Forums</h5>
+              <p class="card-text">Engaging citizens to shape public safety policies.</p>
             </div>
           </div>
         </div>
-        <div class="col-12 col-md-6 col-lg-4">
+        <div class="col-md-4">
           <div class="card h-100 shadow-sm border-0">
-            <div class="card-body">
-              <h5 class="card-title">Transparency Dashboard</h5>
-              <p class="card-text small">Providing open access to crime and governance data.</p>
+            <div class="card-body text-center p-4">
+                 <div class="feature-icon-small d-inline-flex align-items-center justify-content-center text-bg-primary bg-gradient fs-4 rounded-3 mb-3">
+                    <i class="fas fa-chart-line p-3"></i>
+                </div>
+              <h5 class="card-title fw-bold">Transparency Dashboard</h5>
+              <p class="card-text">Providing open access to crime and governance data.</p>
             </div>
           </div>
         </div>
@@ -106,15 +253,18 @@
 
   <!-- Footer -->
   <footer class="bg-dark text-white text-center py-4 mt-auto">
-    <p class="mb-1">&copy; 2025 Albany Aegis Initiative. All rights reserved.</p>
-    <p class="mb-0">
-      Email: <a href="mailto:info@albany.watch" class="text-warning">info@albany.watch</a> |
-      Phone: <a href="tel:+15185995882" class="text-warning">(518) 599-5882</a>
-    </p>
+    <div class="container">
+        <p class="mb-1">&copy; 2025 Albany Aegis Initiative. All rights reserved.</p>
+        <p class="mb-0">
+          Email: <a href="mailto:info@albany.watch" class="text-warning">info@albany.watch</a>
+        </p>
+    </div>
   </footer>
 
-  <!-- Scripts -->
+  <!-- Bootstrap JS Bundle -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-  <script src="/assets/js/main.js" defer></script>
+  
+  <!-- A placeholder for custom JS like the dark mode toggle -->
+  <!-- <script src="/assets/js/main.js" defer></script> -->
 </body>
 </html>
