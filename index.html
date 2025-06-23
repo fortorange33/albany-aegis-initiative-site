@@ -18,9 +18,6 @@
   <!-- Font Awesome Icons -->
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet" />
 
-  <!-- ArcGIS Embeddable Map Component Script -->
-  <script type="module" src="https://js.arcgis.com/embeddable-components/4.32/arcgis-embeddable-components.esm.js"></script>
-
   <!-- Custom Styles -->
   <style>
     body {
@@ -67,7 +64,7 @@
         border: 1px solid #dee2e6;
         height: 600px; /* Default height */
     }
-    arcgis-embedded-map {
+    .map-container iframe {
       width: 100%;
       height: 100%;
     }
@@ -217,7 +214,7 @@
     <section class="interactive-map py-5 mt-5 border-top">
         <h2 class="h4 text-primary text-center mb-4">Albany Crime Map</h2>
         <div class="map-container shadow-sm">
-            <arcgis-embedded-map style="width: 100%; height: 100%;" item-id="36d7ce1463bb4ae487965972b56b04ec" theme="dark" heading-enabled legend-enabled share-enabled portal-url="https://aai.maps.arcgis.com" ></arcgis-embedded-map>
+            <iframe width='100%' height='480px' src='https://www.arcgis.com/apps/View/index.html?appid=d3ddc0d9b8034d1898026ce309525890' frameborder='0' scrolling='no'></iframe>
         </div>
     </section>
 
