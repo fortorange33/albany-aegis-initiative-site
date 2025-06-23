@@ -18,6 +18,9 @@
   <!-- Font Awesome Icons -->
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet" />
 
+  <!-- ArcGIS Embeddable Map Component Script -->
+  <script type="module" src="https://js.arcgis.com/embeddable-components/4.32/arcgis-embeddable-components.esm.js"></script>
+
   <!-- Custom Styles -->
   <style>
     body {
@@ -62,6 +65,11 @@
         border-radius: .5rem;
         overflow: hidden;
         border: 1px solid #dee2e6;
+        height: 600px; /* Default height */
+    }
+    arcgis-embedded-map {
+      width: 100%;
+      height: 100%;
     }
   </style>
 
@@ -79,10 +87,10 @@
         <div class="collapse navbar-collapse" id="navbarNav">
           <ul class="navbar-nav ms-auto mb-2 mb-lg-0 align-items-center">
             <li class="nav-item"><a class="nav-link active" href="#" aria-current="page">Home</a></li>
-            <li class="nav-item"><a class="nav-link" href="#">About</a></li>
-            <li class="nav-item"><a class="nav-link" href="#">Crime Data</a></li>
-            <li class="nav-item"><a class="nav-link" href="#">Resources</a></li>
-            <li class="nav-item"><a class="nav-link" href="#">Contact</a></li>
+            <li class="nav-item"><a class="nav-link" href="about.html">About</a></li>
+            <li class="nav-item"><a class="nav-link" href="crime-data.html">Crime Data</a></li>
+            <li class="nav-item"><a class="nav-link" href="resources.html">Resources</a></li>
+            <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
             <li class="nav-item ms-lg-2">
                 <button id="darkToggle" class="btn btn-outline-light" aria-label="Toggle dark mode">
                   <i class="fas fa-moon"></i>
@@ -103,7 +111,7 @@
             <h1 class="display-5 fw-bolder text-dark mb-2">Confronting Crime in Albany</h1>
             <p class="lead fw-normal text-dark-50 mb-4">Headlines don't tell the whole story. We focus on the persistent threats that undermine safety in our community.</p>
             <div class="d-grid gap-3 d-sm-flex justify-content-sm-center justify-content-xl-start">
-              <a class="btn btn-primary btn-lg px-4 me-sm-3" href="#">Explore the Data</a>
+              <a class="btn btn-primary btn-lg px-4 me-sm-3" href="crime-data.html">Explore the Data</a>
             </div>
           </div>
         </div>
@@ -197,7 +205,7 @@
                 <h2 class="h4 text-danger mb-3">Live Scanner Feed</h2>
                 <div class="card shadow-sm">
                     <div class="card-body p-2">
-                        <iframe width="100%" height="350" src="https://www.broadcastify.com/calls/playlists/?uuid=425db81f-efc3-11ef-9e04-0e98d5b32039" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+                        <iframe width="100%" height="525" src="https://www.broadcastify.com/calls/playlists/?uuid=425db81f-efc3-11ef-9e04-0e98d5b32039" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
                     </div>
                 </div>
                 <small class="d-block text-muted text-center mt-2">Live call playlist from Broadcastify.</small>
@@ -207,20 +215,9 @@
     
     <!-- Interactive Map Section -->
     <section class="interactive-map py-5 mt-5 border-top">
-        <h2 class="h4 text-primary text-center mb-4">Interactive Map of Albany</h2>
+        <h2 class="h4 text-primary text-center mb-4">Albany Crime Map</h2>
         <div class="map-container shadow-sm">
-            <div class="ratio ratio-16x9">
-                <iframe 
-                    src="https://www.openstreetmap.org/export/embed.html?bbox=-73.99995803833009%2C42.58696090638247%2C-73.62058639526369%2C42.74852488539495&amp;layer=mapnik" 
-                    style="border:0;" 
-                    allowfullscreen="" 
-                    loading="lazy" 
-                    referrerpolicy="no-referrer-when-downgrade">
-                </iframe>
-            </div>
-        </div>
-        <div class="text-center mt-2">
-            <small><a href="https://www.openstreetmap.org/?#map=13/42.66780/-73.81027" target="_blank" rel="noopener noreferrer">View Larger Map on OpenStreetMap</a></small>
+            <arcgis-embedded-map style="width: 100%; height: 100%;" item-id="36d7ce1463bb4ae487965972b56b04ec" theme="dark" heading-enabled legend-enabled share-enabled portal-url="https://aai.maps.arcgis.com" ></arcgis-embedded-map>
         </div>
     </section>
 
