@@ -1,278 +1,417 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Albany Aegis Initiative | Home</title>
-  <meta name="description" content="Data-driven strategies to reduce crime and promote civic transparency in Albany, NY.">
-  
-  <!-- Favicon -->
-  <link rel="icon" href="https://iconsusa.org/assets/icons_copy/aai-seal-1.svg" />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Albany Aegis Initiative | Data-Driven Public Safety</title>
+    <meta name="description" content="Using data-driven strategies to reduce crime, enhance transparency, and improve public safety in Albany, NY.">
 
-  <!-- Google Fonts: Inter -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
-  
-  <!-- Bootstrap CSS -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
-  
-  <!-- Font Awesome Icons -->
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet" />
+    <!-- Favicon -->
+    <link rel="icon" href="https://iconsusa.org/assets/icons_copy/aai-seal-1.svg" />
 
-  <!-- Custom Styles -->
-  <style>
-    body {
-      font-family: 'Inter', sans-serif;
-      display: flex;
-      flex-direction: column;
-      min-height: 100vh;
-    }
-    .logo {
-      font-weight: 700;
-      font-size: 1.5rem;
-    }
-    .hero {
-      background-color: #f8f9fa;
-    }
-    .hero-seal {
-        width: 140px; /* Slightly increased size */
-        height: 140px;
-    }
-    .card {
-        transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
-    }
-    .card:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important;
-    }
-    .blotter .list-group-item {
-        border-right: 0;
-        border-left: 0;
-    }
-    .blotter .blotter-icon {
-        width: 40px;
-        text-align: center;
-    }
-    footer a {
-        text-decoration: none;
-    }
-    footer a:hover {
-        text-decoration: underline;
-    }
-    .map-container {
-        border-radius: .5rem;
-        overflow: hidden;
-        border: 1px solid #dee2e6;
-        height: 600px; /* Default height */
-    }
-    .map-container iframe {
-      width: 100%;
-      height: 100%;
-    }
-  </style>
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
 
+    <!-- Font Awesome Icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet" />
+
+    <!-- Apple MapKit JS -->
+    <script src="https://cdn.apple-mapkit.com/mk/5.x.x/mapkit.js"></script>
+
+    <!-- Custom Styles & Tailwind Config -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+    </style>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        'brand-dark': '#111827',
+                        'brand-light': '#f9fafb',
+                        'brand-primary': {
+                            DEFAULT: '#3b82f6',
+                            'light': '#60a5fa',
+                            'dark': '#2563eb'
+                        },
+                        'brand-accent': {
+                            DEFAULT: '#f59e0b',
+                            'dark': '#d97706'
+                        },
+                    }
+                }
+            }
+        }
+    </script>
 </head>
-<body>
+<body class="bg-brand-light dark:bg-brand-dark antialiased text-gray-700 dark:text-gray-300">
 
-  <!-- Header -->
-  <header class="bg-dark text-white py-3 shadow-sm">
-    <div class="container">
-      <nav class="navbar navbar-expand-lg navbar-dark">
-        <a class="navbar-brand logo" href="#">Albany Aegis Initiative</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-          <ul class="navbar-nav ms-auto mb-2 mb-lg-0 align-items-center">
-            <li class="nav-item"><a class="nav-link active" href="#" aria-current="page">Home</a></li>
-            <li class="nav-item"><a class="nav-link" href="about.html">About</a></li>
-            <li class="nav-item"><a class="nav-link" href="crime-data.html">Crime Data</a></li>
-            <li class="nav-item"><a class="nav-link" href="resources.html">Resources</a></li>
-            <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
-            <li class="nav-item ms-lg-2">
-                <button id="darkToggle" class="btn btn-outline-light" aria-label="Toggle dark mode">
-                  <i class="fas fa-moon"></i>
-                </button>
-            </li>
-          </ul>
-        </div>
-      </nav>
-    </div>
-  </header>
-
-  <!-- Hero Section -->
-  <section class="hero py-5">
-    <div class="container px-4">
-      <div class="row gx-5 align-items-center justify-content-center">
-        <div class="col-lg-8 col-xl-7 col-xxl-6">
-          <div class="my-5 text-center text-xl-start">
-            <h1 class="display-5 fw-bolder text-dark mb-2">Confronting Crime in Albany</h1>
-            <p class="lead fw-normal text-dark-50 mb-4">Headlines don't tell the whole story. We focus on the persistent threats that undermine safety in our community.</p>
-            <div class="d-grid gap-3 d-sm-flex justify-content-sm-center justify-content-xl-start">
-              <a class="btn btn-primary btn-lg px-4 me-sm-3" href="crime-data.html">Explore the Data</a>
-            </div>
-          </div>
-        </div>
-        <div class="col-xl-5 col-xxl-6 d-none d-xl-block text-center">
-          <img class="img-fluid rounded-3 my-5 hero-seal" src="https://iconsusa.org/assets/icons_copy/aai-seal-1.svg" alt="Aegis Seal" loading="lazy">
-        </div>
-      </div>
-    </div>
-  </section>
-
-
-  <!-- Content -->
-  <main class="container my-5 flex-grow-1">
-    <section class="overview mb-5">
-        <div class="row">
-            <div class="col-12">
-                 <h2 class="h4 text-primary mb-3">Beyond the Headlines</h2>
-                 <p>While some metrics show progress, they can mask the reality of persistent and evolving criminal threats. The Albany Aegis Initiative (AAI) confronts the complex challenges that statistics alone don't capture, focusing on the violent and personal crimes that erode our community's sense of security.</p>
-            </div>
-        </div>
-    </section>
-
-    <div class="row g-5">
-        <div class="col-lg-6">
-            <section class="blotter">
-                <h2 class="h4 text-danger mb-3">Live Incident Blotter</h2>
-                <div class="card shadow-sm">
-                    <ul class="list-group list-group-flush">
-                        <!-- Incident 1 -->
-                        <li class="list-group-item d-flex justify-content-between align-items-center">
-                            <div class="d-flex align-items-center">
-                                <div class="blotter-icon me-3"><i class="fas fa-bullhorn fa-lg text-danger"></i></div>
-                                <div>
-                                    <div class="fw-bold">Shots Fired</div>
-                                    <small class="text-muted">Arbor Hill</small>
-                                </div>
-                            </div>
-                            <small class="text-muted">2 hours ago</small>
-                        </li>
-                        <!-- Incident 2 -->
-                        <li class="list-group-item d-flex justify-content-between align-items-center">
-                             <div class="d-flex align-items-center">
-                                <div class="blotter-icon me-3"><i class="fas fa-mask fa-lg text-warning"></i></div>
-                                <div>
-                                    <div class="fw-bold">Armed Robbery</div>
-                                    <small class="text-muted">Central Avenue</small>
-                                </div>
-                            </div>
-                            <small class="text-muted">8 hours ago</small>
-                        </li>
-                        <!-- Incident 3 -->
-                        <li class="list-group-item d-flex justify-content-between align-items-center">
-                             <div class="d-flex align-items-center">
-                                <div class="blotter-icon me-3"><i class="fas fa-car-burst fa-lg text-primary"></i></div>
-                                <div>
-                                    <div class="fw-bold">Vehicle Theft</div>
-                                    <small class="text-muted">Pine Hills</small>
-                                </div>
-                            </div>
-                            <small class="text-muted">15 hours ago</small>
-                        </li>
-                        <!-- Incident 4 -->
-                        <li class="list-group-item d-flex justify-content-between align-items-center">
-                             <div class="d-flex align-items-center">
-                                <div class="blotter-icon me-3"><i class="fas fa-house-chimney-window fa-lg text-info"></i></div>
-                                <div>
-                                    <div class="fw-bold">Burglary Reported</div>
-                                    <small class="text-muted">Washington Park Area</small>
-                                </div>
-                            </div>
-                            <small class="text-muted">22 hours ago</small>
-                        </li>
-                        <!-- Incident 5 -->
-                        <li class="list-group-item d-flex justify-content-between align-items-center">
-                             <div class="d-flex align-items-center">
-                                <div class="blotter-icon me-3"><i class="fas fa-hand-fist fa-lg text-danger"></i></div>
-                                <div>
-                                    <div class="fw-bold">Assault with Weapon</div>
-                                    <small class="text-muted">South End</small>
-                                </div>
-                            </div>
-                            <small class="text-muted">1 day ago</small>
-                        </li>
-                    </ul>
+    <!-- Header -->
+    <header id="header" class="bg-white/80 dark:bg-brand-dark/80 backdrop-blur-lg sticky top-0 z-50 transition-all duration-300 shadow-sm">
+        <div class="container mx-auto px-4">
+            <nav class="flex justify-between items-center py-4">
+                <a href="index.html" class="flex items-center gap-2">
+                    <img src="https://iconsusa.org/assets/icons_copy/aai-seal-1.svg" alt="AAI Seal" class="h-8 w-8">
+                    <span class="text-xl font-bold text-gray-900 dark:text-white hidden sm:inline">Albany Aegis</span>
+                </a>
+                <div class="hidden md:flex items-center gap-6 text-sm font-medium">
+                    <a href="index.html" class="text-brand-primary dark:text-brand-primary-light font-semibold">Home</a>
+                    <a href="about.html" class="text-gray-600 dark:text-gray-300 hover:text-brand-primary dark:hover:text-brand-primary-light transition-colors">About</a>
+                    <a href="crime-data.html" class="text-gray-600 dark:text-gray-300 hover:text-brand-primary dark:hover:text-brand-primary-light transition-colors">Crime Data</a>
+                    <a href="crime-tracker.html" class="text-gray-600 dark:text-gray-300 hover:text-brand-primary dark:hover:text-brand-primary-light transition-colors">Crime Tracker</a>
+                    <a href="visualizations.html" class="text-gray-600 dark:text-gray-300 hover:text-brand-primary dark:hover:text-brand-primary-light transition-colors">Visualizations</a>
+                    <a href="resources.html" class="text-gray-600 dark:text-gray-300 hover:text-brand-primary dark:hover:text-brand-primary-light transition-colors">Resources</a>
+                    <a href="contact.html" class="text-gray-600 dark:text-gray-300 hover:text-brand-primary dark:hover:text-brand-primary-light transition-colors">Contact</a>
                 </div>
-                 <small class="d-block text-muted text-center mt-2">Note: Incident data is for demonstration.</small>
-            </section>
+                <div class="flex items-center gap-2">
+                    <button id="theme-toggle" type="button" class="text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 rounded-lg text-sm p-2.5">
+                        <svg id="theme-toggle-dark-icon" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
+                        <svg id="theme-toggle-light-icon" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm-.707 7.072l.707-.707a1 1 0 10-1.414-1.414l-.707.707a1 1 0 001.414 1.414zM3 11a1 1 0 100-2H2a1 1 0 100 2h1z" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
+                    </button>
+                    <!-- Mobile Menu Button -->
+                    <button id="mobile-menu-button" class="md:hidden p-2 text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg">
+                        <i class="fas fa-bars fa-lg"></i>
+                    </button>
+                    <a href="crime-data.html" class="bg-brand-primary text-white px-4 py-2 rounded-lg text-sm font-semibold hover:bg-brand-primary-dark transition-colors hidden sm:inline">Explore Data</a>
+                </div>
+            </nav>
+            <!-- Mobile Menu -->
+            <div id="mobile-menu" class="hidden md:hidden py-2">
+                <a href="index.html" class="block py-2 px-4 text-sm text-brand-primary dark:text-brand-primary-light font-semibold bg-gray-50 dark:bg-gray-700/50 rounded-md">Home</a>
+                <a href="about.html" class="block py-2 px-4 text-sm text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700/50 rounded-md">About</a>
+                <a href="crime-data.html" class="block py-2 px-4 text-sm text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700/50 rounded-md">Crime Data</a>
+                <a href="crime-tracker.html" class="block py-2 px-4 text-sm text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700/50 rounded-md">Crime Tracker</a>
+                <a href="visualizations.html" class="block py-2 px-4 text-sm text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700/50 rounded-md">Visualizations</a>
+                <a href="resources.html" class="block py-2 px-4 text-sm text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700/50 rounded-md">Resources</a>
+                <a href="contact.html" class="block py-2 px-4 text-sm text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700/50 rounded-md">Contact</a>
+            </div>
         </div>
-        <div class="col-lg-6">
-            <section class="scanner-feed">
-                <h2 class="h4 text-danger mb-3">Live Scanner Feed</h2>
-                <div class="card shadow-sm">
-                    <div class="card-body p-2">
-                        <iframe width="100%" height="525" src="https://www.broadcastify.com/calls/playlists/?uuid=425db81f-efc3-11ef-9e04-0e98d5b32039" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+        <!-- Hero Section -->
+        <section class="relative bg-gray-900 text-white py-20 md:py-32">
+            <div class="absolute inset-0 bg-black opacity-50"></div>
+             <div class="absolute inset-0 bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1620324623345-037198511b43?q=80&w=2670&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'); filter: blur(4px);"></div>
+            <div class="container mx-auto px-4 relative z-10">
+                <div class="max-w-3xl text-center mx-auto">
+                    <img src="https://iconsusa.org/assets/icons_copy/aai-seal-1.svg" alt="Aegis Seal" class="w-32 h-32 mx-auto mb-6 bg-white/10 rounded-full p-2">
+                    <h1 class="text-4xl md:text-6xl font-extrabold tracking-tight leading-tight">Clarity in Crisis. Safety by Design.</h1>
+                    <p class="mt-6 text-lg md:text-xl text-gray-300 max-w-2xl mx-auto">We move beyond headlines to provide data-driven insights into the persistent threats that undermine safety in Albany.</p>
+                    <div class="mt-10 flex flex-col sm:flex-row justify-center gap-4">
+                        <a href="crime-data.html" class="bg-brand-primary hover:bg-brand-primary-dark text-white font-bold py-3 px-8 rounded-full transition-transform transform hover:scale-105">Explore the Data</a>
+                        <a href="#pillars" class="bg-white/10 hover:bg-white/20 text-white font-bold py-3 px-8 rounded-full transition-colors">Learn Our Mission</a>
                     </div>
                 </div>
-                <small class="d-block text-muted text-center mt-2">Live call playlist from Broadcastify.</small>
-            </section>
-        </div>
-    </div>
-    
-    <!-- Interactive Map Section -->
-    <section class="interactive-map py-5 mt-5 border-top">
-        <h2 class="h4 text-primary text-center mb-4">Albany Crime Map</h2>
-        <div class="map-container shadow-sm">
-            <iframe width='100%' height='480px' src='https://www.arcgis.com/apps/View/index.html?appid=d3ddc0d9b8034d1898026ce309525890' frameborder='0' scrolling='no'></iframe>
-        </div>
-    </section>
-
-    <!-- Initiative Pillars -->
-    <section class="initiative-pillars py-5 mt-5 border-top">
-      <h2 class="h4 text-primary text-center mb-4">Initiative Pillars</h2>
-      <div class="row g-4">
-        <div class="col-md-4">
-          <div class="card h-100 shadow-sm border-0">
-            <div class="card-body text-center p-4">
-              <div class="feature-icon-small d-inline-flex align-items-center justify-content-center text-bg-primary bg-gradient fs-4 rounded-3 mb-3">
-                <i class="fas fa-brain p-3"></i>
-              </div>
-              <h5 class="card-title fw-bold">Predictive Risk Modelling</h5>
-              <p class="card-text">Using data to anticipate and mitigate risks effectively.</p>
             </div>
-          </div>
-        </div>
-        <div class="col-md-4">
-          <div class="card h-100 shadow-sm border-0">
-            <div class="card-body text-center p-4">
-                <div class="feature-icon-small d-inline-flex align-items-center justify-content-center text-bg-primary bg-gradient fs-4 rounded-3 mb-3">
-                    <i class="fas fa-users p-3"></i>
+        </section>
+        
+        <!-- Live Feeds Section -->
+        <section id="data" class="py-16 sm:py-24 bg-gray-50 dark:bg-gray-900/50">
+            <div class="container mx-auto px-4">
+                <div class="text-center mb-12">
+                     <h2 class="text-3xl font-bold tracking-tight text-gray-900 dark:text-white sm:text-4xl">Live from Albany</h2>
+                     <p class="mt-4 text-lg text-gray-600 dark:text-gray-400">Real-time incident reports and scanner communications.</p>
                 </div>
-              <h5 class="card-title fw-bold">Community Forums</h5>
-              <p class="card-text">Engaging citizens to shape public safety policies.</p>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-4">
-          <div class="card h-100 shadow-sm border-0">
-            <div class="card-body text-center p-4">
-                 <div class="feature-icon-small d-inline-flex align-items-center justify-content-center text-bg-primary bg-gradient fs-4 rounded-3 mb-3">
-                    <i class="fas fa-chart-line p-3"></i>
-                </div>
-              <h5 class="card-title fw-bold">Transparency Dashboard</h5>
-              <p class="card-text">Providing open access to crime and governance data.</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-  </main>
 
-  <!-- Footer -->
-  <footer class="bg-dark text-white text-center py-4 mt-auto">
-    <div class="container">
-        <p class="mb-1">&copy; 2025 Albany Aegis Initiative. All rights reserved.</p>
-        <p class="mb-0">
-          Email: <a href="mailto:info@albany.watch" class="text-warning">info@albany.watch</a>
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+                    <!-- Live Incident Blotter -->
+                    <div class="lg:col-span-5">
+                        <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg h-full overflow-hidden">
+                            <div class="p-5 border-b border-gray-200 dark:border-gray-700">
+                                <h3 class="text-lg font-semibold text-gray-900 dark:text-white flex items-center gap-3">
+                                    <i class="fas fa-list-ul text-brand-primary"></i>
+                                    Incident Blotter
+                                </h3>
+                            </div>
+                            <div class="p-3 space-y-2">
+                                <!-- Incidents will be dynamically loaded here, using mock data for now -->
+                                <div class="p-4 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors">
+                                    <div class="flex items-center justify-between">
+                                        <div class="flex items-center gap-4">
+                                            <div class="flex-shrink-0 w-10 h-10 flex items-center justify-center rounded-full bg-red-100 dark:bg-red-900/50">
+                                                <i class="fas fa-bullhorn fa-lg text-red-500"></i>
+                                            </div>
+                                            <div>
+                                                <p class="font-bold text-gray-800 dark:text-gray-100">Shots Fired</p>
+                                                <p class="text-sm text-gray-500 dark:text-gray-400">Arbor Hill</p>
+                                            </div>
+                                        </div>
+                                        <p class="text-sm text-gray-400 dark:text-gray-500 text-right">2h ago</p>
+                                    </div>
+                                </div>
+                                <div class="p-4 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors">
+                                    <div class="flex items-center justify-between">
+                                        <div class="flex items-center gap-4">
+                                            <div class="flex-shrink-0 w-10 h-10 flex items-center justify-center rounded-full bg-yellow-100 dark:bg-yellow-900/50">
+                                                 <i class="fas fa-mask fa-lg text-yellow-500"></i>
+                                            </div>
+                                            <div>
+                                                <p class="font-bold text-gray-800 dark:text-gray-100">Armed Robbery</p>
+                                                <p class="text-sm text-gray-500 dark:text-gray-400">Central Avenue</p>
+                                            </div>
+                                        </div>
+                                        <p class="text-sm text-gray-400 dark:text-gray-500 text-right">8h ago</p>
+                                    </div>
+                                </div>
+                                <div class="p-4 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors">
+                                     <div class="flex items-center justify-between">
+                                        <div class="flex items-center gap-4">
+                                            <div class="flex-shrink-0 w-10 h-10 flex items-center justify-center rounded-full bg-blue-100 dark:bg-blue-900/50">
+                                                 <i class="fas fa-car-burst fa-lg text-blue-500"></i>
+                                            </div>
+                                            <div>
+                                                <p class="font-bold text-gray-800 dark:text-gray-100">Vehicle Theft</p>
+                                                <p class="text-sm text-gray-500 dark:text-gray-400">Pine Hills</p>
+                                            </div>
+                                        </div>
+                                        <p class="text-sm text-gray-400 dark:text-gray-500 text-right">15h ago</p>
+                                    </div>
+                                </div>
+                                <div class="p-4 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors">
+                                     <div class="flex items-center justify-between">
+                                        <div class="flex items-center gap-4">
+                                            <div class="flex-shrink-0 w-10 h-10 flex items-center justify-center rounded-full bg-teal-100 dark:bg-teal-900/50">
+                                                 <i class="fas fa-house-chimney-window fa-lg text-teal-500"></i>
+                                            </div>
+                                            <div>
+                                                <p class="font-bold text-gray-800 dark:text-gray-100">Burglary Reported</p>
+                                                <p class="text-sm text-gray-500 dark:text-gray-400">Washington Park</p>
+                                            </div>
+                                        </div>
+                                        <p class="text-sm text-gray-400 dark:text-gray-500 text-right">22h ago</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="p-4 text-center border-t border-gray-200 dark:border-gray-700">
+                                <a href="crime-tracker.html" class="text-sm font-semibold text-brand-primary hover:underline">View All Incidents</a>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Live Scanner -->
+                    <div class="lg:col-span-7">
+                        <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg h-full flex flex-col">
+                            <div class="p-5 border-b border-gray-200 dark:border-gray-700">
+                                <h3 class="text-lg font-semibold text-gray-900 dark:text-white flex items-center gap-3">
+                                    <i class="fas fa-headset text-brand-accent"></i>
+                                    Live Scanner Feed
+                                </h3>
+                            </div>
+                            <div class="p-3 flex-grow">
+                                <div class="w-full h-full rounded-lg overflow-hidden">
+                                     <iframe class="w-full h-full" src="https://www.broadcastify.com/calls/playlists/?uuid=425db81f-efc3-11ef-9e04-0e98d5b32039" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Interactive Map Section -->
+        <section id="map-section" class="py-16 sm:py-24">
+            <div class="container mx-auto px-4">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl font-bold tracking-tight text-gray-900 dark:text-white sm:text-4xl">Live Interactive Crime Map</h2>
+                    <p class="mt-4 text-lg text-gray-600 dark:text-gray-400">Visualizing real-time incident data across Albany's neighborhoods.</p>
+                </div>
+                <div id="map" class="w-full h-[600px] rounded-xl border shadow-lg"></div>
+            </div>
+        </section>
+
+        <!-- Initiative Pillars Section -->
+        <section id="pillars" class="py-16 sm:py-24 bg-gray-50 dark:bg-gray-900/50">
+            <div class="container mx-auto px-4">
+                <div class="text-center mb-12 max-w-2xl mx-auto">
+                    <h2 class="text-3xl font-bold tracking-tight text-gray-900 dark:text-white sm:text-4xl">Our Three-Pillar Approach</h2>
+                    <p class="mt-4 text-lg text-gray-600 dark:text-gray-400">We are committed to a multi-faceted strategy for a safer community through technology, engagement, and transparency.</p>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <!-- Pillar 1 -->
+                    <div class="bg-white dark:bg-gray-800 p-8 rounded-xl shadow-lg text-center transform hover:-translate-y-2 transition-transform duration-300">
+                        <div class="inline-flex items-center justify-center w-16 h-16 mb-6 rounded-full bg-brand-primary/10 text-brand-primary">
+                            <i class="fas fa-brain text-2xl"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">Predictive Risk Modelling</h3>
+                        <p class="text-gray-600 dark:text-gray-400">Leveraging advanced analytics and historical data to identify patterns and forecast potential crime hotspots, enabling proactive resource allocation.</p>
+                    </div>
+                    <!-- Pillar 2 -->
+                    <div class="bg-white dark:bg-gray-800 p-8 rounded-xl shadow-lg text-center transform hover:-translate-y-2 transition-transform duration-300">
+                        <div class="inline-flex items-center justify-center w-16 h-16 mb-6 rounded-full bg-brand-primary/10 text-brand-primary">
+                            <i class="fas fa-users text-2xl"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">Community Engagement</h3>
+                        <p class="text-gray-600 dark:text-gray-400">Fostering dialogue through open forums and digital platforms, ensuring that public safety strategies are shaped by community voices and needs.</p>
+                    </div>
+                    <!-- Pillar 3 -->
+                    <div class="bg-white dark:bg-gray-800 p-8 rounded-xl shadow-lg text-center transform hover:-translate-y-2 transition-transform duration-300">
+                        <div class="inline-flex items-center justify-center w-16 h-16 mb-6 rounded-full bg-brand-primary/10 text-brand-primary">
+                            <i class="fas fa-chart-line text-2xl"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">Transparency Dashboard</h3>
+                        <p class="text-gray-600 dark:text-gray-400">Providing the public with unfettered access to crime statistics, police activity, and governance data through an interactive, easy-to-use dashboard.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-brand-dark text-gray-400">
+        <div class="container mx-auto px-4 py-12">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <!-- About -->
+                <div class="lg:col-span-2">
+                    <div class="flex items-center gap-3 mb-4">
+                       <img src="https://iconsusa.org/assets/icons_copy/aai-seal-1.svg" alt="AAI Seal" class="h-10 w-10">
+                       <span class="text-2xl font-bold text-white">Albany Aegis Initiative</span>
+                    </div>
+                    <p class="max-w-md">A non-partisan project dedicated to enhancing public safety through data analysis, transparency, and community collaboration.</p>
+                </div>
+                <!-- Quick Links -->
+                <div>
+                    <h4 class="text-lg font-semibold text-white mb-4">Quick Links</h4>
+                    <ul class="space-y-2">
+                        <li><a href="about.html" class="hover:text-white transition-colors">About Us</a></li>
+                        <li><a href="crime-data.html" class="hover:text-white transition-colors">Crime Data</a></li>
+                        <li><a href="visualizations.html" class="hover:text-white transition-colors">Visualizations</a></li>
+                        <li><a href="resources.html" class="hover:text-white transition-colors">Resources</a></li>
+                    </ul>
+                </div>
+                <!-- Contact -->
+                <div>
+                     <h4 class="text-lg font-semibold text-white mb-4">Get In Touch</h4>
+                    <ul class="space-y-2">
+                        <li><a href="mailto:info@albany.watch" class="hover:text-white transition-colors flex items-center gap-2"><i class="fas fa-envelope"></i>info@albany.watch</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors flex items-center gap-2"><i class="fab fa-twitter"></i>Follow on X</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="mt-12 pt-8 border-t border-gray-700 text-center text-sm">
+                <p>&copy; 2025 Albany Aegis Initiative. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript for Dark Mode Toggle & Map-->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Mobile Menu Toggle
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            if (mobileMenuButton && mobileMenu) {
+                mobileMenuButton.addEventListener('click', () => {
+                    mobileMenu.classList.toggle('hidden');
+                });
+            }
+
+            // Dark Mode Toggle Logic
+            const themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
+            const themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
+            const themeToggleBtn = document.getElementById('theme-toggle');
+
+            if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                document.documentElement.classList.add('dark');
+                if (themeToggleLightIcon) themeToggleLightIcon.classList.remove('hidden');
+                 if (themeToggleDarkIcon) themeToggleDarkIcon.classList.add('hidden');
+            } else {
+                document.documentElement.classList.remove('dark');
+                if (themeToggleDarkIcon) themeToggleDarkIcon.classList.remove('hidden');
+                if (themeToggleLightIcon) themeToggleLightIcon.classList.add('hidden');
+            }
+
+            if(themeToggleBtn) {
+                themeToggleBtn.addEventListener('click', function() {
+                    themeToggleDarkIcon.classList.toggle('hidden');
+                    themeToggleLightIcon.classList.toggle('hidden');
+
+                    if (localStorage.getItem('color-theme')) {
+                        if (localStorage.getItem('color-theme') === 'light') {
+                            document.documentElement.classList.add('dark');
+                            localStorage.setItem('color-theme', 'dark');
+                        } else {
+                            document.documentElement.classList.remove('dark');
+                            localStorage.setItem('color-theme', 'light');
+                        }
+                    } else {
+                        if (document.documentElement.classList.contains('dark')) {
+                            document.documentElement.classList.remove('dark');
+                            localStorage.setItem('color-theme', 'light');
+                        } else {
+                            document.documentElement.classList.add('dark');
+                            localStorage.setItem('color-theme', 'dark');
+                        }
+                    }
+                });
+            }
+
+            // Apple MapKit JS Initialization
+            const mapElement = document.getElementById('map');
+            if (mapElement) {
+                try {
+                     mapkit.init({
+                        authorizationCallback: function(done) {
+                            done("eyJraWQiOiI2NzM5NkhENUo0IiwidHlwIjoiSldUIiwiYWxnIjoiRVMyNTYifQ.eyJpc3MiOiJWOTUzSEFEM1c2IiwiaWF0IjoxNzUwNzEyMDA0LCJvcmlnaW4iOiJhbGJhbnkud2F0Y2gifQ.UskAlbwEiOyP0naBqEY8KXC0PLoNQr20ZPfZDFnyIp6lDXTA9Yb_h4_R7irsic1YTYeSvlH7PdRlpQzKDmibmw"); 
+                        }
+                    });
+
+                    const map = new mapkit.Map("map");
+                    map.region = new mapkit.CoordinateRegion(
+                        new mapkit.Coordinate(42.6526, -73.7562), // Albany
+                        new mapkit.CoordinateSpan(0.05, 0.05)
+                    );
+
+                    fetch("https://data.albanyny.gov/resource/m4jx-di39.json")
+                        .then(res => res.json())
+                        .then(data => {
+                             const annotations = data.map(record => {
+                                const lat = parseFloat(record.latitude);
+                                const lon = parseFloat(record.longitude);
+                                const type = record.offense_description || "Unclassified Crime";
+                                const date = record.reported_date?.split("T")[0] || "Unknown Date";
+
+                                if (!isNaN(lat) && !isNaN(lon)) {
+                                    return new mapkit.MarkerAnnotation(
+                                        new mapkit.Coordinate(lat, lon),
+                                        {
+                                            title: type,
+                                            subtitle: `Reported: ${date}`,
+                                            color: "#dc2626", // Tailwind's red-600
+                                            clusteringIdentifier: "albany-crime"
+                                        }
+                                    );
+                                }
+                                return null;
+                             }).filter(Boolean); // remove nulls
+                             
+                             map.addAnnotations(annotations);
+                        })
+                        .catch(err => {
+                            console.error("Failed to load Albany crime data:", err);
+                            mapElement.innerHTML = `<div class="p-4 text-center text-red-700 bg-red-100 dark:bg-red-800/50 rounded-lg">Failed to load crime data for the map.</div>`;
+                        });
+                } catch(e) {
+                     console.error("MapKit JS failed to initialize:", e);
+                     mapElement.innerHTML = `<div class="p-4 text-center text-yellow-700 bg-yellow-100 dark:bg-yellow-800/50 rounded-lg">Could not initialize the map.</div>`;
+                }
+            }
+        });
+    </script>
+    <noscript>
+      <div class="container mx-auto p-4">
+        <p class="text-red-700 bg-yellow-100 p-4 rounded-md mt-4 text-center">
+            JavaScript is required to view this interactive crime map.
         </p>
-    </div>
-  </footer>
-
-  <!-- Bootstrap JS Bundle -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-  
-  <!-- A placeholder for custom JS like the dark mode toggle -->
-  <!-- <script src="/assets/js/main.js" defer></script> -->
+      </div>
+    </noscript>
 </body>
 </html>
