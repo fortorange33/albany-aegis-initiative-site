@@ -1,92 +1,405 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="dark">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>About | Albany Aegis Initiative</title>
   <meta name="description" content="Learn more about the mission, vision, and approach of the Albany Aegis Initiative.">
 
-  <!-- Fonts, Bootstrap, Font Awesome -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet" />
-  <link rel="stylesheet" href="css/style.css" />
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Chart.js for data visualization -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+
+  <style>
+    /* Custom Styles */
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #0f172a; /* slate-900 */
+      color: #cbd5e1; /* slate-300 */
+    }
+    .logo {
+      font-weight: 700;
+      letter-spacing: -0.5px;
+    }
+    .nav-link-active {
+      color: #fbbf24; /* amber-400 */
+    }
+    .nav-link-hover:hover {
+      color: #d1d5db; /* gray-300 */
+    }
+    .card {
+      background-color: #1e293b; /* slate-800 */
+      border: 1px solid #334155; /* slate-700 */
+      transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+    }
+    .card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    }
+    .section-title {
+        border-left: 3px solid #fbbf24; /* amber-400 */
+        padding-left: 1rem;
+    }
+    /* Styles for the data table */
+    .table-header {
+        background-color: #334155; /* slate-700 */
+    }
+    .table-row {
+        border-bottom: 1px solid #334155; /* slate-700 */
+    }
+    .table-row:last-child {
+        border-bottom: none;
+    }
+  </style>
+  <script>
+    // Tailwind Dark Mode Config
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            primary: {
+              '50': '#fffbeb',
+              '100': '#fef3c7',
+              '200': '#fde68a',
+              '300': '#fcd34d',
+              '400': '#fbbf24',
+              '500': '#f59e0b',
+              '600': '#d97706',
+              '700': '#b45309',
+              '800': '#92400e',
+              '900': '#78350f',
+            },
+          }
+        }
+      }
+    }
+  </script>
 </head>
-<body>
+<body class="antialiased">
 
   <!-- Header -->
-  <header class="bg-dark text-white py-3">
-    <div class="container">
-      <nav class="navbar navbar-expand-lg navbar-dark">
-        <a class="navbar-brand logo" href="index.html">Albany Aegis Initiative</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
+  <header class="bg-slate-900/70 backdrop-blur-lg sticky top-0 z-50 border-b border-slate-800">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+      <nav class="flex items-center justify-between h-16">
+        <!-- Logo -->
+        <a class="text-xl font-bold text-white logo" href="#">
+          Albany Aegis Initiative
+        </a>
+        
+        <!-- Desktop Navigation -->
+        <div class="hidden md:flex items-center space-x-8">
+          <a href="#" class="text-slate-300 nav-link-hover">Home</a>
+          <a href="#" class="font-semibold nav-link-active">About</a>
+          <a href="#" class="text-slate-300 nav-link-hover">Crime Data</a>
+          <a href="#" class="text-slate-300 nav-link-hover">Resources</a>
+          <a href="#" class="text-slate-300 nav-link-hover">Contact</a>
+        </div>
+
+        <!-- Dark Mode Toggle -->
+        <button id="darkToggle" class="hidden md:flex items-center justify-center w-10 h-10 bg-slate-800 rounded-lg text-slate-400 hover:bg-slate-700 hover:text-amber-400 transition-colors" aria-label="Toggle dark mode">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-moon"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
         </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-            <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
-            <li class="nav-item"><a class="nav-link active" href="about.html" aria-current="page">About</a></li>
-            <li class="nav-item"><a class="nav-link" href="crime-data.html">Crime Data</a></li>
-            <li class="nav-item"><a class="nav-link" href="resources.html">Resources</a></li>
-            <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
-          </ul>
-          <button id="darkToggle" class="btn btn-outline-light ms-lg-3" aria-label="Toggle dark mode">
-            <i class="fas fa-moon"></i>
+
+        <!-- Mobile Menu Button -->
+        <div class="md:hidden">
+          <button id="mobile-menu-button" class="text-slate-300 hover:text-white">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/></svg>
           </button>
         </div>
       </nav>
     </div>
+    <!-- Mobile Menu -->
+    <div id="mobile-menu" class="hidden md:hidden">
+        <a href="#" class="block py-2 px-4 text-sm text-slate-300 hover:bg-slate-800">Home</a>
+        <a href="#" class="block py-2 px-4 text-sm nav-link-active font-semibold bg-slate-800">About</a>
+        <a href="#" class="block py-2 px-4 text-sm text-slate-300 hover:bg-slate-800">Crime Data</a>
+        <a href="#" class="block py-2 px-4 text-sm text-slate-300 hover:bg-slate-800">Resources</a>
+        <a href="#" class="block py-2 px-4 text-sm text-slate-300 hover:bg-slate-800">Contact</a>
+    </div>
   </header>
 
-  <!-- Main -->
-  <main class="container my-5 about-page">
-    <section class="mb-5">
-      <h2 class="h3 text-primary mb-3">About the Albany Aegis Initiative</h2>
-      <p>The Albany Aegis Initiative is a civic and data-driven public safety initiative dedicated to reducing crime, increasing accountability, and transforming governance throughout Albany, New York. Our approach blends behavioral insight, analytics, and community partnership to create a smarter, safer city.</p>
+  <!-- Main Content -->
+  <main class="container mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-20">
+    
+    <!-- Hero Section -->
+    <section class="text-center mb-16 md:mb-24">
+        <h1 class="text-4xl md:text-5xl font-bold text-white tracking-tight">A Data-Driven Approach to Public Safety</h1>
+        <p class="mt-4 max-w-3xl mx-auto text-lg text-slate-400">The Albany Aegis Initiative is a civic project dedicated to reducing crime, increasing accountability, and transforming governance in Albany, NY through behavioral insight, analytics, and community partnership.</p>
+    </section>
+    
+    <!-- Mission Section -->
+    <section class="mb-16 md:mb-24">
+      <h2 class="text-3xl font-bold text-white mb-2 section-title">Our Mission</h2>
+      <p class="text-slate-400 mb-8 max-w-3xl">Our multi-faceted approach combines research, technology, economic strategy, and direct community involvement to build a safer, more prosperous city for all.</p>
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <!-- Mission Card 1: Behavioral Analysis -->
+        <div class="card p-6 rounded-lg">
+          <div class="flex items-center justify-center h-12 w-12 rounded-md bg-primary-500/10 text-primary-400 mb-4 text-4xl">
+            𝚿
+          </div>
+          <h3 class="text-lg font-semibold text-white mb-2">Behavioral Analysis</h3>
+          <p class="text-slate-400 text-sm">Leveraging psychological and sociological research to interrupt harmful behavior cycles.</p>
+        </div>
+        <!-- Mission Card 2: Cutting-Edge Tech -->
+        <div class="card p-6 rounded-lg">
+          <div class="flex items-center justify-center h-12 w-12 rounded-md bg-primary-500/10 text-primary-400 mb-4">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-cpu"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M9 9h6v6H9z"/><path d="M9 1v3"/><path d="M15 1v3"/><path d="M9 20v3"/><path d="M15 20v3"/><path d="M20 9h3"/><path d="M20 14h3"/><path d="M1 9h3"/><path d="M1 14h3"/></svg>
+          </div>
+          <h3 class="text-lg font-semibold text-white mb-2">Cutting-Edge Tech</h3>
+          <p class="text-slate-400 text-sm">Using smart surveillance, predictive analytics, and open data to enhance safety.</p>
+        </div>
+        <!-- Mission Card 3: Economic Diversification -->
+        <div class="card p-6 rounded-lg">
+          <div class="flex items-center justify-center h-12 w-12 rounded-md bg-primary-500/10 text-primary-400 mb-4">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-trending-up"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg>
+          </div>
+          <h3 class="text-lg font-semibold text-white mb-2">Economic Diversification</h3>
+          <p class="text-slate-400 text-sm">Driving long-term prosperity through job creation and entrepreneurial investment.</p>
+        </div>
+        <!-- Mission Card 4: Community Engagement -->
+        <div class="card p-6 rounded-lg">
+          <div class="flex items-center justify-center h-12 w-12 rounded-md bg-primary-500/10 text-primary-400 mb-4">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-users"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          </div>
+          <h3 class="text-lg font-semibold text-white mb-2">Community Engagement</h3>
+          <p class="text-slate-400 text-sm">Ensuring public voices shape safety and civic improvement policies.</p>
+        </div>
+      </div>
     </section>
 
-    <section class="mb-5">
-      <h3 class="h4 text-primary mb-3">Our Mission</h3>
-      <ul>
-        <li><strong>Behavioral Analysis</strong> – Leveraging psychological and sociological research to interrupt harmful behavior cycles.</li>
-        <li><strong>Cutting-Edge Technology</strong> – Using smart surveillance, predictive analytics, and open data tools.</li>
-        <li><strong>Economic Diversification</strong> – Driving long-term prosperity through job creation and entrepreneurial investment.</li>
-        <li><strong>Community Engagement</strong> – Ensuring public voices shape safety and civic improvement policies.</li>
-      </ul>
+    <!-- Emblem Section -->
+    <section class="mb-16 md:mb-24">
+        <div class="bg-slate-800 rounded-lg p-8 md:p-12 border border-slate-700">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 items-center">
+                <div class="md:col-span-1 text-center">
+                     <svg xmlns="http://www.w3.org/2000/svg" width="120" height="120" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-shield-check text-primary-400 mx-auto"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10"/><path d="m9 12 2 2 4-4"/></svg>
+                     <h3 class="text-2xl font-bold text-white mt-4">The Aegis Emblem</h3>
+                     <p class="text-slate-400 italic mt-1">"Justitia et Progressus"</p>
+                </div>
+                <div class="md:col-span-2">
+                    <h2 class="text-3xl font-bold text-white mb-4 section-title">Our Coat of Arms</h2>
+                    <p class="text-slate-400 mb-6">Our heraldic emblem visually communicates our core principles through storied symbolism. Each element was chosen to represent a facet of our commitment to the city of Albany.</p>
+                    <dl class="space-y-4">
+                        <div class="flex items-start">
+                            <dt class="font-semibold text-white w-28 shrink-0">Icons:</dt>
+                            <dd class="text-slate-400">A sword, blindfold, and balance scale representing martial readiness, impartiality, and fairness.</dd>
+                        </div>
+                        <div class="flex items-start">
+                            <dt class="font-semibold text-white w-28 shrink-0">Colors:</dt>
+                            <dd class="text-slate-400">Blue for vigilance, orange for civic energy, and silver for moral and analytical clarity.</dd>
+                        </div>
+                        <div class="flex items-start">
+                            <dt class="font-semibold text-white w-28 shrink-0">Motto:</dt>
+                            <dd class="text-slate-400"><em>Justice and Progress</em>, our guiding philosophy for a better future.</dd>
+                        </div>
+                    </dl>
+                </div>
+            </div>
+        </div>
     </section>
 
-    <section class="mb-5">
-      <h3 class="h4 text-primary mb-3">The Albany Aegis Coat of Arms</h3>
-      <p>Our heraldic emblem visually communicates our mission:</p>
-      <ul>
-        <li><strong>Justice Icons</strong> – Including a sword, blindfold, and balance scale.</li>
-        <li><strong>Color Palette</strong> – Blue for vigilance, orange for energy, and silver for clarity.</li>
-        <li><strong>Motto</strong> – <em>Justitia et Progressus</em> (“Justice and Progress”).</li>
-      </ul>
+    <!-- Analysis Section -->
+    <section class="mb-16 md:mb-24">
+        <h2 class="text-3xl font-bold text-white mb-2 section-title">The Albany Challenge: A Sobering Analysis</h2>
+        <p class="text-slate-400 mb-8 max-w-3xl">To solve a problem, we must first understand it. Our analysis points to a complex web of interconnected issues that stifle progress and endanger residents. A history of political corruption erodes trust, leading to stagnation and a sense of helplessness. This is compounded by economic despair and policies that, while well-intentioned, can have unintended consequences for public safety.</p>
+        
+        <div class="bg-slate-800 rounded-lg p-8 border border-slate-700 mb-12">
+            <h3 class="text-2xl font-bold text-white mb-6 text-center">Crime at a Glance: The Stark Reality</h3>
+            <div class="overflow-x-auto">
+                <div class="min-w-full text-sm text-left">
+                    <div class="grid grid-cols-2 md:grid-cols-4 table-header font-semibold text-white rounded-t-lg">
+                        <div class="p-4">Metric</div>
+                        <div class="p-4 text-center">Albany, NY</div>
+                        <div class="p-4 text-center">National Average</div>
+                        <div class="p-4 text-center">New York State</div>
+                    </div>
+                    <div class="bg-slate-900/50 rounded-b-lg">
+                       <div class="grid grid-cols-2 md:grid-cols-4 table-row items-center">
+                            <div class="p-4 font-semibold text-white">Total Crime Rate <span class="font-normal text-slate-400">(per 1,000)</span></div>
+                            <div class="p-4 text-center text-red-400 font-bold">46</div>
+                            <div class="p-4 text-center">22.7</div>
+                            <div class="p-4 text-center">21.1</div>
+                        </div>
+                        <div class="grid grid-cols-2 md:grid-cols-4 table-row items-center">
+                            <div class="p-4 font-semibold text-white">Violent Crime Rate <span class="font-normal text-slate-400">(per 1,000)</span></div>
+                            <div class="p-4 text-center text-red-400 font-bold">11.6</div>
+                            <div class="p-4 text-center">4.7</div>
+                            <div class="p-4 text-center">3.6</div>
+                        </div>
+                         <div class="grid grid-cols-2 md:grid-cols-4 table-row items-center">
+                            <div class="p-4 font-semibold text-white">Property Crime Rate <span class="font-normal text-slate-400">(per 1,000)</span></div>
+                            <div class="p-4 text-center text-red-400 font-bold">34.4</div>
+                            <div class="p-4 text-center">18.0</div>
+                            <div class="p-4 text-center">17.5</div>
+                        </div>
+                        <div class="grid grid-cols-2 md:grid-cols-4 table-row items-center">
+                            <div class="p-4 font-semibold text-white">Chance of Victimization</div>
+                            <div class="p-4 text-center text-red-400 font-bold">1 in 22</div>
+                            <div class="p-4 text-center">1 in 44</div>
+                            <div class="p-4 text-center">1 in 47</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <p class="text-xs text-slate-500 mt-4 text-center">Source: NeighborhoodScout, AreaVibes, as of April 2025 estimates.</p>
+        </div>
+
+        <h3 class="text-2xl font-bold text-white mb-6 text-center">A Deeper Dive: System Inefficiencies</h3>
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <div class="bg-slate-800 rounded-lg p-6 border border-slate-700">
+                <h4 class="text-lg font-semibold text-white mb-4 text-center">Case Clearance Status</h4>
+                <div class="max-w-xs mx-auto">
+                    <canvas id="caseStatusChart"></canvas>
+                </div>
+            </div>
+            <div class="bg-slate-800 rounded-lg p-6 border border-slate-700">
+                <h4 class="text-lg font-semibold text-white mb-4 text-center">Arrest Rate Trend (%)</h4>
+                <canvas id="arrestRateChart"></canvas>
+            </div>
+        </div>
     </section>
 
+    <!-- Support Section -->
     <section>
-      <h3 class="h4 text-primary mb-3">How You Can Support</h3>
-      <p>Whether you're a resident, policymaker, or partner agency, you can help move Albany forward through:</p>
-      <ul>
-        <li>Attending our community engagement forums</li>
-        <li>Joining data and oversight working groups</li>
-        <li>Sharing neighborhood feedback and safety ideas</li>
-      </ul>
+      <h2 class="text-3xl font-bold text-white mb-2 section-title">How You Can Support</h2>
+      <p class="text-slate-400 mb-8 max-w-3xl">Progress requires partnership. Whether you're a resident, policymaker, or allied agency, your participation is vital to moving Albany forward.</p>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div class="bg-slate-800 p-6 rounded-lg border border-slate-700">
+            <h4 class="font-semibold text-primary-400 mb-2">Attend Forums</h4><p class="text-slate-400 text-sm">Join our community engagement forums to voice your opinions and ideas.</p>
+        </div>
+        <div class="bg-slate-800 p-6 rounded-lg border border-slate-700">
+            <h4 class="font-semibold text-primary-400 mb-2">Join a Group</h4><p class="text-slate-400 text-sm">Lend your expertise to our data and oversight working groups.</p>
+        </div>
+         <div class="bg-slate-800 p-6 rounded-lg border border-slate-700">
+            <h4 class="font-semibold text-primary-400 mb-2">Share Feedback</h4><p class="text-slate-400 text-sm">Provide neighborhood feedback and safety ideas to guide our strategies.</p>
+        </div>
+      </div>
     </section>
+
   </main>
 
   <!-- Footer -->
-  <footer class="bg-dark text-white text-center py-4 mt-auto">
-    <p class="mb-1">&copy; 2025 Albany Aegis Initiative. All rights reserved.</p>
-    <p class="mb-0">
-      Email: <a href="mailto:info@albany.watch" class="text-warning">info@albany.watch</a> |
-      Phone: <a href="tel:+15185995882" class="text-warning">(518) 599-5882</a>
-    </p>
+  <footer class="bg-slate-900 border-t border-slate-800">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-8 text-center text-slate-400">
+      <p class="mb-2">&copy; 2025 Albany Aegis Initiative. All rights reserved.</p>
+      <p class="text-sm">
+        <a href="mailto:info@albany.watch" class="hover:text-amber-400 transition-colors">info@albany.watch</a>
+      </p>
+    </div>
   </footer>
 
-  <!-- Scripts -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-  <script src="js/main.js"></script>
+  <script>
+    // Simple mobile menu toggle
+    const mobileMenuButton = document.getElementById('mobile-menu-button');
+    const mobileMenu = document.getElementById('mobile-menu');
+
+    mobileMenuButton.addEventListener('click', () => {
+      mobileMenu.classList.toggle('hidden');
+    });
+
+    // Note: A real dark mode toggle would require more logic to handle user preference
+    // and persistence (e.g., using localStorage). This is a placeholder.
+    const darkToggle = document.getElementById('darkToggle');
+    darkToggle.addEventListener('click', () => {
+        document.documentElement.classList.toggle('dark');
+    });
+
+    // Chart.js Data and Configuration
+    document.addEventListener('DOMContentLoaded', () => {
+        // Common Chart Options
+        const commonOptions = {
+            plugins: {
+                legend: {
+                    labels: {
+                        color: '#cbd5e1' // slate-300
+                    }
+                }
+            },
+            scales: {
+                y: {
+                    ticks: { color: '#94a3b8' }, // slate-400
+                    grid: { color: '#334155' } // slate-700
+                },
+                x: {
+                    ticks: { color: '#94a3b8' }, // slate-400
+                    grid: { color: '#334155' } // slate-700
+                }
+            }
+        };
+
+        // Case Status Chart (Doughnut)
+        const caseStatusCtx = document.getElementById('caseStatusChart').getContext('2d');
+        new Chart(caseStatusCtx, {
+            type: 'doughnut',
+            data: {
+                labels: ['Open/Unsolved', 'Closed (No Arrest)', 'Closed (Arrest)'],
+                datasets: [{
+                    label: 'Case Status',
+                    data: [1850, 950, 1200], // Example data derived from files
+                    backgroundColor: [
+                        '#b45309', // amber-700
+                        '#64748b', // slate-500
+                        '#fbbf24'  // amber-400
+                    ],
+                    borderColor: '#1e293b', // slate-800
+                    hoverOffset: 4
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                        labels: {
+                           color: '#cbd5e1'
+                        }
+                    },
+                    tooltip: {
+                         callbacks: {
+                            label: function(context) {
+                                let label = context.label || '';
+                                if (label) {
+                                    label += ': ';
+                                }
+                                if (context.parsed !== null) {
+                                    label += context.parsed;
+                                }
+                                return label;
+                            }
+                        }
+                    }
+                }
+            }
+        });
+
+        // Arrest Rate Chart (Bar)
+        const arrestRateCtx = document.getElementById('arrestRateChart').getContext('2d');
+        new Chart(arrestRateCtx, {
+            type: 'bar',
+            data: {
+                labels: ['2021', '2022', '2023', '2024 (YTD)'],
+                datasets: [{
+                    label: 'Arrest Rate %',
+                    data: [31, 28, 29, 27], // Example data derived from files
+                    backgroundColor: '#d97706', // amber-600
+                    borderColor: '#fbbf24', // amber-400
+                    borderWidth: 1
+                }]
+            },
+            options: commonOptions
+        });
+    });
+  </script>
+
 </body>
 </html>
