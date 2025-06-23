@@ -1,146 +1,354 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Visualizations | Albany Aegis Initiative</title>
-  <meta name="description" content="Interactive crime visualizations: neighborhood data, arrest demographics, heatmaps, and time-based trends for Albany, NY.">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Visualizations | Albany Watch</title>
+    
+    <!-- SEO and Social Sharing -->
+    <meta name="description" content="Interactive crime data visualizations for Albany, NY, with AI-powered analysis. Explore neighborhood trends, arrest demographics, heatmaps, and more." />
+    <meta name="robots" content="index,follow">
+    <meta property="og:title" content="Visualizations | Albany Watch">
+    <meta property="og:description" content="Explore interactive charts and get AI-powered insights into crime data in Albany, NY.">
+    <meta property="og:image" content="https://placehold.co/1200x630/1e40af/ffffff?text=Albany.watch+Visualizations">
+    <meta property="og:url" content="https://www.albany.watch/visualizations.html">
+    <meta name="twitter:card" content="summary_large_image">
 
-  <!-- Favicons for All Platforms -->
-  <link rel="apple-touch-icon" sizes="180x180" href="favicon-192.png" />
-  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png" />
-  <link rel="icon" type="image/png" sizes="96x96" href="favicon-96.png" />
-  <link rel="icon" type="image/png" sizes="192x192" href="favicon-192.png" />
-  <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+    <!-- Favicons -->
+    <link rel="apple-touch-icon" sizes="180x180" href="favicon-192.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png" />
+    <link rel="icon" type="image/png" sizes="192x192" href="favicon-192.png" />
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+    
+    <!-- Web Manifest & Themeing -->
+    <link rel="manifest" href="manifest.json" />
+    <meta name="theme-color" content="#111827" />
+    <meta name="color-scheme" content="light dark">
 
-  <!-- Web Manifest for Android and Progressive Web App (PWA) -->
-  <link rel="manifest" href="manifest.json" />
-  <meta name="theme-color" content="#003087" />
-  <meta name="msapplication-navbutton-color" content="#003087" />
-  <meta name="msapplication-TileColor" content="#003087" />
-  <meta name="msapplication-navbutton-color" content="#003087" />
-  <meta name="apple-mobile-web-app-status-bar-style" content="#003087" />
-  <meta name="msapplication-navbutton-color" content="#003087" />
-  <meta name="msapplication-TileColor" content="#003087" />
-  <meta name="msapplication-TileColor" content="#003087" />
-  <meta name="mobile-web-app-capable" content="yes" />
-  <meta name="application-name" content="Albany Aegis Initiative" />
-
-  <!-- iOS Safari Homescreen -->
-  <meta name="apple-mobile-web-app-capable" content="yes" />
-  <meta name="apple-mobile-web-app-title" content="Albany Aegis" />
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-
-  <!-- Fonts, Bootstrap, Font Awesome -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet" />
-  <link rel="stylesheet" href="css/style.css" />
+    <!-- Preload Fonts for Performance -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet"></noscript>
+    
+    <!-- Critical Scripts and Styles -->
+    <!-- NOTE: For production, Tailwind CSS should be built and purged to a small file, not loaded from CDN. -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Custom base styles and utilities */
+        body { font-family: 'Inter', sans-serif; background-color: #f3f4f6; }
+        .dark body { background-color: #030712; }
+        .logo-text { font-weight: 800; letter-spacing: -0.05em; }
+        /* Skip link: visually hidden until focused */
+        .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border-width: 0; }
+        .focus\:not-sr-only:focus { position: static; width: auto; height: auto; padding: 0; margin: 0; overflow: visible; clip: auto; white-space: normal; }
+        /* Enhanced focus indicators */
+        .focus-visible-ring { outline: none; }
+        .focus-visible-ring:focus-visible { box-shadow: 0 0 0 2px #f3f4f6, 0 0 0 4px #2563eb; }
+        .dark .focus-visible-ring:focus-visible { box-shadow: 0 0 0 2px #030712, 0 0 0 4px #3b82f6; }
+        /* Spinner animation */
+        @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+        .spinner {
+            border: 2px solid rgba(0, 0, 0, 0.1);
+            width: 1rem;
+            height: 1rem;
+            border-radius: 50%;
+            border-left-color: #fff;
+            animation: spin 1s linear infinite;
+        }
+    </style>
+    
+    <!-- Inline script to prevent FOUC on dark mode -->
+    <script>
+      (function() {
+        const theme = localStorage.getItem('theme');
+        const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        if (theme === 'dark' || (!theme && systemPrefersDark)) {
+          document.documentElement.classList.add('dark');
+        }
+      })();
+    </script>
 </head>
-<body>
+<body class="text-gray-800 dark:text-gray-200">
+    
+    <!-- Accessibility Skip Link -->
+    <a href="#main-content" class="sr-only focus:not-sr-only block text-center bg-blue-600 text-white p-2">Skip to main content</a>
 
-  <!-- Header -->
-  <header class="bg-dark text-white py-3">
-    <div class="container">
-      <nav class="navbar navbar-expand-lg navbar-dark">
-        <a class="navbar-brand logo" href="index.html">Albany Aegis Initiative</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-            <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
-            <li class="nav-item"><a class="nav-link" href="about.html">About</a></li>
-            <li class="nav-item"><a class="nav-link" href="crime-data.html">Crime Data</a></li>
-            <li class="nav-item"><a class="nav-link" href="resources.html">Resources</a></li>
-            <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
-            <li class="nav-item"><a class="nav-link active" href="visualizations.html" aria-current="page">Visualizations</a></li>
-          </ul>
-          <button id="darkToggle" class="btn btn-outline-light ms-lg-3" aria-label="Toggle dark mode">
-            <i class="fas fa-moon"></i>
-          </button>
+    <!-- Header -->
+    <header role="banner" class="bg-white/75 dark:bg-gray-900/75 backdrop-blur-lg sticky top-0 z-50 border-b border-gray-200 dark:border-gray-800">
+        <div class="container mx-auto px-4">
+            <nav role="navigation" aria-label="Primary" class="flex justify-between items-center py-4">
+                <a href="index.html" class="text-2xl font-extrabold text-gray-900 dark:text-white logo-text focus-visible-ring rounded">
+                    Albany<span class="text-blue-600">.watch</span>
+                </a>
+                <div class="hidden lg:flex items-center space-x-6 text-sm font-semibold">
+                    <a href="index.html" class="text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-500 transition-colors focus-visible-ring rounded">Home</a>
+                    <a href="about.html" class="text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-500 transition-colors focus-visible-ring rounded">About</a>
+                    <a href="crime-data.html" class="text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-500 transition-colors focus-visible-ring rounded">Crime Data</a>
+                    <a href="crime-tracker.html" class="text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-500 transition-colors focus-visible-ring rounded">Crime Tracker</a>
+                    <a href="resources.html" class="text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-500 transition-colors focus-visible-ring rounded">Resources</a>
+                    <a href="contact.html" class="text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-500 transition-colors focus-visible-ring rounded">Contact</a>
+                    <a href="visualizations.html" class="text-blue-600 dark:text-blue-500 focus-visible-ring rounded" aria-current="page">Visualizations</a>
+                </div>
+                <div class="flex items-center">
+                    <button id="darkToggle" class="w-10 h-10 rounded-full flex items-center justify-center text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors focus-visible-ring" aria-label="Toggle dark mode">
+                        <svg id="moonIcon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="hidden"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+                        <svg id="sunIcon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+                    </button>
+                    <button class="lg:hidden ml-3 focus-visible-ring rounded" id="mobileMenuButton" aria-label="Open menu" aria-expanded="false" aria-controls="mobileMenu">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
+                        </svg>
+                    </button>
+                </div>
+            </nav>
         </div>
-      </nav>
-    </div>
-  </header>
+        <!-- Mobile Menu -->
+        <div id="mobileMenu" class="hidden lg:hidden bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-800">
+             <a href="index.html" class="block py-2 px-4 text-sm text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800">Home</a>
+             <a href="about.html" class="block py-2 px-4 text-sm text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800">About</a>
+             <a href="crime-data.html" class="block py-2 px-4 text-sm text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800">Crime Data</a>
+             <a href="crime-tracker.html" class="block py-2 px-4 text-sm text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800">Crime Tracker</a>
+             <a href="resources.html" class="block py-2 px-4 text-sm text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800">Resources</a>
+             <a href="contact.html" class="block py-2 px-4 text-sm text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800">Contact</a>
+             <a href="visualizations.html" class="block py-2 px-4 text-sm text-blue-600 dark:text-blue-500 bg-gray-100 dark:bg-gray-800" aria-current="page">Visualizations</a>
+        </div>
+    </header>
 
-  <!-- Main Content -->
-  <main class="container my-5">
-    <h2 class="h3 text-primary mb-4">Interactive Crime Data Visualizations</h2>
-    <p>These interactive charts explore trends in reported crimes and arrests across Albany, NY (2021–2024), offering insight into demographics, neighborhood activity, and temporal dynamics.</p>
+    <!-- Main Content -->
+    <main id="main-content" role="main" tabindex="-1" class="container mx-auto px-4 py-8 sm:py-12">
+        <div class="text-center mb-12">
+            <h1 class="text-4xl sm:text-5xl font-extrabold text-gray-900 dark:text-white mb-4">Data Visualizations</h1>
+            <p class="max-w-3xl mx-auto text-lg text-gray-600 dark:text-gray-400">
+                Explore interactive charts on reported crimes and arrests in Albany, NY (2021–2024). Below, you can also use our AI-powered tool to generate a summary of these findings.
+            </p>
+        </div>
 
-    <div class="row g-5">
+        <!-- Gemini AI Analysis Section -->
+        <section class="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6 md:p-8 mb-12 border border-blue-200 dark:border-blue-800">
+            <h2 class="text-2xl sm:text-3xl font-extrabold text-gray-900 dark:text-white mb-3">AI-Powered Analysis</h2>
+            <p class="text-gray-600 dark:text-gray-400 mb-6">Click the button below to get an AI-generated analysis of the key trends from the data visualizations shown on this page. This summary is created by Google's Gemini model.</p>
+            <button id="generateInsightsBtn" class="inline-flex items-center justify-center px-6 py-3 bg-blue-600 text-white font-semibold rounded-lg shadow-md hover:bg-blue-700 focus:outline-none focus-visible-ring disabled:bg-gray-400 disabled:cursor-wait transition-colors">
+                <span class="mr-2">✨</span>
+                Generate Insights
+            </button>
+            <div id="loadingIndicator" class="mt-6 hidden items-center text-gray-600 dark:text-gray-400">
+                <div class="spinner mr-3"></div>
+                <span>Analyzing data and generating insights...</span>
+            </div>
+            <div id="insightsResult" class="mt-6 text-gray-700 dark:text-gray-300 prose prose-blue dark:prose-invert max-w-none"></div>
+        </section>
 
-      <!-- Chart 1: Arrests by Neighborhood -->
-      <div class="col-md-6">
-        <img src="images/Arrests by Neighborhood (Choropleth-style Summary).png" alt="Arrests by Neighborhood" class="img-fluid rounded shadow" />
-        <p class="text-muted small mt-2">Choropleth-style summary of arrests by neighborhood.</p>
-      </div>
+        <!-- Visualizations Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
 
-      <!-- Chart 2: Reported Crimes by Day -->
-      <div class="col-md-6">
-        <img src="images/Reported Crimes by Day of the Week.png" alt="Reported Crimes by Day" class="img-fluid rounded shadow" />
-        <p class="text-muted small mt-2">Reported crimes by day of the week. Fridays and Saturdays consistently show higher volume.</p>
-      </div>
+            <!-- Card 1: Arrests by Neighborhood -->
+            <section class="bg-white dark:bg-gray-800 rounded-xl shadow-lg overflow-hidden transform hover:-translate-y-1 transition-all duration-300" aria-labelledby="viz-title-1">
+                <img src="https://placehold.co/600x400/e0f2fe/0c4a6e?text=Choropleth+Map" alt="Choropleth map showing arrests by neighborhood" class="w-full h-48 object-cover" width="600" height="400" loading="lazy">
+                <div class="p-6">
+                    <h2 id="viz-title-1" class="font-bold text-xl mb-2 text-gray-900 dark:text-white">Arrests by Neighborhood</h2>
+                    <p class="text-gray-600 dark:text-gray-400 text-sm">Choropleth-style summary of arrests by neighborhood.</p>
+                </div>
+            </section>
 
-      <!-- Chart 3: Arrest Heatmap -->
-      <div class="col-md-6">
-        <img src="images/Temporal Heatmap of Arrests (Hour of Day vs Day of Week).png" alt="Arrest Heatmap" class="img-fluid rounded shadow" />
-        <p class="text-muted small mt-2">Temporal heatmap showing frequency of arrests by hour and weekday.</p>
-      </div>
+            <!-- Card 2: Reported Crimes by Day -->
+            <section class="bg-white dark:bg-gray-800 rounded-xl shadow-lg overflow-hidden transform hover:-translate-y-1 transition-all duration-300" aria-labelledby="viz-title-2">
+                <img src="https://placehold.co/600x400/d1fae5/065f46?text=Bar+Chart" alt="Bar chart showing reported crimes by day of the week" class="w-full h-48 object-cover" width="600" height="400" loading="lazy">
+                <div class="p-6">
+                    <h2 id="viz-title-2" class="font-bold text-xl mb-2 text-gray-900 dark:text-white">Reported Crimes by Day</h2>
+                    <p class="text-gray-600 dark:text-gray-400 text-sm">Reported crimes by day of the week. Fridays and Saturdays consistently show higher volume.</p>
+                </div>
+            </section>
 
-      <!-- Chart 4: Crime Heatmap -->
-      <div class="col-md-6">
-        <img src="images/Temporal Heatmap of Reported Crimes (Hour of Day vs Day of Week).png" alt="Reported Crimes Heatmap" class="img-fluid rounded shadow" />
-        <p class="text-muted small mt-2">Reported crime density by time of day across the week.</p>
-      </div>
+            <!-- Card 3: Arrest Heatmap -->
+            <section class="bg-white dark:bg-gray-800 rounded-xl shadow-lg overflow-hidden transform hover:-translate-y-1 transition-all duration-300" aria-labelledby="viz-title-3">
+                <img src="https://placehold.co/600x400/fef3c7/92400e?text=Temporal+Heatmap" alt="Temporal heatmap of arrests" class="w-full h-48 object-cover" width="600" height="400" loading="lazy">
+                <div class="p-6">
+                    <h2 id="viz-title-3" class="font-bold text-xl mb-2 text-gray-900 dark:text-white">Arrest Heatmap</h2>
+                    <p class="text-gray-600 dark:text-gray-400 text-sm">Temporal heatmap showing frequency of arrests by hour and weekday.</p>
+                </div>
+            </section>
 
-      <!-- Chart 5: Arrests by Sex -->
-      <div class="col-md-6">
-        <img src="images/Arrests by Sex.png" alt="Arrests by Sex" class="img-fluid rounded shadow" />
-        <p class="text-muted small mt-2">Gender distribution among arrestees. Male arrests are the majority across all zones.</p>
-      </div>
+            <!-- Card 4: Crime Heatmap -->
+            <section class="bg-white dark:bg-gray-800 rounded-xl shadow-lg overflow-hidden transform hover:-translate-y-1 transition-all duration-300" aria-labelledby="viz-title-4">
+                <img src="https://placehold.co/600x400/fef3c7/92400e?text=Temporal+Heatmap" alt="Temporal heatmap of reported crimes" class="w-full h-48 object-cover" width="600" height="400" loading="lazy">
+                <div class="p-6">
+                    <h2 id="viz-title-4" class="font-bold text-xl mb-2 text-gray-900 dark:text-white">Crime Heatmap</h2>
+                    <p class="text-gray-600 dark:text-gray-400 text-sm">Reported crime density by time of day across the week.</p>
+                </div>
+            </section>
 
-      <!-- Chart 6: Top Arrest Types by Race -->
-      <div class="col-md-6">
-        <img src="images/Top Arrest Types by Race.png" alt="Top Arrest Types by Race" class="img-fluid rounded shadow" />
-        <p class="text-muted small mt-2">Breakdown of top arrest offenses by race (2021–2024).</p>
-      </div>
+            <!-- Card 5: Arrests by Sex -->
+            <section class="bg-white dark:bg-gray-800 rounded-xl shadow-lg overflow-hidden transform hover:-translate-y-1 transition-all duration-300" aria-labelledby="viz-title-5">
+                <img src="https://placehold.co/600x400/e9d5ff/581c87?text=Donut+Chart" alt="Donut chart showing arrests by sex" class="w-full h-48 object-cover" width="600" height="400" loading="lazy">
+                <div class="p-6">
+                    <h2 id="viz-title-5" class="font-bold text-xl mb-2 text-gray-900 dark:text-white">Arrests by Sex</h2>
+                    <p class="text-gray-600 dark:text-gray-400 text-sm">Gender distribution among arrestees. Male arrests are the majority across all zones.</p>
+                </div>
+            </section>
 
-      <!-- Chart 7: Geographic Crime Spread -->
-      <div class="col-md-6">
-        <img src="images/Geographic Distribution of Reported Crimes in Albany.png" alt="Geographic Crime Map" class="img-fluid rounded shadow" />
-        <p class="text-muted small mt-2">Geographic concentration of reported crime incidents in Albany city limits.</p>
-      </div>
+            <!-- Card 6: Top Arrest Types by Race -->
+            <section class="bg-white dark:bg-gray-800 rounded-xl shadow-lg overflow-hidden transform hover:-translate-y-1 transition-all duration-300" aria-labelledby="viz-title-6">
+                <img src="https://placehold.co/600x400/d1fae5/065f46?text=Grouped+Bar+Chart" alt="Grouped bar chart showing top arrest types by race" class="w-full h-48 object-cover" width="600" height="400" loading="lazy">
+                <div class="p-6">
+                    <h2 id="viz-title-6" class="font-bold text-xl mb-2 text-gray-900 dark:text-white">Top Arrest Types by Race</h2>
+                    <p class="text-gray-600 dark:text-gray-400 text-sm">Breakdown of top arrest offenses by race (2021–2024).</p>
+                </div>
+            </section>
+            
+            <!-- Card 7: Geographic Crime Spread -->
+            <section class="bg-white dark:bg-gray-800 rounded-xl shadow-lg overflow-hidden transform hover:-translate-y-1 transition-all duration-300" aria-labelledby="viz-title-7">
+                <img src="https://placehold.co/600x400/e0f2fe/0c4a6e?text=Geographic+Scatter" alt="Geographic map of crime incidents" class="w-full h-48 object-cover" width="600" height="400" loading="lazy">
+                <div class="p-6">
+                    <h2 id="viz-title-7" class="font-bold text-xl mb-2 text-gray-900 dark:text-white">Geographic Crime Spread</h2>
+                    <p class="text-gray-600 dark:text-gray-400 text-sm">Geographic concentration of reported crime incidents in Albany city limits.</p>
+                </div>
+            </section>
 
-      <!-- Chart 8: Predicted Violent Crime Rate by Zone -->
-      <div class="col-md-12">
-        <img src="images/predicted-violent-crime-rate-2023.png" alt="Predicted Violent Crime Rate by Zone" class="img-fluid rounded shadow" />
-          <strong>Figure:</strong> Predicted violent crime rates by zone using a 2023 regression model. Model inputs include population growth, minority percentage, migration pressure, and police presence index. High-risk zones include Albany–Arbor Hill and Schenectady–Central.
-        <p></p>
-      </div>
+            <!-- Card 8: Predicted Violent Crime Rate (Full Width) -->
+            <section class="md:col-span-2 lg:col-span-3 bg-white dark:bg-gray-800 rounded-xl shadow-lg overflow-hidden transform hover:-translate-y-1 transition-all duration-300" aria-labelledby="viz-title-8">
+                <img src="https://placehold.co/1200x500/fee2e2/991b1b?text=Predicted+Violent+Crime+Rate+by+Zone+(Regression+Model)" alt="Map showing predicted violent crime rate by zone" class="w-full h-64 sm:h-80 object-cover" width="1200" height="500" loading="lazy">
+                <div class="p-6">
+                    <h2 id="viz-title-8" class="font-bold text-xl mb-2 text-gray-900 dark:text-white">Predicted Violent Crime Rate by Zone</h2>
+                    <p class="text-gray-600 dark:text-gray-400 text-sm">
+                        Predicted violent crime rates by zone using a 2023 regression model. Model inputs include population growth, minority percentage, migration pressure, and police presence index. High-risk zones include Albany–Arbor Hill and Schenectady–Central.
+                    </p>
+                </div>
+            </section>
+        </div>
 
-    </div>
+        <!-- Source Note -->
+        <div class="mt-16 pt-8 border-t border-gray-200 dark:border-gray-700 text-center">
+            <p class="text-sm text-gray-500 dark:text-gray-400">
+                <strong>Source:</strong> Albany Police Department FOIL data (2021–2024), processed by the Albany Watch Initiative. Visuals are illustrative and based on analyses produced with Python, Seaborn, and other data science libraries.
+            </p>
+        </div>
+    </main>
 
-    <!-- Source Note -->
-    <div class="mt-5 pt-4 border-top">
-      <p class="small text-muted">
-        <strong>Source:</strong> Albany Police Department FOIL data (2021–2024), processed by the Albany Aegis Initiative. Visuals produced with Python, Seaborn, and Chart.js.
-      </p>
-    </div>
-  </main>
+    <!-- Footer -->
+    <footer role="contentinfo" class="bg-gray-900 text-white">
+        <div class="container mx-auto px-4 py-8 text-center">
+            <p class="mb-2">&copy; 2025 Albany Watch Initiative. All rights reserved.</p>
+            <p class="text-sm text-gray-400">
+                Email: <a href="mailto:info@albany.watch" class="text-blue-400 hover:text-blue-300 focus-visible-ring rounded">info@albany.watch</a>
+            </p>
+        </div>
+    </footer>
 
-  <!-- Footer -->
-  <footer class="bg-dark text-white text-center py-4 mt-auto">
-    <p class="mb-1">&copy; 2025 Albany Aegis Initiative. All rights reserved.</p>
-    <p class="mb-0">
-      Email: <a href="mailto:info@albany.watch" class="text-warning">info@albany.watch</a> |
-      Phone: <a href="tel:+15185995882" class="text-warning">(518) 599-5882</a>
-    </p>
-  </footer>
+    <!-- Deferred JavaScript for Performance -->
+    <script defer>
+        document.addEventListener('DOMContentLoaded', () => {
+            const darkToggle = document.getElementById('darkToggle');
+            const sunIcon = document.getElementById('sunIcon');
+            const moonIcon = document.getElementById('moonIcon');
+            const mobileMenuButton = document.getElementById('mobileMenuButton');
+            const mobileMenu = document.getElementById('mobileMenu');
+            const generateBtn = document.getElementById('generateInsightsBtn');
+            const loadingIndicator = document.getElementById('loadingIndicator');
+            const insightsResult = document.getElementById('insightsResult');
 
-  <!-- Scripts -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-  <script src="js/main.js"></script>
+            // Function to apply the current theme
+            const applyTheme = (theme) => {
+                if (theme === 'dark') {
+                    document.documentElement.classList.add('dark');
+                    if(sunIcon) sunIcon.classList.add('hidden');
+                    if(moonIcon) moonIcon.classList.remove('hidden');
+                } else {
+                    document.documentElement.classList.remove('dark');
+                    if(sunIcon) sunIcon.classList.remove('hidden');
+                    if(moonIcon) moonIcon.classList.add('hidden');
+                }
+            };
+
+            // Dark Mode Toggle Listener
+            darkToggle.addEventListener('click', () => {
+                const newTheme = document.documentElement.classList.contains('dark') ? 'light' : 'dark';
+                localStorage.setItem('theme', newTheme);
+                applyTheme(newTheme);
+            });
+            
+            // Mobile Menu Toggle
+            mobileMenuButton.addEventListener('click', () => {
+                const isExpanded = mobileMenu.classList.toggle('hidden');
+                mobileMenuButton.setAttribute('aria-expanded', !isExpanded);
+            });
+
+            // Gemini API Call
+            generateBtn.addEventListener('click', async () => {
+                loadingIndicator.style.display = 'flex';
+                insightsResult.innerHTML = '';
+                generateBtn.disabled = true;
+
+                try {
+                    // 1. Gather context from the page
+                    const chartSections = document.querySelectorAll('main section[aria-labelledby]');
+                    let dataContext = "Here is a summary of data visualizations for crime in Albany, NY from 2021-2024:\n\n";
+                    chartSections.forEach(section => {
+                        const title = section.querySelector('h2').innerText;
+                        const description = section.querySelector('p').innerText;
+                        if (title && description) {
+                           dataContext += `- **${title}**: ${description}\n`;
+                        }
+                    });
+
+                    // 2. Create the prompt
+                    const prompt = `
+                    As an expert data analyst specializing in criminology and public policy, please analyze the following summary of crime data visualizations for Albany, NY.
+
+                    Provide a concise, high-level summary of the key trends and insights a citizen or policymaker should take away from this data. Your analysis should be well-structured with clear headings, and must:
+                    1.  Identify the most significant patterns (e.g., temporal hotspots, demographic trends, high-risk areas).
+                    2.  Suggest potential underlying factors that could contribute to these patterns.
+                    3.  Pose 2-3 critical questions that this data raises for city officials or community leaders to consider.
+                    
+                    Keep the tone objective, insightful, and accessible to a general audience. Do not just list the data points; synthesize them into a coherent narrative. Start your response with a clear heading like "Key Insights from the Data".
+
+                    Data summary to analyze:
+                    ${dataContext}
+                    `;
+
+                    // 3. Call the Gemini API
+                    const apiKey = ""; // Canvas will provide this
+                    const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
+                    
+                    const payload = {
+                        contents: [{
+                            role: "user",
+                            parts: [{ text: prompt }]
+                        }]
+                    };
+
+                    const response = await fetch(apiUrl, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload)
+                    });
+
+                    if (!response.ok) {
+                        throw new Error(`API Error: ${response.statusText}`);
+                    }
+
+                    const result = await response.json();
+
+                    // 4. Display the result
+                    if (result.candidates && result.candidates[0].content.parts[0].text) {
+                        let text = result.candidates[0].content.parts[0].text;
+                        // Basic markdown to HTML conversion
+                        text = text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+                                   .replace(/\n/g, '<br>');
+                        insightsResult.innerHTML = `<div class="p-4 bg-gray-100 dark:bg-gray-900 rounded-lg">${text}</div>`;
+                    } else {
+                        throw new Error("No content received from the API.");
+                    }
+
+                } catch (error) {
+                    console.error("Error generating insights:", error);
+                    insightsResult.innerHTML = `<p class="text-red-500">Sorry, we couldn't generate insights at this time. Please try again later.</p>`;
+                } finally {
+                    loadingIndicator.style.display = 'none';
+                    generateBtn.disabled = false;
+                }
+            });
+        });
+    </script>
 </body>
 </html>
