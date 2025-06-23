@@ -1,197 +1,460 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Crime Data | Albany Aegis Initiative</title>
-  <meta name="description" content="Explore Albany crime trends, strategic visualizations, and report analysis (2021–2024).">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Crime Data | Albany Aegis Initiative</title>
+    <meta name="description" content="Explore Albany crime trends, strategic visualizations, and report analysis (2021–2024).">
 
-  <!-- Fonts & Styles -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet" />
-  <link rel="stylesheet" href="css/style.css" />
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <style>
+        /* Custom base styles */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc; /* Tailwind gray-50 */
+        }
+        /* Custom styles for Chart.js responsiveness */
+        .chart-container {
+            position: relative;
+            height: 400px;
+            width: 100%;
+        }
+        /* Loading spinner */
+        .loader {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #3498db;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 20px auto;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
 </head>
-<body>
+<body class="bg-gray-50 text-gray-800">
 
-  <!-- Header -->
-  <header class="bg-dark text-white py-3">
-    <div class="container">
-      <nav class="navbar navbar-expand-lg navbar-dark">
-        <a class="navbar-brand logo" href="index.html">Albany Aegis Initiative</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-            <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
-            <li class="nav-item"><a class="nav-link" href="about.html">About</a></li>
-            <li class="nav-item"><a class="nav-link active" href="crime-data.html" aria-current="page">Crime Data</a></li>
-            <li class="nav-item"><a class="nav-link" href="resources.html">Resources</a></li>
-            <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
-          </ul>
-          <button id="darkToggle" class="btn btn-outline-light ms-lg-3" aria-label="Toggle dark mode">
-            <i class="fas fa-moon"></i>
-          </button>
+    <!-- Header -->
+    <header class="bg-white shadow-sm sticky top-0 z-50">
+        <div class="container mx-auto px-4">
+            <nav class="flex justify-between items-center py-4">
+                <a href="#" class="text-xl font-bold text-gray-900">Albany Aegis Initiative</a>
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="#" class="text-gray-600 hover:text-blue-700">Home</a>
+                    <a href="#" class="text-gray-600 hover:text-blue-700">About</a>
+                    <a href="#" class="text-blue-700 font-semibold border-b-2 border-blue-700 pb-1">Crime Data</a>
+                    <a href="#" class="text-gray-600 hover:text-blue-700">Resources</a>
+                    <a href="#" class="text-gray-600 hover:text-blue-700">Contact</a>
+                </div>
+                <!-- Mobile Menu Button -->
+                <button id="mobile-menu-button" class="md:hidden p-2 rounded-md text-gray-600 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-500">
+                    <span class="sr-only">Open main menu</span>
+                    <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
+                    </svg>
+                </button>
+            </nav>
         </div>
-      </nav>
-    </div>
-  </header>
-
-  <!-- Main -->
-  <main class="container my-5">
-
-    <section class="mb-5">
-      <h2 class="h3 text-primary mb-3">2021–2024 Crime Overview</h2>
-      <p>This report summarizes Albany's recent crime trends and performance metrics based on official data. Strategic analysis and visualizations support transparency and policy improvement.</p>
-    </section>
-
-    <section class="mb-5">
-      <h3 class="h4 text-primary mb-3">Downloadable Reports</h3>
-      <ul>
-        <li><a href="reports/Crime-Analysis-Report.pdf" target="_blank">Crime Analysis Report (PDF)</a></li>
-        <li><a href="reports/FOIL-Crime-Data-Summary.pdf" target="_blank" aria-label="Download the FOIL Crime Data Summary in PDF format">FOIL Crime Data Summary (PDF)</a></li>
-      </ul>
-    </section>
-
-    <section class="mb-5" id="visual-highlights">
-      <h3 class="h4 text-primary mb-3">Visual Highlights</h3>
-
-      <ul class="nav nav-tabs mb-3" id="vizTabs" role="tablist">
-        <li class="nav-item" role="presentation">
-          <button class="nav-link active" id="tab1-tab" data-bs-toggle="tab" data-bs-target="#tab1" type="button" role="tab">Crimes by Neighborhood</button>
-        </li>
-        <li class="nav-item" role="presentation">
-          <button class="nav-link" id="tab2-tab" data-bs-toggle="tab" data-bs-target="#tab2" type="button" role="tab">Crimes by Type</button>
-        </li>
-      </ul>
-
-      <div class="tab-content" id="vizTabsContent">
-        <div class="tab-pane fade show active" id="tab1" role="tabpanel">
-          <canvas id="neighborhoodChart" height="300"></canvas>
-          <p class="small text-muted mt-2">Top neighborhoods by reported crimes (2021–2024).</p>
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="md:hidden hidden px-4 pt-2 pb-4 space-y-2">
+            <a href="#" class="block text-gray-600 hover:text-blue-700 py-2">Home</a>
+            <a href="#" class="block text-gray-600 hover:text-blue-700 py-2">About</a>
+            <a href="#" class="block text-blue-700 font-semibold py-2">Crime Data</a>
+            <a href="#" class="block text-gray-600 hover:text-blue-700 py-2">Resources</a>
+            <a href="#" class="block text-gray-600 hover:text-blue-700 py-2">Contact</a>
         </div>
-        <div class="tab-pane fade" id="tab2" role="tabpanel">
-          <canvas id="typeChart" height="300"></canvas>
-          <p class="small text-muted mt-2">Most frequent crime types by classification.</p>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 py-8 md:py-12">
+
+        <!-- Page Title & Intro -->
+        <section class="text-center mb-12">
+            <h1 class="text-4xl md:text-5xl font-bold text-gray-900 mb-4">Albany Crime Data & Analysis</h1>
+            <p class="max-w-3xl mx-auto text-lg text-gray-600">
+                An overview of crime trends from 2021–2024. This report uses official data to provide strategic analysis and visualizations, fostering transparency and informing policy.
+            </p>
+        </section>
+
+        <!-- Downloadable Reports -->
+        <section class="mb-12">
+            <h2 class="text-2xl font-bold text-gray-900 mb-6 text-center">Downloadable Reports</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+                <!-- Report Card 1 -->
+                <a href="#" class="block bg-white p-6 rounded-lg shadow-md hover:shadow-xl transition-shadow border border-gray-200">
+                    <div class="flex items-center">
+                        <svg class="h-8 w-8 text-blue-700 mr-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m.75 12 3 3m0 0 3-3m-3 3v-6m-1.5-9H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z" />
+                        </svg>
+                        <div>
+                            <h3 class="font-semibold text-lg text-gray-800">Crime Analysis Report</h3>
+                            <p class="text-gray-600">In-depth analysis and findings. (PDF)</p>
+                        </div>
+                    </div>
+                </a>
+                <!-- Report Card 2 -->
+                <a href="#" class="block bg-white p-6 rounded-lg shadow-md hover:shadow-xl transition-shadow border border-gray-200">
+                     <div class="flex items-center">
+                        <svg class="h-8 w-8 text-blue-700 mr-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                           <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m.75 12 3 3m0 0 3-3m-3 3v-6m-1.5-9H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z" />
+                        </svg>
+                        <div>
+                            <h3 class="font-semibold text-lg text-gray-800">FOIL Crime Data Summary</h3>
+                            <p class="text-gray-600">Summary data obtained via FOIL request. (PDF)</p>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </section>
+
+        <!-- AI Insights Section -->
+        <section class="mb-12">
+            <h2 class="text-2xl font-bold text-gray-900 mb-6 text-center">AI-Powered Insights</h2>
+            <div class="max-w-4xl mx-auto text-center">
+                <button id="generate-summary-btn" class="bg-indigo-600 text-white font-medium py-3 px-6 rounded-lg hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-colors inline-flex items-center space-x-2">
+                    <span>✨</span>
+                    <span>Generate AI Data Summary</span>
+                </button>
+                <div id="ai-summary-container" class="mt-6 hidden">
+                    <div id="loader-container" class="loader"></div>
+                    <div id="ai-summary-output" class="bg-white p-6 rounded-lg shadow-lg border border-gray-200 text-left">
+                        <!-- AI-generated content will be inserted here -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Visual Highlights -->
+        <section class="mb-12">
+            <h2 class="text-2xl font-bold text-gray-900 mb-6 text-center">Visual Highlights</h2>
+            <div class="bg-white p-6 rounded-lg shadow-lg border border-gray-200">
+                <!-- Tabs -->
+                <div class="border-b border-gray-200">
+                    <nav class="-mb-px flex space-x-6" id="vizTabs" role="tablist">
+                        <button class="nav-link active py-4 px-1 border-b-2 font-medium text-sm text-blue-600 border-blue-600" id="tab1-tab" data-bs-toggle="tab" data-bs-target="#tab1" type="button" role="tab">Crimes by Neighborhood</button>
+                        <button class="nav-link py-4 px-1 border-b-2 border-transparent font-medium text-sm text-gray-500 hover:text-gray-700 hover:border-gray-300" id="tab2-tab" data-bs-toggle="tab" data-bs-target="#tab2" type="button" role="tab">Crimes by Type</button>
+                    </nav>
+                </div>
+
+                <!-- Tab Content -->
+                <div class="mt-6" id="vizTabsContent">
+                    <div class="tab-pane active" id="tab1" role="tabpanel">
+                        <div class="chart-container">
+                            <canvas id="neighborhoodChart"></canvas>
+                        </div>
+                        <p class="text-sm text-gray-500 mt-2 text-center">Top neighborhoods by reported crimes (2021–2024).</p>
+                    </div>
+                    <div class="tab-pane hidden" id="tab2" role="tabpanel">
+                         <div class="chart-container">
+                            <canvas id="typeChart"></canvas>
+                        </div>
+                        <p class="text-sm text-gray-500 mt-2 text-center">Most frequent crime types by classification.</p>
+                    </div>
+                </div>
+                
+                <!-- View All Link -->
+                <div class="mt-8 text-center">
+                    <a href="visualizations.html" class="inline-block bg-blue-600 text-white font-medium py-2 px-5 rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors">
+                        View All Visualizations
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Interactive Trends -->
+        <section>
+            <h2 class="text-2xl font-bold text-gray-900 mb-6 text-center">Interactive Trends</h2>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <!-- Chart Card 1 -->
+                <div class="bg-white p-6 rounded-lg shadow-lg border border-gray-200">
+                    <div class="chart-container">
+                        <canvas id="crimesVsArrestsChart"></canvas>
+                    </div>
+                    <p class="text-sm text-gray-500 mt-2 text-center">Total crimes and arrests per year.</p>
+                </div>
+                 <!-- Chart Card 2 -->
+                <div class="bg-white p-6 rounded-lg shadow-lg border border-gray-200">
+                    <div class="chart-container">
+                        <canvas id="closureRateChart"></canvas>
+                    </div>
+                     <p class="text-sm text-gray-500 mt-2 text-center">Annual case closure rates.</p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white mt-16">
+        <div class="container mx-auto px-4 py-8 text-center">
+            <p class="font-semibold text-lg mb-2">Albany Aegis Initiative</p>
+            <p class="mb-2">&copy; 2025 All rights reserved.</p>
+            <p class="text-gray-400">
+                Email: <a href="mailto:info@albany.watch" class="text-blue-400 hover:underline">info@albany.watch</a>
+            </p>
         </div>
-      </div>
+    </footer>
 
-      <div class="mt-4">
-        <a href="visualizations.html" class="btn btn-outline-primary">View All Visualizations</a>
-      </div>
-    </section>
+    <!-- Scripts -->
+    <script>
+        // Mobile menu toggle
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
 
-    <section class="mb-5">
-      <h3 class="h4 text-primary mb-3">Interactive Trends</h3>
-      <div class="row">
-        <div class="col-md-6 mb-4">
-          <canvas id="crimesVsArrestsChart"></canvas>
-          <p class="text-muted small mt-2">Total crimes and arrests per year.</p>
-        </div>
-        <div class="col-md-6 mb-4">
-          <canvas id="closureRateChart"></canvas>
-          <p class="text-muted small mt-2">Annual case closure rates.</p>
-        </div>
-      </div>
-    </section>
-  </main>
+        // Tab functionality
+        const tabLinks = document.querySelectorAll('.nav-link');
+        const tabPanes = document.querySelectorAll('.tab-pane');
 
-  <!-- Footer -->
-  <footer class="bg-dark text-white text-center py-4 mt-auto">
-    <p class="mb-1">&copy; 2025 Albany Aegis Initiative. All rights reserved.</p>
-    <p class="mb-0">
-      Email: <a href="mailto:info@albany.watch" class="text-warning">info@albany.watch</a> |
-      Phone: <a href="tel:+15185995882" class="text-warning">(518) 599-5882</a>
-    </p>
-  </footer>
+        tabLinks.forEach(link => {
+            link.addEventListener('click', (event) => {
+                event.preventDefault();
 
-  <!-- Scripts -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <script src="js/main.js"></script>
+                // Deactivate all links and panes
+                tabLinks.forEach(l => {
+                    l.classList.remove('active', 'text-blue-600', 'border-blue-600');
+                    l.classList.add('text-gray-500', 'border-transparent', 'hover:text-gray-700', 'hover:border-gray-300');
+                });
+                tabPanes.forEach(p => p.classList.add('hidden'));
 
-  <!-- Chart Configuration -->
-  <script>
-    new Chart(document.getElementById('neighborhoodChart').getContext('2d'), {
-      type: 'bar',
-      data: {
-        labels: ['West Hill', 'Pine Hills', 'South End', 'Arbor Hill', 'Delaware', 'Washington Park', 'North Albany', 'Beverwyck', 'Mansion', 'Buckingham Lake'],
-        datasets: [{
-          label: 'Incidents',
-          data: [1245, 980, 850, 795, 610, 575, 440, 395, 330, 310],
-          backgroundColor: '#003087'
-        }]
-      },
-      options: {
-        responsive: true,
-        plugins: {
-          title: { display: true, text: 'Top 10 Crime Neighborhoods' },
-          legend: { display: false }
-        }
-      }
-    });
+                // Activate clicked link
+                link.classList.add('active', 'text-blue-600', 'border-blue-600');
+                link.classList.remove('text-gray-500', 'border-transparent', 'hover:text-gray-700', 'hover:border-gray-300');
 
-    new Chart(document.getElementById('typeChart').getContext('2d'), {
-      type: 'bar',
-      data: {
-        labels: ['Assault', 'Larceny', 'Burglary', 'Robbery', 'Rape', 'Motor Theft', 'Drugs', 'Fraud', 'Weapons', 'Homicide'],
-        datasets: [{
-          label: 'Incidents',
-          data: [2890, 2475, 1840, 1590, 1485, 1202, 880, 765, 590, 17],
-          backgroundColor: '#ff8c00'
-        }]
-      },
-      options: {
-        responsive: true,
-        plugins: {
-          title: { display: true, text: 'Top 10 Crime Types by UCR Code' },
-          legend: { display: false }
-        }
-      }
-    });
 
-    new Chart(document.getElementById('crimesVsArrestsChart').getContext('2d'), {
-      type: 'bar',
-      data: {
-        labels: ['2021', '2022', '2023', '2024'],
-        datasets: [
-          { label: 'Total Crimes', data: [8264, 9548, 9583, 8420], backgroundColor: '#003087' },
-          { label: 'Arrests', data: [1859, 1869, 1997, 2150], backgroundColor: '#ff8c00' }
-        ]
-      },
-      options: {
-        plugins: {
-          title: { display: true, text: 'Total Crimes vs Arrests' },
-          legend: { position: 'bottom' }
-        },
-        responsive: true
-      }
-    });
+                // Show corresponding pane
+                const targetPaneId = link.getAttribute('data-bs-target');
+                const targetPane = document.querySelector(targetPaneId);
+                if (targetPane) {
+                    targetPane.classList.remove('hidden');
+                }
+            });
+        });
 
-    new Chart(document.getElementById('closureRateChart').getContext('2d'), {
-      type: 'line',
-      data: {
-        labels: ['2021', '2022', '2023', '2024'],
-        datasets: [{
-          label: 'Closure Rate (%)',
-          data: [67, 62, 56, 55],
-          borderColor: '#003087',
-          backgroundColor: 'rgba(0, 48, 135, 0.1)',
-          tension: 0.4,
-          fill: true
-        }]
-      },
-      options: {
-        plugins: {
-          title: { display: true, text: 'Case Closure Rates by Year' }
-        },
-        scales: {
-          y: { beginAtZero: true, max: 100 }
-        },
-        responsive: true
-      }
-    });
-  </script>
+        // Chart Data
+        const neighborhoodData = {
+            labels: ['West Hill', 'Pine Hills', 'South End', 'Arbor Hill', 'Delaware', 'Washington Park', 'North Albany', 'Beverwyck', 'Mansion', 'Buckingham Lake'],
+            data: [1245, 980, 850, 795, 610, 575, 440, 395, 330, 310]
+        };
+
+        const typeData = {
+            labels: ['Assault', 'Larceny', 'Burglary', 'Robbery', 'Rape', 'Motor Theft', 'Drugs', 'Fraud', 'Weapons', 'Homicide'],
+            data: [2890, 2475, 1840, 1590, 1485, 1202, 880, 765, 590, 17]
+        };
+
+        const crimesVsArrestsData = {
+            labels: ['2021', '2022', '2023', '2024'],
+            crimes: [8264, 9548, 9583, 8420],
+            arrests: [1859, 1869, 1997, 2150]
+        };
+
+        const closureRateData = {
+            labels: ['2021', '2022', '2023', '2024'],
+            rates: [67, 62, 56, 55]
+        };
+
+        // Chart.js Configuration
+        const chartOptions = {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    labels: {
+                        font: {
+                            family: "'Inter', sans-serif"
+                        }
+                    }
+                }
+            },
+            scales: {
+                x: {
+                    ticks: {
+                         font: {
+                            family: "'Inter', sans-serif"
+                        }
+                    },
+                    grid: {
+                      display: false
+                    }
+                },
+                y: {
+                    ticks: {
+                        font: {
+                            family: "'Inter', sans-serif"
+                        }
+                    },
+                     beginAtZero: true
+                }
+            }
+        };
+
+        // Chart 1: Crimes by Neighborhood
+        new Chart(document.getElementById('neighborhoodChart').getContext('2d'), {
+            type: 'bar',
+            data: {
+                labels: neighborhoodData.labels,
+                datasets: [{
+                    label: 'Incidents',
+                    data: neighborhoodData.data,
+                    backgroundColor: 'rgba(29, 78, 216, 0.8)', // Tailwind blue-700
+                    borderColor: 'rgba(29, 78, 216, 1)',
+                    borderWidth: 1,
+                    borderRadius: 4
+                }]
+            },
+            options: { ...chartOptions,
+                plugins: { ...chartOptions.plugins,
+                    title: { display: true, text: 'Top 10 Crime Neighborhoods', font: { size: 16, family: "'Inter', sans-serif" } },
+                    legend: { display: false }
+                }
+            }
+        });
+
+        // Chart 2: Crimes by Type
+        new Chart(document.getElementById('typeChart').getContext('2d'), {
+            type: 'bar',
+            data: {
+                labels: typeData.labels,
+                datasets: [{
+                    label: 'Incidents',
+                    data: typeData.data,
+                    backgroundColor: 'rgba(234, 88, 12, 0.8)', // Tailwind orange-600
+                    borderColor: 'rgba(234, 88, 12, 1)',
+                    borderWidth: 1,
+                    borderRadius: 4
+                }]
+            },
+            options: { ...chartOptions,
+                plugins: { ...chartOptions.plugins,
+                    title: { display: true, text: 'Top 10 Crime Types by UCR Code', font: { size: 16, family: "'Inter', sans-serif" } },
+                    legend: { display: false }
+                },
+                scales: { ...chartOptions.scales, 
+                    x: {...chartOptions.scales.x,
+                        ticks: { ...chartOptions.scales.x.ticks,
+                           maxRotation: 45,
+                           minRotation: 45
+                        }
+                    } 
+                }
+            }
+        });
+
+        // Chart 3: Crimes vs. Arrests
+        new Chart(document.getElementById('crimesVsArrestsChart').getContext('2d'), {
+            type: 'bar',
+            data: {
+                labels: crimesVsArrestsData.labels,
+                datasets: [
+                    { label: 'Total Crimes', data: crimesVsArrestsData.crimes, backgroundColor: 'rgba(29, 78, 216, 0.8)', borderRadius: 4 },
+                    { label: 'Arrests', data: crimesVsArrestsData.arrests, backgroundColor: 'rgba(234, 88, 12, 0.8)', borderRadius: 4 }
+                ]
+            },
+            options: { ...chartOptions,
+                plugins: { ...chartOptions.plugins,
+                    title: { display: true, text: 'Total Crimes vs Arrests', font: { size: 16, family: "'Inter', sans-serif" } },
+                    legend: { ...chartOptions.plugins.legend, position: 'bottom' }
+                }
+            }
+        });
+
+        // Chart 4: Closure Rate
+        new Chart(document.getElementById('closureRateChart').getContext('2d'), {
+            type: 'line',
+            data: {
+                labels: closureRateData.labels,
+                datasets: [{
+                    label: 'Closure Rate (%)',
+                    data: closureRateData.rates,
+                    borderColor: 'rgba(29, 78, 216, 1)',
+                    backgroundColor: 'rgba(29, 78, 216, 0.1)',
+                    tension: 0.3,
+                    fill: true
+                }]
+            },
+            options: { ...chartOptions,
+                plugins: { ...chartOptions.plugins,
+                    title: { display: true, text: 'Case Closure Rates by Year', font: { size: 16, family: "'Inter', sans-serif" } }
+                },
+                scales: { ...chartOptions.scales,
+                    y: { ...chartOptions.scales.y, max: 100 }
+                }
+            }
+        });
+
+        // Gemini API Integration
+        const generateSummaryBtn = document.getElementById('generate-summary-btn');
+        const aiSummaryContainer = document.getElementById('ai-summary-container');
+        const loaderContainer = document.getElementById('loader-container');
+        const aiSummaryOutput = document.getElementById('ai-summary-output');
+
+        generateSummaryBtn.addEventListener('click', async () => {
+            aiSummaryContainer.style.display = 'block';
+            loaderContainer.style.display = 'block';
+            aiSummaryOutput.style.display = 'none';
+
+            // Construct the prompt with data from the charts
+            const prompt = `
+                Analyze the following crime data for Albany from 2021-2024 and provide a summary of the key trends.
+                
+                Data points:
+                - Crimes by Neighborhood: ${JSON.stringify(neighborhoodData)}
+                - Crimes by Type: ${JSON.stringify(typeData)}
+                - Total Crimes vs. Arrests per year: ${JSON.stringify(crimesVsArrestsData)}
+                - Case Closure Rates by year: ${JSON.stringify(closureRateData)}
+
+                Please provide a concise, easy-to-read summary. Highlight any significant trends, such as the neighborhood with the highest crime, the most common type of crime, the trend in total crimes versus arrests over the years, and the trend in case closure rates.
+            `;
+            
+            try {
+                let chatHistory = [];
+                chatHistory.push({ role: "user", parts: [{ text: prompt }] });
+                const payload = { contents: chatHistory };
+                const apiKey = ""; 
+                const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
+                
+                const response = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                const result = await response.json();
+
+                if (result.candidates && result.candidates.length > 0 &&
+                    result.candidates[0].content && result.candidates[0].content.parts &&
+                    result.candidates[0].content.parts.length > 0) {
+                    const text = result.candidates[0].content.parts[0].text;
+                    // Sanitize and format the text a bit for HTML display
+                    aiSummaryOutput.innerHTML = text.replace(/\n/g, '<br>');
+                } else {
+                    aiSummaryOutput.textContent = 'Could not generate a summary at this time. The response from the AI was empty.';
+                    console.error('Unexpected response structure:', result);
+                }
+            } catch (error) {
+                console.error("Error calling Gemini API:", error);
+                aiSummaryOutput.textContent = "An error occurred while generating the summary. Please check the console for details.";
+            } finally {
+                loaderContainer.style.display = 'none';
+                aiSummaryOutput.style.display = 'block';
+            }
+        });
+
+    </script>
 </body>
 </html>
