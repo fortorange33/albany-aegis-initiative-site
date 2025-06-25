@@ -4,3 +4,6 @@
 _notes/
 /bower_components/
 /node_modules/
+/public/*.html
+/public/data/*.json
+.parcel-cache/
