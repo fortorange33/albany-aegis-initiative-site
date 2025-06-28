@@ -20,9 +20,6 @@
     <!-- Font Awesome Icons -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet" />
 
-    <!-- Apple MapKit JS -->
-    <script src="https://cdn.apple-mapkit.com/mk/5.x.x/mapkit.js"></script>
-
     <!-- Custom Styles & Tailwind Config -->
     <style>
         body {
@@ -224,7 +221,12 @@
                     <h2 class="text-3xl font-bold tracking-tight text-gray-900 dark:text-white sm:text-4xl">Live Interactive Crime Map</h2>
                     <p class="mt-4 text-lg text-gray-600 dark:text-gray-400">Visualizing real-time incident data across Albany's neighborhoods.</p>
                 </div>
-                <div id="map" class="w-full h-[600px] rounded-xl border shadow-lg"></div>
+                <div class="w-full h-[600px] rounded-xl border shadow-lg overflow-hidden">
+                    <iframe width="100%" height="600" src="https://www.openstreetmap.org/export/embed.html?bbox=-73.8069248199463%2C42.60111451766069%2C-73.7271022796631%2C42.68193062780271&amp;layer=mapnik&amp;marker=42.6415356943998%2C-73.76701354980469" style="border: 0;"></iframe>
+                </div>
+                <div class="text-center mt-4">
+                    <small><a href="https://www.openstreetmap.org/?mlat=42.64154&amp;mlon=-73.76701#map=14/42.64154/-73.76701" class="text-sm text-gray-500 dark:text-gray-400 hover:underline">View Larger Map</a></small>
+                </div>
             </div>
         </section>
 
@@ -302,7 +304,7 @@
         </div>
     </footer>
 
-    <!-- JavaScript for Dark Mode Toggle & Map-->
+    <!-- JavaScript for Dark Mode Toggle -->
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             // Mobile Menu Toggle
@@ -353,65 +355,7 @@
                     }
                 });
             }
-
-            // Apple MapKit JS Initialization
-            const mapElement = document.getElementById('map');
-            if (mapElement) {
-                try {
-                     mapkit.init({
-                        authorizationCallback: function(done) {
-                            done("eyJraWQiOiI2NzM5NkhENUo0IiwidHlwIjoiSldUIiwiYWxnIjoiRVMyNTYifQ.eyJpc3MiOiJWOTUzSEFEM1c2IiwiaWF0IjoxNzUwNzEyMDA0LCJvcmlnaW4iOiJhbGJhbnkud2F0Y2gifQ.UskAlbwEiOyP0naBqEY8KXC0PLoNQr20ZPfZDFnyIp6lDXTA9Yb_h4_R7irsic1YTYeSvlH7PdRlpQzKDmibmw"); 
-                        }
-                    });
-
-                    const map = new mapkit.Map("map");
-                    map.region = new mapkit.CoordinateRegion(
-                        new mapkit.Coordinate(42.6526, -73.7562), // Albany
-                        new mapkit.CoordinateSpan(0.05, 0.05)
-                    );
-
-                    fetch("https://data.albanyny.gov/resource/m4jx-di39.json")
-                        .then(res => res.json())
-                        .then(data => {
-                             const annotations = data.map(record => {
-                                const lat = parseFloat(record.latitude);
-                                const lon = parseFloat(record.longitude);
-                                const type = record.offense_description || "Unclassified Crime";
-                                const date = record.reported_date?.split("T")[0] || "Unknown Date";
-
-                                if (!isNaN(lat) && !isNaN(lon)) {
-                                    return new mapkit.MarkerAnnotation(
-                                        new mapkit.Coordinate(lat, lon),
-                                        {
-                                            title: type,
-                                            subtitle: `Reported: ${date}`,
-                                            color: "#dc2626", // Tailwind's red-600
-                                            clusteringIdentifier: "albany-crime"
-                                        }
-                                    );
-                                }
-                                return null;
-                             }).filter(Boolean); // remove nulls
-                             
-                             map.addAnnotations(annotations);
-                        })
-                        .catch(err => {
-                            console.error("Failed to load Albany crime data:", err);
-                            mapElement.innerHTML = `<div class="p-4 text-center text-red-700 bg-red-100 dark:bg-red-800/50 rounded-lg">Failed to load crime data for the map.</div>`;
-                        });
-                } catch(e) {
-                     console.error("MapKit JS failed to initialize:", e);
-                     mapElement.innerHTML = `<div class="p-4 text-center text-yellow-700 bg-yellow-100 dark:bg-yellow-800/50 rounded-lg">Could not initialize the map.</div>`;
-                }
-            }
         });
     </script>
-    <noscript>
-      <div class="container mx-auto p-4">
-        <p class="text-red-700 bg-yellow-100 p-4 rounded-md mt-4 text-center">
-            JavaScript is required to view this interactive crime map.
-        </p>
-      </div>
-    </noscript>
 </body>
 </html>
