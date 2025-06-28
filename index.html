@@ -120,93 +120,93 @@
                      <p class="mt-4 text-lg text-gray-600 dark:text-gray-400">Real-time incident reports and scanner communications.</p>
                 </div>
 
-                <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+                <!-- IMPROVEMENT: Changed to a 2-column grid on large screens for a more balanced layout. -->
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
                     <!-- Live Incident Blotter -->
-                    <div class="lg:col-span-5">
-                        <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg h-full overflow-hidden">
-                            <div class="p-5 border-b border-gray-200 dark:border-gray-700">
-                                <h3 class="text-lg font-semibold text-gray-900 dark:text-white flex items-center gap-3">
-                                    <i class="fas fa-list-ul text-brand-primary"></i>
-                                    Incident Blotter
-                                </h3>
-                            </div>
-                            <div class="p-3 space-y-2">
-                                <!-- Incidents will be dynamically loaded here, using mock data for now -->
-                                <div class="p-4 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors">
-                                    <div class="flex items-center justify-between">
-                                        <div class="flex items-center gap-4">
-                                            <div class="flex-shrink-0 w-10 h-10 flex items-center justify-center rounded-full bg-red-100 dark:bg-red-900/50">
-                                                <i class="fas fa-bullhorn fa-lg text-red-500"></i>
-                                            </div>
-                                            <div>
-                                                <p class="font-bold text-gray-800 dark:text-gray-100">Shots Fired</p>
-                                                <p class="text-sm text-gray-500 dark:text-gray-400">Arbor Hill</p>
-                                            </div>
+                    <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg h-full overflow-hidden">
+                        <div class="p-5 border-b border-gray-200 dark:border-gray-700">
+                            <h3 class="text-lg font-semibold text-gray-900 dark:text-white flex items-center gap-3">
+                                <i class="fas fa-list-ul text-brand-primary"></i>
+                                Incident Blotter
+                            </h3>
+                        </div>
+                        <div class="p-3 space-y-2">
+                            <!-- Incidents will be dynamically loaded here, using mock data for now -->
+                            <div class="p-4 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors">
+                                <div class="flex items-center justify-between">
+                                    <div class="flex items-center gap-4">
+                                        <div class="flex-shrink-0 w-10 h-10 flex items-center justify-center rounded-full bg-red-100 dark:bg-red-900/50">
+                                            <i class="fas fa-bullhorn fa-lg text-red-500"></i>
                                         </div>
-                                        <p class="text-sm text-gray-400 dark:text-gray-500 text-right">2h ago</p>
-                                    </div>
-                                </div>
-                                <div class="p-4 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors">
-                                    <div class="flex items-center justify-between">
-                                        <div class="flex items-center gap-4">
-                                            <div class="flex-shrink-0 w-10 h-10 flex items-center justify-center rounded-full bg-yellow-100 dark:bg-yellow-900/50">
-                                                 <i class="fas fa-mask fa-lg text-yellow-500"></i>
-                                            </div>
-                                            <div>
-                                                <p class="font-bold text-gray-800 dark:text-gray-100">Armed Robbery</p>
-                                                <p class="text-sm text-gray-500 dark:text-gray-400">Central Avenue</p>
-                                            </div>
+                                        <div>
+                                            <p class="font-bold text-gray-800 dark:text-gray-100">Shots Fired</p>
+                                            <p class="text-sm text-gray-500 dark:text-gray-400">Arbor Hill</p>
                                         </div>
-                                        <p class="text-sm text-gray-400 dark:text-gray-500 text-right">8h ago</p>
                                     </div>
-                                </div>
-                                <div class="p-4 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors">
-                                     <div class="flex items-center justify-between">
-                                        <div class="flex items-center gap-4">
-                                            <div class="flex-shrink-0 w-10 h-10 flex items-center justify-center rounded-full bg-blue-100 dark:bg-blue-900/50">
-                                                 <i class="fas fa-car-burst fa-lg text-blue-500"></i>
-                                            </div>
-                                            <div>
-                                                <p class="font-bold text-gray-800 dark:text-gray-100">Vehicle Theft</p>
-                                                <p class="text-sm text-gray-500 dark:text-gray-400">Pine Hills</p>
-                                            </div>
-                                        </div>
-                                        <p class="text-sm text-gray-400 dark:text-gray-500 text-right">15h ago</p>
-                                    </div>
-                                </div>
-                                <div class="p-4 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors">
-                                     <div class="flex items-center justify-between">
-                                        <div class="flex items-center gap-4">
-                                            <div class="flex-shrink-0 w-10 h-10 flex items-center justify-center rounded-full bg-teal-100 dark:bg-teal-900/50">
-                                                 <i class="fas fa-house-chimney-window fa-lg text-teal-500"></i>
-                                            </div>
-                                            <div>
-                                                <p class="font-bold text-gray-800 dark:text-gray-100">Burglary Reported</p>
-                                                <p class="text-sm text-gray-500 dark:text-gray-400">Washington Park</p>
-                                            </div>
-                                        </div>
-                                        <p class="text-sm text-gray-400 dark:text-gray-500 text-right">22h ago</p>
-                                    </div>
+                                    <p class="text-sm text-gray-400 dark:text-gray-500 text-right">2h ago</p>
                                 </div>
                             </div>
-                            <div class="p-4 text-center border-t border-gray-200 dark:border-gray-700">
-                                <a href="crime-tracker.html" class="text-sm font-semibold text-brand-primary hover:underline">View All Incidents</a>
+                            <div class="p-4 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors">
+                                <div class="flex items-center justify-between">
+                                    <div class="flex items-center gap-4">
+                                        <div class="flex-shrink-0 w-10 h-10 flex items-center justify-center rounded-full bg-yellow-100 dark:bg-yellow-900/50">
+                                             <i class="fas fa-mask fa-lg text-yellow-500"></i>
+                                        </div>
+                                        <div>
+                                            <p class="font-bold text-gray-800 dark:text-gray-100">Armed Robbery</p>
+                                            <p class="text-sm text-gray-500 dark:text-gray-400">Central Avenue</p>
+                                        </div>
+                                    </div>
+                                    <p class="text-sm text-gray-400 dark:text-gray-500 text-right">8h ago</p>
+                                </div>
                             </div>
+                            <div class="p-4 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors">
+                                 <div class="flex items-center justify-between">
+                                    <div class="flex items-center gap-4">
+                                        <div class="flex-shrink-0 w-10 h-10 flex items-center justify-center rounded-full bg-blue-100 dark:bg-blue-900/50">
+                                             <i class="fas fa-car-burst fa-lg text-blue-500"></i>
+                                        </div>
+                                        <div>
+                                            <p class="font-bold text-gray-800 dark:text-gray-100">Vehicle Theft</p>
+                                            <p class="text-sm text-gray-500 dark:text-gray-400">Pine Hills</p>
+                                        </div>
+                                    </div>
+                                    <p class="text-sm text-gray-400 dark:text-gray-500 text-right">15h ago</p>
+                                 </div>
+                            </div>
+                            <div class="p-4 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors">
+                                 <div class="flex items-center justify-between">
+                                    <div class="flex items-center gap-4">
+                                        <div class="flex-shrink-0 w-10 h-10 flex items-center justify-center rounded-full bg-teal-100 dark:bg-teal-900/50">
+                                             <i class="fas fa-house-chimney-window fa-lg text-teal-500"></i>
+                                        </div>
+                                        <div>
+                                            <p class="font-bold text-gray-800 dark:text-gray-100">Burglary Reported</p>
+                                            <p class="text-sm text-gray-500 dark:text-gray-400">Washington Park</p>
+                                        </div>
+                                    </div>
+                                    <p class="text-sm text-gray-400 dark:text-gray-500 text-right">22h ago</p>
+                                 </div>
+                            </div>
+                        </div>
+                        <div class="p-4 text-center border-t border-gray-200 dark:border-gray-700">
+                            <a href="crime-tracker.html" class="text-sm font-semibold text-brand-primary hover:underline">View All Incidents</a>
                         </div>
                     </div>
                     <!-- Live Scanner -->
-                    <div class="lg:col-span-7">
-                        <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg h-full flex flex-col">
-                            <div class="p-5 border-b border-gray-200 dark:border-gray-700">
-                                <h3 class="text-lg font-semibold text-gray-900 dark:text-white flex items-center gap-3">
-                                    <i class="fas fa-headset text-brand-accent"></i>
-                                    Live Scanner Feed
-                                </h3>
-                            </div>
-                            <div class="p-3 flex-grow">
-                                <div class="w-full h-full rounded-lg overflow-hidden">
-                                     <iframe class="w-full h-full" src="https://www.broadcastify.com/calls/playlists/?uuid=425db81f-efc3-11ef-9e04-0e98d5b32039" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
-                                </div>
+                    <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg h-full flex flex-col">
+                        <div class="p-5 border-b border-gray-200 dark:border-gray-700">
+                            <h3 class="text-lg font-semibold text-gray-900 dark:text-white flex items-center gap-3">
+                                <i class="fas fa-headset text-brand-accent"></i>
+                                Live Scanner Feed
+                            </h3>
+                        </div>
+                        <!-- IMPROVEMENT: The container for the iframe now has a defined, responsive height.
+                             This prevents the card from becoming excessively tall on mobile and ensures
+                             the player controls are visible without scrolling. -->
+                        <div class="p-3 flex-grow flex flex-col">
+                            <div class="w-full h-[450px] rounded-lg overflow-hidden flex-grow">
+                                 <iframe class="w-full h-full" src="https://www.broadcastify.com/calls/playlists/?uuid=425db81f-efc3-11ef-9e04-0e98d5b32039" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
                             </div>
                         </div>
                     </div>
@@ -218,11 +218,13 @@
         <section id="map-section" class="py-16 sm:py-24">
             <div class="container mx-auto px-4">
                 <div class="text-center mb-12">
-                    <h2 class="text-3xl font-bold tracking-tight text-gray-900 dark:text-white sm:text-4xl">Live Interactive Crime Map</h2>
-                    <p class="mt-4 text-lg text-gray-600 dark:text-gray-400">Visualizing real-time incident data across Albany's neighborhoods.</p>
+                    <h2 class="text-3xl font-bold tracking-tight text-gray-900 dark:text-white sm:text-4xl">Interactive Crime Map</h2>
+                    <p class="mt-4 text-lg text-gray-600 dark:text-gray-400">Visualizing incident data across Albany's neighborhoods.</p>
                 </div>
-                <div class="w-full h-[600px] rounded-xl border shadow-lg overflow-hidden">
-                    <iframe width="100%" height="600" src="https://www.openstreetmap.org/export/embed.html?bbox=-73.8069248199463%2C42.60111451766069%2C-73.7271022796631%2C42.68193062780271&amp;layer=mapnik&amp;marker=42.6415356943998%2C-73.76701354980469" style="border: 0;"></iframe>
+                <!-- IMPROVEMENT: The map container now has responsive height classes. It's shorter on mobile
+                     and taller on desktop. The iframe height is set to 100% to fill this container. -->
+                <div class="w-full h-[400px] md:h-[500px] lg:h-[600px] rounded-xl border dark:border-gray-700 shadow-lg overflow-hidden">
+                    <iframe width="100%" height="100%" src="https://www.openstreetmap.org/export/embed.html?bbox=-73.8069248199463%2C42.60111451766069%2C-73.7271022796631%2C42.68193062780271&amp;layer=mapnik&amp;marker=42.6415356943998%2C-73.76701354980469" style="border: 0;"></iframe>
                 </div>
                 <div class="text-center mt-4">
                     <small><a href="https://www.openstreetmap.org/?mlat=42.64154&amp;mlon=-73.76701#map=14/42.64154/-73.76701" class="text-sm text-gray-500 dark:text-gray-400 hover:underline">View Larger Map</a></small>
