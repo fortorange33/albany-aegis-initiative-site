@@ -14,6 +14,13 @@ require([
     }
   }, 1000);
 
+  // Copilot: Add ward layer to the map if available
+  setTimeout(() => {
+    if (window.wardLayer) {
+      map.add(window.wardLayer);
+    }
+  }, 1000);
+
   // add a feature layer from ArcGIS FeatureServer
   var featureLayer = new FeatureLayer({
     url: "https://services.arcgis.com/.../FeatureServer/0"
