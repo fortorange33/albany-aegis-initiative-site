@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Albany Crime Map</title>
   <link rel="stylesheet" href="https://js.arcgis.com/4.26/esri/themes/light/main.css" />
+  <link rel="stylesheet" href="public/styles.css" />
   <style>
     html, body, #viewDiv {
       height: 100%;
@@ -20,5 +21,25 @@
   <!-- Copilot: Load ArcGIS map logic and layers -->
   <script src="scripts/map-init.js"></script>
   <script src="scripts/load-layers.js"></script>
+  <!-- Copilot: Add a floating UI panel with layer toggles and a simple legend -->
+  <div id="map-ui-panel">
+    <strong>Legend</strong>
+    <div>
+      <span style="display:inline-block;width:12px;height:12px;background:#e27728;border-radius:50%;margin-right:5px;"></span>
+      Incident Marker
+    </div>
+
+    <hr style="margin: 0.75rem 0;" />
+
+    <strong>Layers</strong><br />
+    <label>
+      <input type="checkbox" checked id="toggle-incidents" />
+      Crime Incidents
+    </label>
+    <label>
+      <input type="checkbox" id="toggle-wards" />
+      Common Council Wards
+    </label>
+  </div>
 </body>
 </html>

@@ -1,0 +1,17 @@
+/* Add legend and toggle panel styles for fixed map overlay */
+#map-ui-panel {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: white;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+  font-size: 0.85rem;
+  z-index: 10;
+}
+#map-ui-panel label {
+  display: block;
+  margin-bottom: 0.5rem;
+  cursor: pointer;
+}
