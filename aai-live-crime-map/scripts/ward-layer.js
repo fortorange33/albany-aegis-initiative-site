@@ -1,30 +1,45 @@
-require([
-    "esri/layers/FeatureLayer"
-  ], function(FeatureLayer) {
-    // Create a FeatureLayer for Albany Common Council Districts
-    const wardLayer = new FeatureLayer({
-      url: "https://services.arcgis.com/YOUR_ORG_ID/arcgis/rest/services/Albany_Ward_Boundaries/FeatureServer/0",
-      title: "Common Council Wards",
-      visible: false,
-      opacity: 0.5,
-      outFields: ["*"],
-      popupTemplate: {
-        title: "Ward {Ward_Number}",
-        content: "This area is represented by Council District {Ward_Number}."
-      },
-      renderer: {
-        type: "simple",
-        symbol: {
-          type: "simple-fill",
-          color: [51, 102, 204, 0.1],
-          outline: {
-            color: [51, 102, 204],
-            width: 1
-          }
+require(["esri/layers/GeoJSONLayer"], function(GeoJSONLayer) {
+  const wardLayer = new GeoJSONLayer({
+    url: "data/albany_wards.geojson",
+    title: "Common Council Wards",
+    visible: false,
+    renderer: {
+      type: "unique-value",
+      field: "Group",
+      uniqueValueInfos: [
+        {
+          value: "A",
+          symbol: {
+            type: "simple-fill",
+            color: [102, 178, 255, 0.3],
+            outline: { color: "#336699", width: 1 }
+          },
+          label: "Group A"
+        },
+        {
+          value: "B",
+          symbol: {
+            type: "simple-fill",
+            color: [153, 255, 153, 0.3],
+            outline: { color: "#339966", width: 1 }
+          },
+          label: "Group B"
+        },
+        {
+          value: "C",
+          symbol: {
+            type: "simple-fill",
+            color: [255, 204, 102, 0.3],
+            outline: { color: "#cc7a00", width: 1 }
+          },
+          label: "Group C"
         }
-      }
-    });
-  
-    // Export to window so other scripts (e.g. map-init.js) can use it
-    window.wardLayer = wardLayer;
+      ]
+    },
+    popupTemplate: {
+      title: "Ward {Ward_Number}",
+      content: "This is Common Council District {Ward_Number}."
+    }
   });
+  window.wardLayer = wardLayer;
+});
