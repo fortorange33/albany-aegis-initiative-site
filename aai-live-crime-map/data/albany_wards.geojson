@@ -1,0 +1,47 @@
+require(["esri/layers/GeoJSONLayer"], function(GeoJSONLayer) {
+    const wardLayer = new GeoJSONLayer({
+      url: "data/albany_wards.geojson",
+      title: "Common Council Wards",
+      visible: false,
+      renderer: {
+        type: "unique-value",
+        field: "Group",
+        uniqueValueInfos: [
+          {
+            value: "A",
+            symbol: {
+              type: "simple-fill",
+              color: [102, 178, 255, 0.3],
+              outline: { color: "#336699", width: 1 }
+            },
+            label: "Group A"
+          },
+          {
+            value: "B",
+            symbol: {
+              type: "simple-fill",
+              color: [153, 255, 153, 0.3],
+              outline: { color: "#339966", width: 1 }
+            },
+            label: "Group B"
+          },
+          {
+            value: "C",
+            symbol: {
+              type: "simple-fill",
+              color: [255, 204, 102, 0.3],
+              outline: { color: "#cc7a00", width: 1 }
+            },
+            label: "Group C"
+          }
+        ]
+      },
+      popupTemplate: {
+        title: "Ward {Ward_Number}",
+        content: "This is Common Council District {Ward_Number}."
+      }
+    });
+  
+    map.add(wardLayer);
+    window.wardLayer = wardLayer;
+  });
