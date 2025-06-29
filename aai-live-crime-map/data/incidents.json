@@ -1,0 +1,20 @@
+[
+    {
+      "type": "Shots Fired",
+      "location": "Clinton Ave & Lark St",
+      "time": "10:42 PM",
+      "color": "#ef4444"
+    },
+    {
+      "type": "Burglary Reported",
+      "location": "308 Ontario St",
+      "time": "9:55 PM",
+      "color": "#f97316"
+    },
+    {
+      "type": "Stolen Vehicle",
+      "location": "Park South",
+      "time": "9:30 PM",
+      "color": "#3b82f6"
+    }
+  ]
