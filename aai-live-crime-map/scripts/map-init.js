@@ -7,7 +7,7 @@ require([
     basemap: "streets-navigation-vector"
   });
 
-  // Wait for aaiCrimeLayer loaded via load-layers.js
+  // Copilot: Add the exported FeatureLayer (aaiCrimeLayer) to the map if available
   setTimeout(() => {
     if (window.aaiCrimeLayer) {
       map.add(window.aaiCrimeLayer);
