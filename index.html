@@ -428,6 +428,9 @@
                 let chatHistory = [{ role: "user", parts: [{ text: prompt }] }];
                 const payload = {
                     contents: chatHistory,
+                    tools: [{
+                        "google_search": { "queries": ["latest crime news Albany NY", "public safety news Albany NY"] }
+                    }],
                     generationConfig: {
                         responseMimeType: "application/json",
                         responseSchema: {
