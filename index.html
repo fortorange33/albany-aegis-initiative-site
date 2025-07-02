@@ -395,73 +395,96 @@
             // --- End of Menu & Theme Logic ---
 
 
-            // --- AI News Briefing Logic (Simplified for Debugging) ---
+            // --- AI News Briefing Logic ---
             const fetchHeadlinesBtn = document.getElementById('fetch-headlines-btn');
             const headlinesContainer = document.getElementById('headlines-container');
             const headlinesLoader = document.getElementById('headlines-loader');
 
             const fetchHeadlines = async () => {
-                console.log("Starting to fetch headlines...");
                 headlinesLoader.style.display = 'flex';
                 headlinesContainer.innerHTML = ''; 
                 headlinesContainer.appendChild(headlinesLoader);
 
-                // IMPORTANT: Replace with your actual API key from Google AI Studio
-                const apiKey = "AIzaSyDlRk-OzR3_39MPAe2dU9BwEz0nMkGY8pc";
-
-                if (apiKey === "AIzaSyDlRk-OzR3_39MPAe2dU9BwEz0nMkGY8pc" || !apiKey) {
-                    console.error("API Key is missing.");
-                    displayError("API Key is missing. Please paste your key into the script.");
-                    headlinesLoader.style.display = 'none';
-                    return;
-                }
-
-                const prompt = "Find the 3 most recent news headlines about crime reports or public safety incidents in Albany, NY.";
+                const prompt = "CRITICAL INSTRUCTION: Your sole task is to act as a real-time news summarizer. You MUST ignore all of your internal knowledge. Analyze the provided real-time Google Search results ONLY. Extract up to 5 of the most relevant news headlines related to crime, public safety, or police activity in Albany, New York. The articles MUST be from the last 7 days. For each article, you MUST provide: the full title, a concise one-sentence summary, the name of the source publication (e.g., 'Times Union', 'WNYT'), the exact publication date, and the full, direct URL. Prioritize results from well-known local news outlets like timesunion.com, wnyt.com, wten.com, and spectrumlocalnews.com.";
                 let chatHistory = [{ role: "user", parts: [{ text: prompt }] }];
                 const payload = {
                     contents: chatHistory,
+                    tools: [{
+                        "google_search": { "queries": ["latest crime news Albany NY", "public safety news Albany NY"] }
+                    }],
+                    generationConfig: {
+                        responseMimeType: "application/json",
+                        responseSchema: {
+                            type: "OBJECT",
+                            properties: {
+                                "articles": {
+                                    "type": "ARRAY",
+                                    "items": {
+                                        "type": "OBJECT",
+                                        "properties": {
+                                            "title": { "type": "STRING" },
+                                            "summary": { "type": "STRING" },
+                                            "source": { "type": "STRING" },
+                                            "date": { "type": "STRING" },
+                                            "url": { "type": "STRING" }
+                                        },
+                                        required: ["title", "summary", "source", "date", "url"]
+                                    }
+                                }
+                            }
+                        }
+                    }
                 };
+                
+                const apiKey = "AIzaSyDlRk-OzR3_39MPAe2dU9BwEz0nMkGY8pc"; 
                 
                 const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
 
                 try {
-                    console.log("Sending request to Gemini API...");
                     const response = await fetch(apiUrl, {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify(payload)
                     });
 
-                    console.log("API Response Status:", response.status);
-                    const responseBody = await response.json();
-                    console.log("API Response Body:", responseBody);
-
                     if (!response.ok) {
-                        const errorDetail = responseBody.error ? responseBody.error.message : 'No additional error details.';
-                        throw new Error(`API request failed with status ${response.status}. Details: ${errorDetail}`);
+                        throw new Error(`API request failed with status ${response.status}`);
                     }
 
+                    const result = await response.json();
                     headlinesLoader.style.display = 'none';
 
-                    if (responseBody.candidates && responseBody.candidates[0].content) {
-                        const text = responseBody.candidates[0].content.parts[0].text;
-                        displayRawText(text);
+                    if (result.candidates && result.candidates[0].content && result.candidates[0].content.parts.length > 0) {
+                        const data = JSON.parse(result.candidates[0].content.parts[0].text);
+                        if (data.articles && data.articles.length > 0) {
+                            displayHeadlines(data.articles);
+                        } else {
+                            displayError("No articles found. Please try again later.");
+                        }
                     } else {
                        throw new Error("Unexpected API response format.");
                     }
                 } catch (error) {
                     console.error("Error fetching headlines:", error);
                     headlinesLoader.style.display = 'none';
-                    displayError(`Failed to fetch headlines. ${error.message}`);
+                    displayError(`Failed to fetch headlines. Please check the API key and network connection.`);
                 }
             };
 
-            const displayRawText = (text) => {
+            const displayHeadlines = (articles) => {
                 headlinesContainer.innerHTML = '';
-                const textEl = document.createElement('div');
-                textEl.className = 'bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md border border-gray-200 dark:border-gray-700 whitespace-pre-wrap';
-                textEl.textContent = text;
-                headlinesContainer.appendChild(textEl);
+                articles.forEach(article => {
+                    const articleEl = document.createElement('div');
+                    articleEl.className = 'bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md border border-gray-200 dark:border-gray-700';
+                    articleEl.innerHTML = `
+                        <a href="${article.url}" target="_blank" rel="noopener noreferrer" class="text-xl font-bold text-brand-primary dark:text-brand-primary-light hover:underline">${article.title}</a>
+                        <p class="text-gray-600 dark:text-gray-400 mt-2">${article.summary}</p>
+                        <div class="text-sm text-gray-500 dark:text-gray-500 mt-4">
+                            <strong>${article.source}</strong> | <span>${new Date(article.date).toLocaleDateString()}</span>
+                        </div>
+                    `;
+                    headlinesContainer.appendChild(articleEl);
+                });
             };
             
             const displayError = (message) => {
@@ -469,6 +492,135 @@
             };
 
             fetchHeadlinesBtn.addEventListener('click', fetchHeadlines);
+
+
+            // --- AI Scanner Analysis Logic ---
+            const analyzeScannerBtn = document.getElementById('analyze-scanner-btn');
+            const incidentFeedContainer = document.getElementById('incident-feed-container');
+            const incidentLoader = document.getElementById('incident-loader');
+            const incidentPlaceholder = document.getElementById('incident-placeholder');
+
+            const fetchScannerIncidents = async () => {
+                incidentPlaceholder.classList.add('hidden');
+                incidentLoader.style.display = 'flex';
+                incidentFeedContainer.innerHTML = '';
+                incidentFeedContainer.appendChild(incidentLoader);
+                
+                const prompt = "CRITICAL INSTRUCTION: You are a police scanner analysis assistant. Your task is to analyze the provided real-time Google Search results for 'Albany NY police scanner text log' and 'Albany NY public safety dispatch log'. You MUST ignore all of your internal knowledge. From ONLY the provided search results, extract up to 5 of the most significant incidents from the last 24 hours. For each incident, identify an incident 'type' (e.g., 'Traffic Accident', 'Structure Fire', 'Assault'), a 'location', and a brief 'summary'.";
+                let chatHistory = [{ role: "user", parts: [{ text: prompt }] }];
+                const payload = {
+                    contents: chatHistory,
+                    tools: [{
+                        "google_search": { "queries": ["Albany NY police scanner text log", "Albany NY public safety dispatch log"] }
+                    }],
+                    generationConfig: {
+                        responseMimeType: "application/json",
+                        responseSchema: {
+                            type: "OBJECT",
+                            properties: {
+                                "incidents": {
+                                    "type": "ARRAY",
+                                    "items": {
+                                        "type": "OBJECT",
+                                        "properties": {
+                                            "type": { "type": "STRING" },
+                                            "location": { "type": "STRING" },
+                                            "summary": { "type": "STRING" }
+                                        },
+                                        required: ["type", "location", "summary"]
+                                    }
+                                }
+                            }
+                        }
+                    }
+                };
+
+                const apiKey = "AIzaSyDlRk-OzR3_39MPAe2dU9BwEz0nMkGY8pc";
+                const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
+
+                try {
+                    const response = await fetch(apiUrl, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload)
+                    });
+
+                    if (!response.ok) {
+                        throw new Error(`API request failed with status ${response.status}`);
+                    }
+                    
+                    const result = await response.json();
+                    incidentLoader.style.display = 'none';
+
+                    if (result.candidates && result.candidates[0].content && result.candidates[0].content.parts.length > 0) {
+                        const data = JSON.parse(result.candidates[0].content.parts[0].text);
+                        if (data.incidents && data.incidents.length > 0) {
+                            displayScannerIncidents(data.incidents);
+                        } else {
+                            displayScannerError("No significant incidents found in the latest scanner logs.");
+                        }
+                    } else {
+                        throw new Error("Unexpected API response format from scanner analysis.");
+                    }
+                } catch (error) {
+                    console.error("Error fetching scanner incidents:", error);
+                    incidentLoader.style.display = 'none';
+                    displayScannerError(`Failed to analyze scanner feed. Error: ${error.message}`);
+                }
+            };
+
+            const displayScannerIncidents = (incidents) => {
+                incidentFeedContainer.innerHTML = '';
+                const iconMap = {
+                    'traffic': 'fa-car-burst',
+                    'fire': 'fa-fire',
+                    'assault': 'fa-hand-fist',
+                    'theft': 'fa-mask',
+                    'burglary': 'fa-house-chimney-window',
+                    'medical': 'fa-briefcase-medical',
+                    'default': 'fa-bullhorn'
+                };
+
+                const colorMap = {
+                    'traffic': 'blue',
+                    'fire': 'red',
+                    'assault': 'orange',
+                    'theft': 'yellow',
+                    'burglary': 'teal',
+                    'medical': 'green',
+                    'default': 'gray'
+                };
+
+                incidents.forEach(incident => {
+                    const typeKey = Object.keys(iconMap).find(key => incident.type.toLowerCase().includes(key)) || 'default';
+                    const iconClass = iconMap[typeKey];
+                    const color = colorMap[typeKey];
+
+                    const incidentEl = document.createElement('div');
+                    incidentEl.className = 'p-4 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors';
+                    incidentEl.innerHTML = `
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center gap-4">
+                                <div class="flex-shrink-0 w-10 h-10 flex items-center justify-center rounded-full bg-${color}-100 dark:bg-${color}-900/50 text-${color}-500">
+                                    <i class="fas ${iconClass} fa-lg"></i>
+                                </div>
+                                <div>
+                                    <p class="font-bold text-gray-800 dark:text-gray-100">${incident.type}</p>
+                                    <p class="text-sm text-gray-500 dark:text-gray-400">${incident.location}</p>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="text-sm text-gray-600 dark:text-gray-400 mt-2 pl-14">${incident.summary}</p>
+                    `;
+                    incidentFeedContainer.appendChild(incidentEl);
+                });
+            };
+
+            const displayScannerError = (message) => {
+                incidentFeedContainer.innerHTML = `<div class="p-4 text-center text-red-500">${message}</div>`;
+            };
+
+            analyzeScannerBtn.addEventListener('click', fetchScannerIncidents);
         });
     </script>
 </body>
