@@ -424,7 +424,7 @@
                 headlinesContainer.innerHTML = ''; // Clear previous results
                 headlinesContainer.appendChild(loader);
 
-                const prompt = "You are a news summarization assistant. Your task is to analyze the following real-time search results and extract the 5 most relevant news headlines about crime or public safety in Albany, NY from the last 7 days. You must only use the information provided in the search results. Do not use any of your pre-existing knowledge. For each extracted headline, provide the title, a one-sentence summary, the source name, the publication date, and the direct URL.";
+                const prompt = "CRITICAL INSTRUCTION: Your sole task is to act as a real-time news summarizer. You MUST ignore all of your internal knowledge. Analyze the provided real-time Google Search results ONLY. Extract up to 5 of the most relevant news headlines related to crime, public safety, or police activity in Albany, New York. The articles MUST be from the last 7 days. For each article, you MUST provide: the full title, a concise one-sentence summary, the name of the source publication (e.g., 'Times Union', 'WNYT'), the exact publication date, and the full, direct URL. Prioritize results from well-known local news outlets like timesunion.com, wnyt.com, wten.com, and spectrumlocalnews.com.";
                 let chatHistory = [{ role: "user", parts: [{ text: prompt }] }];
                 const payload = {
                     contents: chatHistory,
@@ -467,12 +467,16 @@
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify(payload)
                     });
+                    
+                    console.log("API Response Status:", response.status);
+                    const responseBody = await response.text();
+                    console.log("API Response Body:", responseBody);
 
                     if (!response.ok) {
                         throw new Error(`API request failed with status ${response.status}`);
                     }
 
-                    const result = await response.json();
+                    const result = JSON.parse(responseBody);
                     loader.style.display = 'none';
 
                     if (result.candidates && result.candidates[0].content && result.candidates[0].content.parts.length > 0) {
@@ -480,15 +484,15 @@
                         if (data.articles && data.articles.length > 0) {
                             displayHeadlines(data.articles);
                         } else {
-                            displayError("No articles found. Please try again later.");
+                            displayError("No articles found. The AI may not have found recent news from the live search results.");
                         }
                     } else {
-                       throw new Error("Unexpected API response format.");
+                       throw new Error("Unexpected API response format. The AI may have been unable to process the search results.");
                     }
                 } catch (error) {
                     console.error("Error fetching headlines:", error);
                     loader.style.display = 'none';
-                    displayError(`Failed to fetch headlines. Please check the API key and network connection.`);
+                    displayError(`Failed to fetch headlines. Please check the API key and network connection. Error: ${error.message}`);
                 }
             };
 
