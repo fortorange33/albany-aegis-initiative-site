@@ -25,18 +25,27 @@
         body {
             font-family: 'Inter', sans-serif;
         }
-        /* Add a subtle texture to the dark background */
-        .dark .textured-bg {
+        .textured-bg {
             background-image: radial-gradient(circle at 1px 1px, rgba(255,255,255,0.05) 1px, transparent 0);
             background-size: 2rem 2rem;
         }
-        /* Animation for stat counters */
         @keyframes count-up {
             from { transform: translateY(1rem); opacity: 0; }
             to { transform: translateY(0); opacity: 1; }
         }
         .count-up {
             animation: count-up 0.5s ease-out forwards;
+        }
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        .loader {
+            border: 4px solid rgba(255, 255, 255, 0.2);
+            border-left-color: #FF6600;
+            border-radius: 50%;
+            width: 2rem;
+            height: 2rem;
+            animation: spin 1s linear infinite;
         }
     </style>
     <script>
@@ -153,12 +162,32 @@
             </div>
         </section>
 
+        <!-- AI News Briefing Section -->
+        <section id="ai-briefing" class="py-20 sm:py-28 bg-gray-100 dark:bg-gray-900/50">
+            <div class="container mx-auto px-4">
+                <div class="text-center mb-12">
+                     <h2 class="text-3xl font-bold tracking-tight text-gray-900 dark:text-white sm:text-4xl">AI-Powered News Briefing</h2>
+                     <p class="mt-4 text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">Get the latest crime and safety headlines from across Albany, powered by generative AI.</p>
+                     <button id="fetch-headlines-btn" class="mt-6 bg-brand-accent hover:bg-brand-accent-dark text-white font-bold py-3 px-8 rounded-full transition-transform transform hover:scale-105 shadow-lg flex items-center gap-3 mx-auto">
+                        <i class="fa-solid fa-newspaper"></i>
+                        Get Latest Headlines
+                    </button>
+                </div>
+                <div id="headlines-container" class="max-w-4xl mx-auto space-y-4">
+                    <!-- AI-generated headlines will be inserted here -->
+                    <div id="headlines-loader" class="hidden justify-center items-center py-8">
+                        <div class="loader"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
         <!-- Live Situation Section -->
-        <section id="data" class="py-20 sm:py-28 bg-gray-100 dark:bg-gray-900/50">
+        <section id="data" class="py-20 sm:py-28">
             <div class="container mx-auto px-4">
                 <div class="text-center mb-16">
-                     <h2 class="text-3xl font-bold tracking-tight text-gray-900 dark:text-white sm:text-4xl">Live Situation</h2>
-                     <p class="mt-4 text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">Real-time incident reports from across the city and direct access to scanner communications.</p>
+                     <h2 class="text-3xl font-bold tracking-tight text-gray-900 dark:text-white sm:text-4xl">Manual Feeds & Scanner</h2>
+                     <p class="mt-4 text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">Access our manually curated incident reports and the live scanner feed.</p>
                 </div>
 
                 <div class="grid grid-cols-1 lg:grid-cols-5 gap-8 items-start">
@@ -171,7 +200,6 @@
                             </h3>
                         </div>
                         <div class="p-3 space-y-2">
-                            <!-- Incident Item 1 -->
                             <div class="p-4 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors cursor-pointer">
                                 <div class="flex items-center justify-between">
                                     <div class="flex items-center gap-4">
@@ -184,7 +212,6 @@
                                     <p class="text-sm text-gray-400 dark:text-gray-500 text-right font-medium">1m ago</p>
                                 </div>
                             </div>
-                            <!-- Incident Item 2 -->
                             <div class="p-4 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors cursor-pointer">
                                 <div class="flex items-center justify-between">
                                     <div class="flex items-center gap-4">
@@ -195,19 +222,6 @@
                                         </div>
                                     </div>
                                     <p class="text-sm text-gray-400 dark:text-gray-500 text-right font-medium">28m ago</p>
-                                </div>
-                            </div>
-                             <!-- Incident Item 3 -->
-                            <div class="p-4 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors cursor-pointer">
-                                <div class="flex items-center justify-between">
-                                    <div class="flex items-center gap-4">
-                                        <div class="flex-shrink-0 w-10 h-10 flex items-center justify-center rounded-full bg-yellow-100 dark:bg-yellow-900/50 text-yellow-500"><i class="fas fa-mask fa-lg"></i></div>
-                                        <div>
-                                            <p class="font-bold text-gray-800 dark:text-gray-100">Armed Robbery</p>
-                                            <p class="text-sm text-gray-500 dark:text-gray-400">Central Avenue</p>
-                                        </div>
-                                    </div>
-                                    <p class="text-sm text-gray-400 dark:text-gray-500 text-right font-medium">2h ago</p>
                                 </div>
                             </div>
                         </div>
@@ -241,35 +255,23 @@
                     <p class="mt-4 text-lg text-gray-600 dark:text-gray-400">Our mission to break the cycle of crime and systemic inefficiencies is built on four core pillars of action and innovation.</p>
                 </div>
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-                    <!-- Element 1 -->
                     <div class="bg-white dark:bg-gray-800 p-8 rounded-xl shadow-lg text-center transform hover:-translate-y-2 transition-transform duration-300">
-                        <div class="inline-flex items-center justify-center w-16 h-16 mb-6 rounded-full bg-brand-primary/10 text-brand-primary">
-                            <i class="fas fa-magnifying-glass-chart text-3xl"></i>
-                        </div>
+                        <div class="inline-flex items-center justify-center w-16 h-16 mb-6 rounded-full bg-brand-primary/10 text-brand-primary"><i class="fas fa-magnifying-glass-chart text-3xl"></i></div>
                         <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">Data-Driven Decisions</h3>
                         <p class="text-gray-600 dark:text-gray-400">Using predictive analytics to identify high-impact problem areas and deploy resources effectively and transparently.</p>
                     </div>
-                    <!-- Element 2 -->
                     <div class="bg-white dark:bg-gray-800 p-8 rounded-xl shadow-lg text-center transform hover:-translate-y-2 transition-transform duration-300">
-                        <div class="inline-flex items-center justify-center w-16 h-16 mb-6 rounded-full bg-brand-primary/10 text-brand-primary">
-                            <i class="fas fa-brain text-3xl"></i>
-                        </div>
+                        <div class="inline-flex items-center justify-center w-16 h-16 mb-6 rounded-full bg-brand-primary/10 text-brand-primary"><i class="fas fa-brain text-3xl"></i></div>
                         <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">Behavioral Insight</h3>
                         <p class="text-gray-600 dark:text-gray-400">Drawing on psychology to design programs that address the underlying motivations behind criminal activity.</p>
                     </div>
-                    <!-- Element 3 -->
                     <div class="bg-white dark:bg-gray-800 p-8 rounded-xl shadow-lg text-center transform hover:-translate-y-2 transition-transform duration-300">
-                        <div class="inline-flex items-center justify-center w-16 h-16 mb-6 rounded-full bg-brand-primary/10 text-brand-primary">
-                            <i class="fas fa-microchip text-3xl"></i>
-                        </div>
+                        <div class="inline-flex items-center justify-center w-16 h-16 mb-6 rounded-full bg-brand-primary/10 text-brand-primary"><i class="fas fa-microchip text-3xl"></i></div>
                         <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">Technological Integration</h3>
                         <p class="text-gray-600 dark:text-gray-400">Implementing AI-assisted crime mapping, smart surveillance, and real-time data analysis to intervene proactively.</p>
                     </div>
-                     <!-- Element 4 -->
                     <div class="bg-white dark:bg-gray-800 p-8 rounded-xl shadow-lg text-center transform hover:-translate-y-2 transition-transform duration-300">
-                        <div class="inline-flex items-center justify-center w-16 h-16 mb-6 rounded-full bg-brand-primary/10 text-brand-primary">
-                            <i class="fas fa-arrow-trend-up text-3xl"></i>
-                        </div>
+                        <div class="inline-flex items-center justify-center w-16 h-16 mb-6 rounded-full bg-brand-primary/10 text-brand-primary"><i class="fas fa-arrow-trend-up text-3xl"></i></div>
                         <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">Economic Diversification</h3>
                         <p class="text-gray-600 dark:text-gray-400">Encouraging private-sector investment and entrepreneurship to build a sustainable and equitable Albany.</p>
                     </div>
@@ -285,36 +287,20 @@
                     <p class="mt-4 text-lg text-gray-300">We are committed to transparent results. Our success is measured by clear, quantifiable outcomes across safety, the economy, and the community.</p>
                 </div>
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-                    <!-- Metric 1 -->
                     <div class="bg-white/5 p-8 rounded-xl border border-white/10 text-left">
-                        <div class="flex items-center gap-4 mb-4">
-                            <i class="fa-solid fa-arrow-down-wide-short text-brand-accent text-2xl"></i>
-                            <h3 class="text-xl font-bold text-white">Crime Reduction</h3>
-                        </div>
+                        <div class="flex items-center gap-4 mb-4"><i class="fa-solid fa-arrow-down-wide-short text-brand-accent text-2xl"></i><h3 class="text-xl font-bold text-white">Crime Reduction</h3></div>
                         <p class="text-gray-400">Measured by decreases in violent incidents, property crimes, and recidivism rates.</p>
                     </div>
-                    <!-- Metric 2 -->
                     <div class="bg-white/5 p-8 rounded-xl border border-white/10 text-left">
-                        <div class="flex items-center gap-4 mb-4">
-                            <i class="fa-solid fa-briefcase text-brand-primary-light text-2xl"></i>
-                            <h3 class="text-xl font-bold text-white">Economic Growth</h3>
-                        </div>
+                        <div class="flex items-center gap-4 mb-4"><i class="fa-solid fa-briefcase text-brand-primary-light text-2xl"></i><h3 class="text-xl font-bold text-white">Economic Growth</h3></div>
                         <p class="text-gray-400">Reflected by increased private-sector job creation, new business registrations, and prosperity indicators.</p>
                     </div>
-                    <!-- Metric 3 -->
                     <div class="bg-white/5 p-8 rounded-xl border border-white/10 text-left">
-                       <div class="flex items-center gap-4 mb-4">
-                            <i class="fa-solid fa-users text-brand-accent text-2xl"></i>
-                            <h3 class="text-xl font-bold text-white">Community Engagement</h3>
-                        </div>
+                       <div class="flex items-center gap-4 mb-4"><i class="fa-solid fa-users text-brand-accent text-2xl"></i><h3 class="text-xl font-bold text-white">Community Engagement</h3></div>
                         <p class="text-gray-400">Assessed by attendance at forums, volunteer participation, and positive public sentiment.</p>
                     </div>
-                    <!-- Metric 4 -->
                     <div class="bg-white/5 p-8 rounded-xl border border-white/10 text-left">
-                        <div class="flex items-center gap-4 mb-4">
-                            <i class="fa-solid fa-crosshairs text-white text-2xl"></i>
-                            <h3 class="text-xl font-bold text-white">Technological Impact</h3>
-                        </div>
+                        <div class="flex items-center gap-4 mb-4"><i class="fa-solid fa-crosshairs text-white text-2xl"></i><h3 class="text-xl font-bold text-white">Technological Impact</h3></div>
                         <p class="text-gray-400">Tracked through the influence of predictive analytics in preventing and solving crimes.</p>
                     </div>
                 </div>
@@ -345,7 +331,6 @@
     <footer class="bg-brand-dark text-gray-400 textured-bg">
         <div class="container mx-auto px-4 py-16">
             <div class="grid grid-cols-1 md:grid-cols-12 gap-8">
-                <!-- About -->
                 <div class="md:col-span-12 lg:col-span-5">
                     <div class="flex items-center gap-3 mb-4">
                        <img src="https://iconsusa.org/assets/icons_copy/aai-seal-1.svg" alt="AAI Seal" class="h-10 w-10">
@@ -359,7 +344,6 @@
                         <a href="#" class="text-gray-400 hover:text-white transition-colors" aria-label="Follow on LinkedIn"><i class="fab fa-linkedin fa-xl"></i></a>
                     </div>
                 </div>
-                <!-- Links -->
                 <div class="md:col-span-4 lg:col-span-2">
                     <h4 class="text-sm font-semibold text-gray-200 uppercase tracking-wider mb-4">Explore</h4>
                     <ul class="space-y-3">
@@ -392,10 +376,10 @@
         </div>
     </footer>
 
-    <!-- JavaScript for Dark Mode & Mobile Menu -->
+    <!-- JavaScript -->
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            // Mobile Menu Toggle
+            // Mobile Menu & Theme Toggle Logic
             const mobileMenuButton = document.getElementById('mobile-menu-button');
             const mobileMenu = document.getElementById('mobile-menu');
             if (mobileMenuButton && mobileMenu) {
@@ -404,12 +388,10 @@
                 });
             }
 
-            // Dark Mode Toggle Logic
             const themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
             const themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
             const themeToggleBtn = document.getElementById('theme-toggle');
 
-            // Function to set theme
             const setTheme = (isDark) => {
                 if (isDark) {
                     document.documentElement.classList.add('dark');
@@ -424,16 +406,107 @@
                 }
             };
 
-            // Initial theme check
             const isInitialDark = localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches);
             setTheme(isInitialDark);
             
-            // Listener for theme toggle button
             if(themeToggleBtn) {
                 themeToggleBtn.addEventListener('click', () => {
                     setTheme(!document.documentElement.classList.contains('dark'));
                 });
             }
+
+            // AI News Briefing Logic
+            const fetchBtn = document.getElementById('fetch-headlines-btn');
+            const headlinesContainer = document.getElementById('headlines-container');
+            const loader = document.getElementById('headlines-loader');
+
+            const fetchHeadlines = async () => {
+                loader.style.display = 'flex';
+                headlinesContainer.innerHTML = ''; // Clear previous results
+                headlinesContainer.appendChild(loader);
+
+                const prompt = "Find the 5 most recent and relevant news headlines about crime reports or public safety incidents in Albany, NY. For each headline, provide the title, a one-sentence summary, the source name, the publication date, and the direct URL.";
+                let chatHistory = [{ role: "user", parts: [{ text: prompt }] }];
+                const payload = {
+                    contents: chatHistory,
+                    generationConfig: {
+                        responseMimeType: "application/json",
+                        responseSchema: {
+                            type: "OBJECT",
+                            properties: {
+                                "articles": {
+                                    "type": "ARRAY",
+                                    "items": {
+                                        "type": "OBJECT",
+                                        "properties": {
+                                            "title": { "type": "STRING" },
+                                            "summary": { "type": "STRING" },
+                                            "source": { "type": "STRING" },
+                                            "date": { "type": "STRING" },
+                                            "url": { "type": "STRING" }
+                                        },
+                                        required: ["title", "summary", "source", "date", "url"]
+                                    }
+                                }
+                            }
+                        }
+                    }
+                };
+                const apiKey = ""; // API key will be automatically provided by the environment
+                const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
+
+                try {
+                    const response = await fetch(apiUrl, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload)
+                    });
+
+                    if (!response.ok) {
+                        throw new Error(`API request failed with status ${response.status}`);
+                    }
+
+                    const result = await response.json();
+                    loader.style.display = 'none';
+
+                    if (result.candidates && result.candidates[0].content && result.candidates[0].content.parts.length > 0) {
+                        const data = JSON.parse(result.candidates[0].content.parts[0].text);
+                        if (data.articles && data.articles.length > 0) {
+                            displayHeadlines(data.articles);
+                        } else {
+                            displayError("No articles found. Please try again later.");
+                        }
+                    } else {
+                       throw new Error("Unexpected API response format.");
+                    }
+                } catch (error) {
+                    console.error("Error fetching headlines:", error);
+                    loader.style.display = 'none';
+                    displayError(`Failed to fetch headlines. ${error.message}`);
+                }
+            };
+
+            const displayHeadlines = (articles) => {
+                headlinesContainer.innerHTML = ''; // Clear loader
+                articles.forEach(article => {
+                    const articleEl = document.createElement('div');
+                    articleEl.className = 'bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md border border-gray-200 dark:border-gray-700';
+                    articleEl.innerHTML = `
+                        <a href="${article.url}" target="_blank" rel="noopener noreferrer" class="text-xl font-bold text-brand-primary dark:text-brand-primary-light hover:underline">${article.title}</a>
+                        <p class="text-gray-600 dark:text-gray-400 mt-2">${article.summary}</p>
+                        <div class="text-sm text-gray-500 dark:text-gray-500 mt-4">
+                            <strong>${article.source}</strong> | <span>${new Date(article.date).toLocaleDateString()}</span>
+                        </div>
+                    `;
+                    headlinesContainer.appendChild(articleEl);
+                });
+            };
+            
+            const displayError = (message) => {
+                headlinesContainer.innerHTML = `<div class="text-center text-red-500 bg-red-100 dark:bg-red-900/50 p-4 rounded-lg">${message}</div>`;
+            };
+
+            fetchBtn.addEventListener('click', fetchHeadlines);
         });
     </script>
 </body>
