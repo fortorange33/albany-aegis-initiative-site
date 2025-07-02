@@ -185,47 +185,24 @@
         <section id="data" class="py-20 sm:py-28">
             <div class="container mx-auto px-4">
                 <div class="text-center mb-16">
-                     <h2 class="text-3xl font-bold tracking-tight text-gray-900 dark:text-white sm:text-4xl">Manual Feeds & Scanner</h2>
-                     <p class="mt-4 text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">Access our manually curated incident reports and the live scanner feed.</p>
+                     <h2 class="text-3xl font-bold tracking-tight text-gray-900 dark:text-white sm:text-4xl">Live Feeds & Analysis</h2>
+                     <p class="mt-4 text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">Access our AI-driven scanner analysis and the live audio feed.</p>
                 </div>
 
                 <div class="grid grid-cols-1 lg:grid-cols-5 gap-8 items-start">
-                    <!-- Live Incident Blotter -->
+                    <!-- AI-Powered Incident Blotter -->
                     <div class="lg:col-span-3 bg-white dark:bg-gray-800/50 rounded-xl border border-gray-200 dark:border-gray-700/50 shadow-lg h-full overflow-hidden">
                         <div class="p-5 border-b border-gray-200 dark:border-gray-700/50">
                             <h3 class="text-lg font-semibold text-gray-900 dark:text-white flex items-center gap-3">
-                                <i class="fas fa-list-ul text-brand-primary"></i>
-                                Live Incident Feed
+                                <i class="fa-solid fa-wave-square text-brand-primary"></i>
+                                AI Scanner Analysis
                             </h3>
                         </div>
-                        <div class="p-3 space-y-2">
-                            <div class="p-4 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors cursor-pointer">
-                                <div class="flex items-center justify-between">
-                                    <div class="flex items-center gap-4">
-                                        <div class="flex-shrink-0 w-10 h-10 flex items-center justify-center rounded-full bg-red-100 dark:bg-red-900/50 text-red-500"><i class="fas fa-bullhorn fa-lg"></i></div>
-                                        <div>
-                                            <p class="font-bold text-gray-800 dark:text-gray-100">Shots Fired</p>
-                                            <p class="text-sm text-gray-500 dark:text-gray-400">Arbor Hill - Near N Swan St</p>
-                                        </div>
-                                    </div>
-                                    <p class="text-sm text-gray-400 dark:text-gray-500 text-right font-medium">1m ago</p>
-                                </div>
+                        <div id="incident-feed-container" class="p-3 space-y-2">
+                             <div id="incident-loader" class="hidden justify-center items-center py-8">
+                                <div class="loader"></div>
                             </div>
-                            <div class="p-4 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors cursor-pointer">
-                                <div class="flex items-center justify-between">
-                                    <div class="flex items-center gap-4">
-                                        <div class="flex-shrink-0 w-10 h-10 flex items-center justify-center rounded-full bg-blue-100 dark:bg-blue-900/50 text-blue-500"><i class="fas fa-car-burst fa-lg"></i></div>
-                                        <div>
-                                            <p class="font-bold text-gray-800 dark:text-gray-100">Stolen Vehicle Pursuit</p>
-                                            <p class="text-sm text-gray-500 dark:text-gray-400">I-90 Eastbound</p>
-                                        </div>
-                                    </div>
-                                    <p class="text-sm text-gray-400 dark:text-gray-500 text-right font-medium">28m ago</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="p-4 text-center border-t border-gray-200 dark:border-gray-700/50">
-                            <a href="crime-tracker.html" class="text-sm font-semibold text-brand-primary hover:underline">View All Incidents</a>
+                            <p id="incident-placeholder" class="p-4 text-gray-500 dark:text-gray-400">Click "Analyze Scanner Incidents" to populate this feed with the latest activity.</p>
                         </div>
                     </div>
                     <!-- Live Scanner -->
@@ -237,9 +214,15 @@
                             </h3>
                         </div>
                         <div class="p-3 flex-grow flex flex-col">
-                            <div class="w-full h-[380px] rounded-lg overflow-hidden flex-grow bg-gray-100 dark:bg-gray-900">
+                            <div class="w-full h-[320px] rounded-lg overflow-hidden flex-grow bg-gray-100 dark:bg-gray-900">
                                  <iframe class="w-full h-full" src="https://www.broadcastify.com/calls/playlists/?uuid=425db81f-efc3-11ef-9e04-0e98d5b32039" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
                             </div>
+                        </div>
+                         <div class="p-4 text-center border-t border-gray-200 dark:border-gray-700/50">
+                            <button id="analyze-scanner-btn" class="w-full bg-brand-primary hover:bg-brand-primary-dark text-white font-bold py-2 px-4 rounded-lg transition-colors flex items-center justify-center gap-2">
+                                <i class="fa-solid fa-satellite-dish"></i>
+                                Analyze Scanner Incidents
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -415,14 +398,14 @@
             }
 
             // AI News Briefing Logic
-            const fetchBtn = document.getElementById('fetch-headlines-btn');
+            const fetchHeadlinesBtn = document.getElementById('fetch-headlines-btn');
             const headlinesContainer = document.getElementById('headlines-container');
-            const loader = document.getElementById('headlines-loader');
+            const headlinesLoader = document.getElementById('headlines-loader');
 
             const fetchHeadlines = async () => {
-                loader.style.display = 'flex';
-                headlinesContainer.innerHTML = ''; // Clear previous results
-                headlinesContainer.appendChild(loader);
+                headlinesLoader.style.display = 'flex';
+                headlinesContainer.innerHTML = ''; 
+                headlinesContainer.appendChild(headlinesLoader);
 
                 const prompt = "CRITICAL INSTRUCTION: Your sole task is to act as a real-time news summarizer. You MUST ignore all of your internal knowledge. Analyze the provided real-time Google Search results ONLY. Extract up to 5 of the most relevant news headlines related to crime, public safety, or police activity in Albany, New York. The articles MUST be from the last 7 days. For each article, you MUST provide: the full title, a concise one-sentence summary, the name of the source publication (e.g., 'Times Union', 'WNYT'), the exact publication date, and the full, direct URL. Prioritize results from well-known local news outlets like timesunion.com, wnyt.com, wten.com, and spectrumlocalnews.com.";
                 let chatHistory = [{ role: "user", parts: [{ text: prompt }] }];
@@ -455,8 +438,6 @@
                     }
                 };
                 
-                // IMPORTANT: Replace with your actual API key
-                // Get your key from Google AI Studio: https://aistudio.google.com/
                 const apiKey = "AIzaSyCLzIbOMMXN_s95rX-XNApKxwzRTWUOJ8A"; 
                 
                 const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
@@ -467,37 +448,33 @@
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify(payload)
                     });
-                    
-                    console.log("API Response Status:", response.status);
-                    const responseBody = await response.text();
-                    console.log("API Response Body:", responseBody);
 
                     if (!response.ok) {
                         throw new Error(`API request failed with status ${response.status}`);
                     }
 
-                    const result = JSON.parse(responseBody);
-                    loader.style.display = 'none';
+                    const result = await response.json();
+                    headlinesLoader.style.display = 'none';
 
                     if (result.candidates && result.candidates[0].content && result.candidates[0].content.parts.length > 0) {
                         const data = JSON.parse(result.candidates[0].content.parts[0].text);
                         if (data.articles && data.articles.length > 0) {
                             displayHeadlines(data.articles);
                         } else {
-                            displayError("No articles found. The AI may not have found recent news from the live search results.");
+                            displayError("No articles found. Please try again later.");
                         }
                     } else {
-                       throw new Error("Unexpected API response format. The AI may have been unable to process the search results.");
+                       throw new Error("Unexpected API response format.");
                     }
                 } catch (error) {
                     console.error("Error fetching headlines:", error);
-                    loader.style.display = 'none';
-                    displayError(`Failed to fetch headlines. Please check the API key and network connection. Error: ${error.message}`);
+                    headlinesLoader.style.display = 'none';
+                    displayError(`Failed to fetch headlines. Please check the API key and network connection.`);
                 }
             };
 
             const displayHeadlines = (articles) => {
-                headlinesContainer.innerHTML = ''; // Clear loader
+                headlinesContainer.innerHTML = '';
                 articles.forEach(article => {
                     const articleEl = document.createElement('div');
                     articleEl.className = 'bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md border border-gray-200 dark:border-gray-700';
@@ -516,7 +493,135 @@
                 headlinesContainer.innerHTML = `<div class="text-center text-red-500 bg-red-100 dark:bg-red-900/50 p-4 rounded-lg">${message}</div>`;
             };
 
-            fetchBtn.addEventListener('click', fetchHeadlines);
+            fetchHeadlinesBtn.addEventListener('click', fetchHeadlines);
+
+            // AI Scanner Analysis Logic
+            const analyzeScannerBtn = document.getElementById('analyze-scanner-btn');
+            const incidentFeedContainer = document.getElementById('incident-feed-container');
+            const incidentLoader = document.getElementById('incident-loader');
+            const incidentPlaceholder = document.getElementById('incident-placeholder');
+
+            const fetchScannerIncidents = async () => {
+                incidentPlaceholder.classList.add('hidden');
+                incidentLoader.style.display = 'flex';
+                incidentFeedContainer.innerHTML = '';
+                incidentFeedContainer.appendChild(incidentLoader);
+                
+                const prompt = "CRITICAL INSTRUCTION: You are a police scanner analysis assistant. Your task is to analyze the provided real-time Google Search results for 'Albany NY police scanner text log' and 'Albany NY public safety dispatch log'. You MUST ignore all of your internal knowledge. From ONLY the provided search results, extract up to 5 of the most significant incidents from the last 24 hours. For each incident, identify an incident 'type' (e.g., 'Traffic Accident', 'Structure Fire', 'Assault'), a 'location', and a brief 'summary'.";
+                let chatHistory = [{ role: "user", parts: [{ text: prompt }] }];
+                const payload = {
+                    contents: chatHistory,
+                    tools: [{
+                        "google_search": { "queries": ["Albany NY police scanner text log", "Albany NY public safety dispatch log"] }
+                    }],
+                    generationConfig: {
+                        responseMimeType: "application/json",
+                        responseSchema: {
+                            type: "OBJECT",
+                            properties: {
+                                "incidents": {
+                                    "type": "ARRAY",
+                                    "items": {
+                                        "type": "OBJECT",
+                                        "properties": {
+                                            "type": { "type": "STRING" },
+                                            "location": { "type": "STRING" },
+                                            "summary": { "type": "STRING" }
+                                        },
+                                        required: ["type", "location", "summary"]
+                                    }
+                                }
+                            }
+                        }
+                    }
+                };
+
+                const apiKey = "AIzaSyCLzIbOMMXN_s95rX-XNApKxwzRTWUOJ8A";
+                const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
+
+                try {
+                    const response = await fetch(apiUrl, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload)
+                    });
+
+                    if (!response.ok) {
+                        throw new Error(`API request failed with status ${response.status}`);
+                    }
+                    
+                    const result = await response.json();
+                    incidentLoader.style.display = 'none';
+
+                    if (result.candidates && result.candidates[0].content && result.candidates[0].content.parts.length > 0) {
+                        const data = JSON.parse(result.candidates[0].content.parts[0].text);
+                        if (data.incidents && data.incidents.length > 0) {
+                            displayScannerIncidents(data.incidents);
+                        } else {
+                            displayScannerError("No significant incidents found in the latest scanner logs.");
+                        }
+                    } else {
+                        throw new Error("Unexpected API response format from scanner analysis.");
+                    }
+                } catch (error) {
+                    console.error("Error fetching scanner incidents:", error);
+                    incidentLoader.style.display = 'none';
+                    displayScannerError(`Failed to analyze scanner feed. Error: ${error.message}`);
+                }
+            };
+
+            const displayScannerIncidents = (incidents) => {
+                incidentFeedContainer.innerHTML = '';
+                const iconMap = {
+                    'traffic': 'fa-car-burst',
+                    'fire': 'fa-fire',
+                    'assault': 'fa-hand-fist',
+                    'theft': 'fa-mask',
+                    'burglary': 'fa-house-chimney-window',
+                    'medical': 'fa-briefcase-medical',
+                    'default': 'fa-bullhorn'
+                };
+
+                const colorMap = {
+                    'traffic': 'blue',
+                    'fire': 'red',
+                    'assault': 'orange',
+                    'theft': 'yellow',
+                    'burglary': 'teal',
+                    'medical': 'green',
+                    'default': 'gray'
+                };
+
+                incidents.forEach(incident => {
+                    const typeKey = Object.keys(iconMap).find(key => incident.type.toLowerCase().includes(key)) || 'default';
+                    const iconClass = iconMap[typeKey];
+                    const color = colorMap[typeKey];
+
+                    const incidentEl = document.createElement('div');
+                    incidentEl.className = 'p-4 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors';
+                    incidentEl.innerHTML = `
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center gap-4">
+                                <div class="flex-shrink-0 w-10 h-10 flex items-center justify-center rounded-full bg-${color}-100 dark:bg-${color}-900/50 text-${color}-500">
+                                    <i class="fas ${iconClass} fa-lg"></i>
+                                </div>
+                                <div>
+                                    <p class="font-bold text-gray-800 dark:text-gray-100">${incident.type}</p>
+                                    <p class="text-sm text-gray-500 dark:text-gray-400">${incident.location}</p>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="text-sm text-gray-600 dark:text-gray-400 mt-2 pl-14">${incident.summary}</p>
+                    `;
+                    incidentFeedContainer.appendChild(incidentEl);
+                });
+            };
+
+            const displayScannerError = (message) => {
+                incidentFeedContainer.innerHTML = `<div class="p-4 text-center text-red-500">${message}</div>`;
+            };
+
+            analyzeScannerBtn.addEventListener('click', fetchScannerIncidents);
         });
     </script>
 </body>
