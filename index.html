@@ -174,7 +174,6 @@
                     </button>
                 </div>
                 <div id="headlines-container" class="max-w-4xl mx-auto space-y-4">
-                    <!-- AI-generated headlines will be inserted here -->
                     <div id="headlines-loader" class="hidden justify-center items-center py-8">
                         <div class="loader"></div>
                     </div>
@@ -482,7 +481,7 @@
                 } catch (error) {
                     console.error("Error fetching headlines:", error);
                     loader.style.display = 'none';
-                    displayError(`Failed to fetch headlines. ${error.message}`);
+                    displayError(`Failed to fetch headlines. Please check the API key and network connection.`);
                 }
             };
 
