@@ -174,7 +174,6 @@
                     </button>
                 </div>
                 <div id="headlines-container" class="max-w-4xl mx-auto space-y-4">
-                    <div id="api-error-message" class="hidden text-center text-amber-600 dark:text-amber-400 bg-amber-100 dark:bg-amber-900/50 p-4 rounded-lg"></div>
                     <div id="headlines-loader" class="hidden justify-center items-center py-8">
                         <div class="loader"></div>
                     </div>
@@ -425,7 +424,7 @@
                 headlinesContainer.innerHTML = ''; // Clear previous results
                 headlinesContainer.appendChild(loader);
 
-                const prompt = "Find the 5 most recent and relevant news headlines about crime reports or public safety incidents in Albany, NY. For each headline, provide the title, a one-sentence summary, the source name, the publication date, and the direct URL.";
+                const prompt = "Using the provided search results, extract the 5 most relevant news headlines about crime reports or public safety incidents in Albany, NY. For each headline, provide the title, a one-sentence summary, the source name, the publication date, and the direct URL.";
                 let chatHistory = [{ role: "user", parts: [{ text: prompt }] }];
                 const payload = {
                     contents: chatHistory,
