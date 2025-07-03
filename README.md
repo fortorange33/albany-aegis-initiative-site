@@ -1,5 +1,7 @@
 # Albany Aegis Initiative Site
 
+[![Netlify Status](https://api.netlify.com/api/v1/badges/ed254c35-7733-4044-9144-93a91e5c7817/deploy-status)](https://app.netlify.com/projects/albany-aegis-initiative-netlify/deploys)
+
 ## Overview
 
 This is the official site of the **Albany Aegis Initiative**, a civic data and public safety program dedicated to reducing crime, enhancing community trust, and improving local governance in Albany, New York. The site provides transparency tools, interactive visualizations, and civic resources for the public and policymakers.
