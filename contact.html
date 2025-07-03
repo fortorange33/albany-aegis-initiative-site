@@ -1,84 +1,181 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Contact | Albany Aegis Initiative</title>
   <meta name="description" content="Get in touch with the Albany Aegis Initiative. Reach us via secure form or contact info below.">
 
-  <!-- Fonts & Styles -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet" />
-  <link rel="stylesheet" href="css/style.css" />
+  <!-- Favicon -->
+  <link rel="icon" href="https://iconsusa.org/assets/icons_copy/aai-seal-1.svg" />
+
+  <!-- Google Fonts: Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Font Awesome Icons -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet" />
+
+  <!-- Custom Styles & Tailwind Config -->
+  <style>
+      body {
+          font-family: 'Inter', sans-serif;
+      }
+  </style>
+  <script>
+      tailwind.config = {
+          darkMode: 'class',
+          theme: {
+              extend: {
+                  colors: {
+                      'brand-dark': '#001e48',
+                      'brand-light': '#FFFFFF',
+                      'brand-primary': {
+                          DEFAULT: '#003884',
+                          'light': '#1a5bb5',
+                          'dark': '#002766'
+                      },
+                      'brand-accent': {
+                          DEFAULT: '#FF6600',
+                          'dark': '#e65c00'
+                      },
+                  }
+              }
+          }
+      }
+  </script>
 </head>
-<body>
+<body class="bg-brand-light dark:bg-brand-dark antialiased text-gray-700 dark:text-gray-300 flex flex-col min-h-screen">
 
   <!-- Header -->
-  <header class="bg-dark text-white py-3">
-    <div class="container">
-      <nav class="navbar navbar-expand-lg navbar-dark">
-        <a class="navbar-brand logo" href="index.html">Albany Aegis Initiative</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-            <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
-            <li class="nav-item"><a class="nav-link" href="about.html">About</a></li>
-            <li class="nav-item"><a class="nav-link" href="crime-data.html">Crime Data</a></li>
-            <li class="nav-item"><a class="nav-link" href="resources.html">Resources</a></li>
-            <li class="nav-item"><a class="nav-link active" href="contact.html" aria-current="page">Contact</a></li>
-          </ul>
-          <button id="darkToggle" class="btn btn-outline-light ms-lg-3" aria-label="Toggle dark mode">
-            <i class="fas fa-moon"></i>
+  <header id="header" class="bg-white/80 dark:bg-brand-dark/80 backdrop-blur-lg sticky top-0 z-50 transition-all duration-300 border-b border-gray-200 dark:border-gray-700/50">
+    <div class="container mx-auto px-4">
+      <nav class="flex justify-between items-center py-3">
+        <a href="index.html" class="flex items-center gap-3">
+          <img src="https://iconsusa.org/assets/icons_copy/aai-seal-1.svg" alt="AAI Seal" class="h-10 w-10">
+          <span class="text-xl font-bold text-gray-900 dark:text-white hidden sm:inline tracking-tight">Albany Aegis</span>
+        </a>
+        <div class="hidden md:flex items-center gap-1 text-sm font-medium">
+          <a href="index.html" class="text-gray-600 dark:text-gray-300 hover:text-brand-primary dark:hover:text-white hover:bg-gray-100 dark:hover:bg-gray-700 px-3 py-2 rounded-md transition-colors">Home</a>
+          <a href="about.html" class="text-gray-600 dark:text-gray-300 hover:text-brand-primary dark:hover:text-white hover:bg-gray-100 dark:hover:bg-gray-700 px-3 py-2 rounded-md transition-colors">About</a>
+          <a href="crime-data.html" class="text-gray-600 dark:text-gray-300 hover:text-brand-primary dark:hover:text-white hover:bg-gray-100 dark:hover:bg-gray-700 px-3 py-2 rounded-md transition-colors">Crime Data</a>
+          <a href="visualizations.html" class="text-gray-600 dark:text-gray-300 hover:text-brand-primary dark:hover:text-white hover:bg-gray-100 dark:hover:bg-gray-700 px-3 py-2 rounded-md transition-colors">Visualizations</a>
+          <a href="aai-live-crime-map/index.html" class="text-gray-600 dark:text-gray-300 hover:text-brand-primary dark:hover:text-white hover:bg-gray-100 dark:hover:bg-gray-700 px-3 py-2 rounded-md transition-colors">Live Map</a>
+          <a href="contact.html" class="bg-gray-100 dark:bg-gray-700 text-brand-primary dark:text-white px-3 py-2 rounded-md">Contact</a>
+        </div>
+        <div class="flex items-center gap-2">
+          <button id="theme-toggle" type="button" class="text-gray-500 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-700 rounded-lg text-sm p-2.5">
+            <svg id="theme-toggle-dark-icon" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
+            <svg id="theme-toggle-light-icon" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm-.707 7.072l.707-.707a1 1 0 10-1.414-1.414l-.707.707a1 1 0 001.414 1.414zM3 11a1 1 0 100-2H2a1 1 0 100 2h1z" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
           </button>
+          <button id="mobile-menu-button" class="md:hidden p-2 text-gray-500 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-700 rounded-lg"><i class="fas fa-bars fa-lg"></i></button>
         </div>
       </nav>
+      <div id="mobile-menu" class="hidden md:hidden py-2 space-y-1">
+        <a href="index.html" class="block py-2 px-4 text-sm hover:bg-gray-100 dark:hover:bg-gray-700 rounded-md">Home</a>
+        <a href="about.html" class="block py-2 px-4 text-sm hover:bg-gray-100 dark:hover:bg-gray-700 rounded-md">About</a>
+        <a href="crime-data.html" class="block py-2 px-4 text-sm hover:bg-gray-100 dark:hover:bg-gray-700 rounded-md">Crime Data</a>
+        <a href="visualizations.html" class="block py-2 px-4 text-sm hover:bg-gray-100 dark:hover:bg-gray-700 rounded-md">Visualizations</a>
+        <a href="aai-live-crime-map/index.html" class="block py-2 px-4 text-sm hover:bg-gray-100 dark:hover:bg-gray-700 rounded-md">Live Map</a>
+        <a href="contact.html" class="block py-2 px-4 text-sm bg-gray-100 dark:bg-gray-700 rounded-md font-semibold">Contact</a>
+      </div>
     </div>
   </header>
 
   <!-- Main Content -->
-  <main class="container my-5">
-    <section class="mb-5">
-      <h2 class="h3 text-primary mb-4">Contact Us</h2>
-      <p class="mb-4">Have questions, suggestions, or want to get involved? Fill out the form below or email us directly at 
-        <a href="mailto:info@albany.watch">info@albany.watch</a> or call <a href="tel:+15185995882">(518) 599-5882</a>.
-      </p>
-    </section>
+  <main class="flex-grow container mx-auto px-4 py-16 sm:py-24">
+    <div class="max-w-3xl mx-auto">
+      <div class="text-center">
+        <h1 class="text-4xl font-extrabold tracking-tight text-gray-900 dark:text-white sm:text-5xl">Get in Touch</h1>
+        <p class="mt-4 text-lg text-gray-600 dark:text-gray-400">
+          Have a question, suggestion, or want to get involved? We'd love to hear from you.
+        </p>
+      </div>
 
-    <section class="mb-5">
-      <form action="https://formspree.io/f/xjkyagvr" method="POST" class="row g-3">
-        <div class="col-md-6">
-          <label for="name" class="form-label">Full Name</label>
-          <input type="text" class="form-control" id="name" name="name" required />
-        </div>
-        <div class="col-md-6">
-          <label for="email" class="form-label">Email Address</label>
-          <input type="email" class="form-control" id="email" name="_replyto" required />
-        </div>
-        <div class="col-12">
-          <label for="message" class="form-label">Your Message</label>
-          <textarea class="form-control" id="message" name="message" rows="5" required></textarea>
-        </div>
-        <div class="col-12">
-          <button type="submit" class="btn btn-primary">Send Message</button>
-        </div>
-      </form>
-    </section>
+      <div class="mt-12 bg-white dark:bg-gray-800/50 p-8 rounded-2xl shadow-lg border border-gray-200 dark:border-gray-700/50">
+        <form name="contact" method="POST" data-netlify="true" action="/contact-success.html">
+          <input type="hidden" name="form-name" value="contact" />
+          <div class="grid grid-cols-1 gap-y-6 sm:grid-cols-2 sm:gap-x-8">
+            <div>
+              <label for="name" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Full name</label>
+              <div class="mt-1">
+                <input type="text" name="name" id="name" autocomplete="name" required class="py-3 px-4 block w-full shadow-sm dark:bg-gray-700 dark:border-gray-600 dark:text-white focus:ring-brand-primary focus:border-brand-primary border-gray-300 rounded-md">
+              </div>
+            </div>
+            <div>
+              <label for="email" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Email</label>
+              <div class="mt-1">
+                <input id="email" name="email" type="email" autocomplete="email" required class="py-3 px-4 block w-full shadow-sm dark:bg-gray-700 dark:border-gray-600 dark:text-white focus:ring-brand-primary focus:border-brand-primary border-gray-300 rounded-md">
+              </div>
+            </div>
+            <div class="sm:col-span-2">
+              <label for="message" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Message</label>
+              <div class="mt-1">
+                <textarea id="message" name="message" rows="4" required class="py-3 px-4 block w-full shadow-sm dark:bg-gray-700 dark:border-gray-600 dark:text-white focus:ring-brand-primary focus:border-brand-primary border-gray-300 rounded-md"></textarea>
+              </div>
+            </div>
+            <div class="sm:col-span-2">
+              <button type="submit" class="w-full inline-flex items-center justify-center px-6 py-3 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-brand-primary hover:bg-brand-primary-dark focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-brand-primary">
+                Send Message
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
   </main>
 
   <!-- Footer -->
-  <footer class="bg-dark text-white text-center py-4 mt-auto">
-    <p class="mb-1">&copy; 2025 Albany Aegis Initiative. All rights reserved.</p>
-    <p class="mb-0">
-      Email: <a href="mailto:info@albany.watch" class="text-warning">info@albany.watch</a><br>
-      Phone: <a href="tel:+15185995882" class="text-warning">(518) 599-5882</a>
-    </p>
+  <footer class="bg-brand-dark text-gray-400">
+    <div class="container mx-auto px-4 py-12">
+      <div class="text-center">
+        <p>&copy; 2025 Albany Aegis Initiative. All Rights Reserved.</p>
+        <div class="mt-4 flex justify-center space-x-6">
+          <a href="mailto:info@albany.watch" class="text-gray-400 hover:text-white"><i class="fas fa-envelope fa-lg"></i></a>
+          <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-x-twitter fa-lg"></i></a>
+        </div>
+      </div>
+    </div>
   </footer>
 
-  <!-- Scripts -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-  <script src="js/main.js"></script>
+  <script>
+    // Theme Toggle and Mobile Menu Script
+    document.addEventListener('DOMContentLoaded', () => {
+      const mobileMenuButton = document.getElementById('mobile-menu-button');
+      const mobileMenu = document.getElementById('mobile-menu');
+      if (mobileMenuButton && mobileMenu) {
+        mobileMenuButton.addEventListener('click', () => {
+          mobileMenu.classList.toggle('hidden');
+        });
+      }
+      const themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
+      const themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
+      const themeToggleBtn = document.getElementById('theme-toggle');
+      const setTheme = (isDark) => {
+        if (isDark) {
+          document.documentElement.classList.add('dark');
+          if(themeToggleLightIcon) themeToggleLightIcon.classList.remove('hidden');
+          if(themeToggleDarkIcon) themeToggleDarkIcon.classList.add('hidden');
+          localStorage.setItem('color-theme', 'dark');
+        } else {
+          document.documentElement.classList.remove('dark');
+          if(themeToggleDarkIcon) themeToggleDarkIcon.classList.remove('hidden');
+          if(themeToggleLightIcon) themeToggleLightIcon.classList.add('hidden');
+          localStorage.setItem('color-theme', 'light');
+        }
+      };
+      const isInitialDark = localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches);
+      setTheme(isInitialDark);
+      if(themeToggleBtn) {
+        themeToggleBtn.addEventListener('click', () => {
+          setTheme(!document.documentElement.classList.contains('dark'));
+        });
+      }
+    });
+  </script>
 </body>
 </html>

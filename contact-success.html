@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Thank You | Albany Aegis Initiative</title>
+    <meta name="description" content="Thank you for contacting the Albany Aegis Initiative.">
+
+    <!-- Favicon -->
+    <link rel="icon" href="https://iconsusa.org/assets/icons_copy/aai-seal-1.svg" />
+
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Font Awesome Icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet" />
+
+    <!-- Custom Styles & Tailwind Config -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+    </style>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        'brand-dark': '#001e48',
+                        'brand-light': '#FFFFFF',
+                        'brand-primary': {
+                            DEFAULT: '#003884',
+                            'light': '#1a5bb5',
+                            'dark': '#002766'
+                        },
+                        'brand-accent': {
+                            DEFAULT: '#FF6600',
+                            'dark': '#e65c00'
+                        },
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-brand-light dark:bg-brand-dark antialiased text-gray-700 dark:text-gray-300 flex flex-col min-h-screen">
+
+    <!-- Header -->
+    <header id="header" class="bg-white/80 dark:bg-brand-dark/80 backdrop-blur-lg sticky top-0 z-50 transition-all duration-300 border-b border-gray-200 dark:border-gray-700/50">
+        <div class="container mx-auto px-4">
+            <nav class="flex justify-between items-center py-3">
+                <a href="index.html" class="flex items-center gap-3">
+                    <img src="https://iconsusa.org/assets/icons_copy/aai-seal-1.svg" alt="AAI Seal" class="h-10 w-10">
+                    <span class="text-xl font-bold text-gray-900 dark:text-white hidden sm:inline tracking-tight">Albany Aegis</span>
+                </a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-grow container mx-auto px-4 py-16 sm:py-24">
+        <div class="max-w-3xl mx-auto text-center">
+            <div class="inline-flex items-center justify-center w-16 h-16 mb-6 rounded-full bg-emerald-100 dark:bg-emerald-900/50 text-emerald-500">
+                <i class="fas fa-check-circle text-4xl"></i>
+            </div>
+            <h1 class="text-4xl font-extrabold tracking-tight text-gray-900 dark:text-white sm:text-5xl">Thank You!</h1>
+            <p class="mt-4 text-lg text-gray-600 dark:text-gray-400">
+                Your message has been sent successfully. We appreciate you reaching out and will get back to you as soon as possible.
+            </p>
+            <div class="mt-10">
+                <a href="index.html" class="bg-brand-primary text-white px-6 py-3 rounded-lg text-base font-semibold hover:bg-brand-primary-dark transition-all duration-300">
+                    Return to Home
+                </a>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-brand-dark text-gray-400">
+        <div class="container mx-auto px-4 py-12">
+            <div class="text-center">
+                <p>&copy; 2025 Albany Aegis Initiative. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html> 
