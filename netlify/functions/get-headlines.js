@@ -66,11 +66,18 @@ exports.handler = async function (event, context) {
         throw new Error("Unexpected API response format from Google AI.");
     }
     
-    return {
-      statusCode: 200,
-      headers: { "Content-Type": "application/json", "Access-Control-Allow-Origin": "*" },
-      body: resultText,
-    };
+    try {
+      const data = JSON.parse(resultText);
+      // Re-stringify to ensure we send valid JSON to the client.
+      return {
+        statusCode: 200,
+        headers: { "Content-Type": "application/json", "Access-Control-Allow-Origin": "*" },
+        body: JSON.stringify(data),
+      };
+    } catch (parseError) {
+      console.error("AI returned invalid JSON:", resultText);
+      throw new Error("AI response was not in a valid JSON format.");
+    }
   } catch (error) {
     console.error("Error calling Google AI:", error);
     return {
