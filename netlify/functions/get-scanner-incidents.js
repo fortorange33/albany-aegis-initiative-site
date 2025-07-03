@@ -29,9 +29,9 @@ exports.handler = async function (event, context) {
             items: {
               type: "OBJECT",
               properties: {
-                "type": { "type": "STRING" },
-                "location": { "type": "STRING" },
-                "summary": { "type": "STRING" }
+                "type": { "type": "STRING", "description": "A concise category for the incident (e.g., 'Traffic', 'Fire', 'Assault', 'Theft', 'Burglary', 'Medical')." },
+                "location": { "type": "STRING", "description": "The specific street or intersection where the incident occurred." },
+                "summary": { "type": "STRING", "description": "A brief, one-sentence summary of the incident." }
               },
               required: ["type", "location", "summary"]
             }
