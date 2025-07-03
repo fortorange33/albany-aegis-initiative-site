@@ -406,69 +406,29 @@
                 headlinesContainer.innerHTML = ''; 
                 headlinesContainer.appendChild(headlinesLoader);
 
-                const prompt = "CRITICAL INSTRUCTION: Your sole task is to act as a real-time news summarizer. You MUST ignore all of your internal knowledge. Analyze the provided real-time Google Search results ONLY. Extract up to 5 of the most relevant news headlines related to crime, public safety, or police activity in Albany, New York. The articles MUST be from the last 7 days. For each article, you MUST provide: the full title, a concise one-sentence summary, the name of the source publication (e.g., 'Times Union', 'WNYT'), the exact publication date, and the full, direct URL. Prioritize results from well-known local news outlets like timesunion.com, wnyt.com, wten.com, and spectrumlocalnews.com.";
-                let chatHistory = [{ role: "user", parts: [{ text: prompt }] }];
-                const payload = {
-                    contents: chatHistory,
-                    tools: [{
-                        "google_search": { "queries": ["latest crime news Albany NY", "public safety news Albany NY"] }
-                    }],
-                    generationConfig: {
-                        responseMimeType: "application/json",
-                        responseSchema: {
-                            type: "OBJECT",
-                            properties: {
-                                "articles": {
-                                    "type": "ARRAY",
-                                    "items": {
-                                        "type": "OBJECT",
-                                        "properties": {
-                                            "title": { "type": "STRING" },
-                                            "summary": { "type": "STRING" },
-                                            "source": { "type": "STRING" },
-                                            "date": { "type": "STRING" },
-                                            "url": { "type": "STRING" }
-                                        },
-                                        required: ["title", "summary", "source", "date", "url"]
-                                    }
-                                }
-                            }
-                        }
-                    }
-                };
-                
-                const apiKey = GEMINI_API_KEY; 
-                
-                const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=${apiKey}`;
+                // This is the new URL for our secure serverless function
+                const apiUrl = '/.netlify/functions/get-headlines';
 
                 try {
-                    const response = await fetch(apiUrl, {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify(payload)
-                    });
+                    const response = await fetch(apiUrl);
 
                     if (!response.ok) {
-                        throw new Error(`API request failed with status ${response.status}`);
+                        const errorData = await response.json();
+                        throw new Error(errorData.error || `API request failed with status ${response.status}`);
                     }
 
-                    const result = await response.json();
+                    const data = await response.json();
                     headlinesLoader.style.display = 'none';
 
-                    if (result.candidates && result.candidates[0].content && result.candidates[0].content.parts.length > 0) {
-                        const data = JSON.parse(result.candidates[0].content.parts[0].text);
-                        if (data.articles && data.articles.length > 0) {
-                            displayHeadlines(data.articles);
-                        } else {
-                            displayError("No articles found. Please try again later.");
-                        }
+                    if (data.articles && data.articles.length > 0) {
+                        displayHeadlines(data.articles);
                     } else {
-                       throw new Error("Unexpected API response format.");
+                        displayError("No articles found. Please try again later.");
                     }
                 } catch (error) {
                     console.error("Error fetching headlines:", error);
                     headlinesLoader.style.display = 'none';
-                    displayError(`Failed to fetch headlines. Please check the API key and network connection.`);
+                    displayError(`Failed to fetch headlines. Error: ${error.message}`);
                 }
             };
 
@@ -507,61 +467,24 @@
                 incidentFeedContainer.innerHTML = '';
                 incidentFeedContainer.appendChild(incidentLoader);
                 
-                const prompt = "CRITICAL INSTRUCTION: You are a police scanner analysis assistant. Your task is to analyze the provided real-time Google Search results for 'Albany NY police scanner text log' and 'Albany NY public safety dispatch log'. You MUST ignore all of your internal knowledge. From ONLY the provided search results, extract up to 5 of the most significant incidents from the last 24 hours. For each incident, identify an incident 'type' (e.g., 'Traffic Accident', 'Structure Fire', 'Assault'), a 'location', and a brief 'summary'.";
-                let chatHistory = [{ role: "user", parts: [{ text: prompt }] }];
-                const payload = {
-                    contents: chatHistory,
-                    tools: [{
-                        "google_search": { "queries": ["Albany NY police scanner text log", "Albany NY public safety dispatch log"] }
-                    }],
-                    generationConfig: {
-                        responseMimeType: "application/json",
-                        responseSchema: {
-                            type: "OBJECT",
-                            properties: {
-                                "incidents": {
-                                    "type": "ARRAY",
-                                    "items": {
-                                        "type": "OBJECT",
-                                        "properties": {
-                                            "type": { "type": "STRING" },
-                                            "location": { "type": "STRING" },
-                                            "summary": { "type": "STRING" }
-                                        },
-                                        required: ["type", "location", "summary"]
-                                    }
-                                }
-                            }
-                        }
-                    }
-                };
-
-                const apiKey = GEMINI_API_KEY;
-                const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=${apiKey}`;
+                // This is the new URL for our secure serverless function
+                const apiUrl = '/.netlify/functions/get-scanner-incidents';
 
                 try {
-                    const response = await fetch(apiUrl, {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify(payload)
-                    });
+                    const response = await fetch(apiUrl);
 
                     if (!response.ok) {
-                        throw new Error(`API request failed with status ${response.status}`);
+                        const errorData = await response.json();
+                        throw new Error(errorData.error || `API request failed with status ${response.status}`);
                     }
                     
-                    const result = await response.json();
+                    const data = await response.json();
                     incidentLoader.style.display = 'none';
 
-                    if (result.candidates && result.candidates[0].content && result.candidates[0].content.parts.length > 0) {
-                        const data = JSON.parse(result.candidates[0].content.parts[0].text);
-                        if (data.incidents && data.incidents.length > 0) {
-                            displayScannerIncidents(data.incidents);
-                        } else {
-                            displayScannerError("No significant incidents found in the latest scanner logs.");
-                        }
+                    if (data.incidents && data.incidents.length > 0) {
+                        displayScannerIncidents(data.incidents);
                     } else {
-                        throw new Error("Unexpected API response format from scanner analysis.");
+                        displayScannerError("No significant incidents found in the latest scanner logs.");
                     }
                 } catch (error) {
                     console.error("Error fetching scanner incidents:", error);
