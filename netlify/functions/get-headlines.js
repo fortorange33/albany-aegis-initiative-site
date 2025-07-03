@@ -1,4 +1,6 @@
 // This function will run on Netlify's servers and act as a secure proxy.
+const fetch = require('node-fetch');
+
 exports.handler = async function (event, context) {
   const apiKey = process.env.GEMINI_API_KEY;
   if (!apiKey) {
