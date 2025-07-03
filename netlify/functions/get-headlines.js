@@ -29,11 +29,11 @@ exports.handler = async function (event, context) {
             items: {
               type: "OBJECT",
               properties: {
-                "title": { "type": "STRING" },
-                "summary": { "type": "STRING" },
-                "source": { "type": "STRING" },
-                "date": { "type": "STRING" },
-                "url": { "type": "STRING" }
+                "title": { "type": "STRING", "description": "The full title of the news article." },
+                "summary": { "type": "STRING", "description": "A concise, one-sentence summary of the article." },
+                "source": { "type": "STRING", "description": "The name of the source publication (e.g., 'Times Union')." },
+                "date": { "type": "STRING", "description": "The publication date in YYYY-MM-DD format." },
+                "url": { "type": "STRING", "description": "The full, direct URL to the article." }
               },
               required: ["title", "summary", "source", "date", "url"]
             }
