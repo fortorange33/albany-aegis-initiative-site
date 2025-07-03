@@ -359,6 +359,7 @@
     </footer>
 
     <!-- JavaScript -->
+    <script src="assets/js/config.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             // --- Code for Mobile Menu & Theme Toggle ---
@@ -436,7 +437,7 @@
                     }
                 };
                 
-                const apiKey = "AIzaSyDlRk-OzR3_39MPAe2dU9BwEz0nMkGY8pc"; 
+                const apiKey = GEMINI_API_KEY; 
                 
                 const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
 
@@ -535,7 +536,7 @@
                     }
                 };
 
-                const apiKey = "AIzaSyDlRk-OzR3_39MPAe2dU9BwEz0nMkGY8pc";
+                const apiKey = GEMINI_API_KEY;
                 const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
 
                 try {

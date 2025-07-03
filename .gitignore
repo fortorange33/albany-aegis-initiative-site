@@ -7,3 +7,6 @@ _notes/
 /public/*.html
 /public/data/*.json
 .parcel-cache/
+public/
+node_modules
+/assets/js/config.js
