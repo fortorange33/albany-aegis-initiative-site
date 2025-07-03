@@ -1,6 +1,7 @@
 [build]
+  publish = "."
+  command = "echo 'No build required'"
   functions = "netlify/functions"
-  command = "echo 'No build command required'" # Since this is a static site
 
 [dev]
   functions = "netlify/functions" 
