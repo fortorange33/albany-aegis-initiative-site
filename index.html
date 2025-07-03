@@ -405,7 +405,7 @@
                 headlinesContainer.innerHTML = ''; 
                 headlinesContainer.appendChild(headlinesLoader);
 
-                const apiUrl = `/.netlify/functions/get-headlines?t=${new Date().getTime()}`;
+                const apiUrl = `/get-headlines?t=${new Date().getTime()}`;
 
                 try {
                     const response = await fetch(apiUrl);
@@ -435,12 +435,12 @@
                     if (data.articles && data.articles.length > 0) {
                         displayHeadlines(data.articles);
                     } else {
-                        displayError("No articles found. Please try again later.");
+                        displayError(headlinesContainer, "No articles found. Please try again later.");
                     }
                 } catch (error) {
                     console.error("Error fetching headlines:", error);
                     headlinesLoader.style.display = 'none';
-                    displayError(`Failed to fetch headlines. Error: ${error.message}`);
+                    displayError(headlinesContainer, `Failed to fetch headlines. Error: ${error.message}`);
                 }
             };
 
@@ -460,10 +460,6 @@
                 });
             };
             
-            const displayError = (message) => {
-                headlinesContainer.innerHTML = `<div class="text-center text-red-500 bg-red-100 dark:bg-red-900/50 p-4 rounded-lg">${message}</div>`;
-            };
-
             fetchHeadlinesBtn.addEventListener('click', fetchHeadlines);
 
 
@@ -479,7 +475,7 @@
                 incidentFeedContainer.innerHTML = '';
                 incidentFeedContainer.appendChild(incidentLoader);
                 
-                const apiUrl = `/.netlify/functions/get-scanner-incidents?t=${new Date().getTime()}`;
+                const apiUrl = `/get-scanner-incidents?t=${new Date().getTime()}`;
 
                 try {
                     const response = await fetch(apiUrl);
@@ -509,12 +505,12 @@
                     if (data.incidents && data.incidents.length > 0) {
                         displayScannerIncidents(data.incidents);
                     } else {
-                        displayScannerError("No significant incidents found in the latest scanner logs.");
+                        displayError(incidentFeedContainer, "No significant incidents found in the latest scanner logs.");
                     }
                 } catch (error) {
                     console.error("Error fetching scanner incidents:", error);
                     incidentLoader.style.display = 'none';
-                    displayScannerError(`Failed to analyze scanner feed. Error: ${error.message}`);
+                    displayError(incidentFeedContainer, `Failed to analyze scanner feed. Error: ${error.message}`);
                 }
             };
 
@@ -565,8 +561,8 @@
                 });
             };
 
-            const displayScannerError = (message) => {
-                incidentFeedContainer.innerHTML = `<div class="p-4 text-center text-red-500">${message}</div>`;
+            const displayError = (container, message) => {
+                container.innerHTML = `<div class="p-4 text-center text-red-500 bg-red-100 dark:bg-red-900/50 rounded-lg">${message}</div>`;
             };
 
             analyzeScannerBtn.addEventListener('click', fetchScannerIncidents);
