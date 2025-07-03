@@ -12,7 +12,7 @@ exports.handler = async function (event, context) {
 
   const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=${apiKey}`;
   
-  const prompt = "CRITICAL INSTRUCTION: You are a police scanner analysis assistant. Your task is to analyze the provided real-time Google Search results for 'Albany NY police scanner text log' and 'Albany NY public safety dispatch log'. You MUST ignore all of your internal knowledge. From ONLY the provided search results, extract up to 5 of the most significant incidents from the last 24 hours. For each incident, identify an incident 'type' (e.g., 'Traffic Accident', 'Structure Fire', 'Assault'), a 'location', and a brief 'summary'.";
+  const prompt = "CRITICAL INSTRUCTION: You are a police scanner analysis assistant. Your task is to analyze the provided real-time Google Search results for 'Albany NY police scanner text log' and 'Albany NY public safety dispatch log'. You MUST ignore all of your internal knowledge. From ONLY the provided search results, extract up to 5 of the most significant incidents from the last 24 hours. For each incident, identify an incident 'type', a 'location', and a brief 'summary'. If no significant incidents are found, you MUST return an empty 'incidents' array. Do not return explanatory text or apologies.";
 
   const payload = {
     contents: [{ role: "user", parts: [{ text: prompt }] }],
