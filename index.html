@@ -405,7 +405,7 @@
                 headlinesContainer.innerHTML = ''; 
                 headlinesContainer.appendChild(headlinesLoader);
 
-                const apiUrl = '/.netlify/functions/get-headlines';
+                const apiUrl = `/.netlify/functions/get-headlines?t=${new Date().getTime()}`;
 
                 try {
                     const response = await fetch(apiUrl);
@@ -479,7 +479,7 @@
                 incidentFeedContainer.innerHTML = '';
                 incidentFeedContainer.appendChild(incidentLoader);
                 
-                const apiUrl = '/.netlify/functions/get-scanner-incidents';
+                const apiUrl = `/.netlify/functions/get-scanner-incidents?t=${new Date().getTime()}`;
 
                 try {
                     const response = await fetch(apiUrl);
