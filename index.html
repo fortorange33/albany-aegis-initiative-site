@@ -563,6 +563,11 @@
 
             const displayError = (container, message) => {
                 container.innerHTML = `<div class="p-4 text-center text-red-500 bg-red-100 dark:bg-red-900/50 rounded-lg">${message}</div>`;
+                // Append a subtle retry hint
+                const retry = document.createElement('div');
+                retry.className = 'mt-2 text-sm text-gray-500 dark:text-gray-400';
+                retry.textContent = 'AI service unavailable? Please wait a minute and try again.';
+                container.appendChild(retry);
             };
 
             analyzeScannerBtn.addEventListener('click', fetchScannerIncidents);
